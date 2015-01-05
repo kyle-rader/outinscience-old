@@ -50,7 +50,28 @@
 			{% block content %}{% endblock %}
 		</section>
 	</section>
-
+	<footer class="footer">
+		<section class="container">
+			<div class="row">
+				<div class="col-md-4">
+					<h5 class="text-uppercase">Kyle W. Rader &copy; 2015</h5>
+				</div>
+				<div class="col-md-4 text-center">
+					<h5><a class="text-uppercase" href="mailto:kyle.rader@ieee.org">kyle.rader@ieee.org</a></h5>
+				</div>
+				<div class="col-md-4">
+					<ul class="list-inline cert-list pull-right">
+						<li>
+							<span id="cdSiteSeal1"><script type="text/javascript" src="//tracedseals.starfieldtech.com/siteseal/get?scriptId=cdSiteSeal1&amp;cdSealType=Seal1&amp;sealId=55e4ye7y7mb73b9aca1ce7663a535dexzny7mb7355e4ye7d47635fae9435d143"></script></span>
+						</li>
+						<li>
+							<span id="siteseal"><script type="text/javascript" src="https://seal.starfieldtech.com/getSeal?sealID=e8VqvFB54QMJqKg3aA0XZiESj7xhIvgA3Tb7CecBIQ767RFzPVB0"></script></span>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</section>
+	</footer>
 	<!--Embedding The User Object-->
 	<script type="text/javascript">
 		var user = {{ user | json | safe }};
