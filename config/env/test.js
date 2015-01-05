@@ -4,7 +4,7 @@ module.exports = {
 	db: 'mongodb://localhost/my-mean-blog-test',
 	port: 3001,
 	app: {
-		title: 'My-MEAN-blog - Test Environment'
+		title: 'Kyle Rader\'s playground - Test Environment'
 	},
 	facebook: {
 		clientID: process.env.FACEBOOK_ID || 'APP_ID',

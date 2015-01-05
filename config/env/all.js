@@ -2,9 +2,9 @@
 
 module.exports = {
 	app: {
-		title: 'My-MEAN-blog',
+		title: 'Kyle Rader\'s playground',
 		description: 'A blog and web development playground.',
-		keywords: 'MongoDB, Express, AngularJS, NodeJS, MEAN.js, Node.js, WebDev, KyleRader'
+		keywords: 'MongoDB, Express, SWIG, AngularJS, NodeJS, MEAN.js, Node.js, WebDev, KyleRader'
 	},
 	port: process.env.PORT || 3000,
 	templateEngine: 'swig',
@@ -12,20 +12,17 @@ module.exports = {
 	sessionCollection: 'sessions',
 	assets: {
 		lib: {
-			css: [
-				'public/lib/bootstrap/dist/css/bootstrap.css',
-				'public/lib/bootstrap/dist/css/bootstrap-theme.css',
-			],
+			css: [ ],
 			js: [
 				'public/lib/angular/angular.js',
-				'public/lib/angular-resource/angular-resource.js', 
+				'public/lib/angular-resource/angular-resource.js',
 				'public/lib/angular-ui-router/release/angular-ui-router.js',
 				'public/lib/angular-ui-utils/ui-utils.js',
 				'public/lib/angular-bootstrap/ui-bootstrap-tpls.js'
 			]
 		},
 		css: [
-			'public/modules/**/css/*.css'
+			'public/dist/application.min.css'
 		],
 		js: [
 			'public/config.js',

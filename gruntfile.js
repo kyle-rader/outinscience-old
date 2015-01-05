@@ -7,7 +7,7 @@ module.exports = function(grunt) {
 		serverJS: ['gruntfile.js', 'server.js', 'config/**/*.js', 'app/**/*.js'],
 		clientViews: ['public/modules/**/views/**/*.html'],
 		clientJS: ['public/js/*.js', 'public/modules/**/*.js'],
-		clientCSS: ['public/modules/**/*.css'],
+		clientCSS: ['public/dist/application.min.css', 'public/modules/**/*.css'],
 		mochaTests: ['app/tests/**/*.js']
 	};
 
@@ -74,6 +74,17 @@ module.exports = function(grunt) {
 					'public/dist/application.min.js': 'public/dist/application.js'
 				}
 			}
+		},
+		less: {
+		    production: {
+		        options: {
+		            paths: ['public/less'],
+		            cleancss: true,
+		        },
+		        files: {
+		            'public/dist/application.min.css': 'public/less/application.less'
+		        }
+		    }
 		},
 		cssmin: {
 			combine: {
@@ -170,7 +181,8 @@ module.exports = function(grunt) {
 	grunt.registerTask('lint', ['jshint', 'csslint']);
 
 	// Build task(s).
-	grunt.registerTask('build', ['lint', 'loadConfig', 'ngAnnotate', 'uglify', 'cssmin']);
+	grunt.registerTask('build', ['lint', 'loadConfig', 'ngAnnotate', 'uglify', 'less']);
+	grunt.loadNpmTasks('grunt-contrib-less');
 
 	// Test task.
 	grunt.registerTask('test', ['env:test', 'mochaTest', 'karma:unit']);
