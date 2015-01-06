@@ -23,3 +23,22 @@ body {
 		padding-top: 10px;
 	}
 }
+
+@media (max-width: @screen-md-max) {
+	.footer .right-col {
+		.center-block()
+	}
+	.footer .center-col,
+	.footer .left-col {
+		text-align: center;
+	}
+}
+
+@media (min-with: @screen-lg-min) {
+	.footer .center-col {
+		text-align: center;
+	}
+	.footer .right-col {
+		text-align: right;
+	}
+}
