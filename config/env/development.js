@@ -1,6 +1,7 @@
 'use strict';
 
 module.exports = {
+        port: 3001,
 	db: 'mongodb://localhost/my-mean-blog-dev',
 	app: {
 		title: 'Kyle Rader\'s playground - Development Environment'
