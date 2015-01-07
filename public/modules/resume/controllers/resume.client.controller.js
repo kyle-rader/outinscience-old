@@ -7,14 +7,14 @@ angular.module('resume').controller('ResumeController', ['$scope',
 				'name':'Western Washington University',
 				'degree':'B.S. Computer Science',
 				'minors':['Math', 'Embedded Systems Engineering'],
-				'graduated':'June, 2014',
+				'graduated':'June 2014',
 				'gpa':'3.49',
 				'complete':true
 			},
 			{
 				'name':'Western Washington University',
 				'degree':'M.S. Computer Science',
-				'graduated':'March, 2016',
+				'graduated':'March 2016',
 				'gpa':'4.0',
 				'complete':false
 			}];
@@ -102,7 +102,7 @@ angular.module('resume').controller('ResumeController', ['$scope',
 				'location':'Redmond, WA',
 				'dates':'Sept 2006 - Sept 2009',
 				'info':[
-					'Earned my black belt in Jan, 2006.',
+					'Earned my black belt in Jan 2006.',
 					'Taught children ages 4-7 TaeKwonDo.'
 				]
 			}
@@ -111,23 +111,23 @@ angular.module('resume').controller('ResumeController', ['$scope',
 		$scope.awards = [
 			{
 				'name':'WWU Computer Science Citizenship Award',
-				'date':'June, 2014'
+				'date':'June 2014'
 			},
 			{
 				'name':'Technology Alliance Group (NW): Technology Leader of Tomorrow',
-				'date':'Dec, 2013'
+				'date':'Dec 2013'
 			},
 			{
 				'name':'WWU Computer Science Citizenship Scholarship',
-				'date':'Sept, 2013'
+				'date':'Sept 2013'
 			},
 			{
 				'name':'Logos Bible Software Scholarship',
-				'date':'Sept, 2012'
+				'date':'Sept 2012'
 			},
 			{
 				'name':'Dealer Information Systems Scholarship',
-				'date':'Sept, 2011'
+				'date':'Sept 2011'
 			}
 		];
 
@@ -138,27 +138,27 @@ angular.module('resume').controller('ResumeController', ['$scope',
 			},
 			{
 				'name':'WWU ACM Mentor',
-				'date':'March, 2013 - June 2013'
+				'date':'March 2013 - June 2013'
 			},
 			{
 				'name':'WWU Robotics Club: President',
-				'date':'Sept, 2010 - June 2012'
+				'date':'Sept 2010 - June 2012'
 			},
 			{
 				'name':'CCDC/ Cyber Defense Club',
-				'date':'Sept, 2012 - June, 2013'
+				'date':'Sept 2012 - June 2013'
 			},
 			{
 				'name':'WWU IEEE: Vice Chair',
-				'date':'Sept, 2011 - June, 2012'
+				'date':'Sept 2011 - June 2012'
 			},
 			{
 				'name':'Bellingham A.I. and Robotics Society: Jr. Supervisor',
-				'date':'Jan, 2011 - Jan, 2013'
+				'date':'Jan 2011 - Jan 2013'
 			},
 			{
 				'name':'Associated Students Inter Club Council: Academic Representative',
-				'date':'Sept, 2010 - June, 2011'
+				'date':'Sept 2010 - June 2011'
 			}
 		];
 	}
