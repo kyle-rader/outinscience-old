@@ -27,7 +27,7 @@ angular.module('resume').controller('ResumeController', ['$scope',
 				'dates':'Nov 2014 - Present',
 				'info':[
 					'We are building a computer science and web development education service (A coding bootcamp).',
-					'We believe employees who feel undervalued and kids preparing for college all need access to great compter science education.'
+					'We believe employees who feel undervalued and kids preparing for college all need access to great computer science education.'
 				]
 			},
 			{
@@ -93,7 +93,7 @@ angular.module('resume').controller('ResumeController', ['$scope',
 				'location':'Seattle, WA',
 				'dates':'June 2010 - July 2010',
 				'info':[
-					'Live stunt performances utalizing gymnastics, martial arts, and parkour.'
+					'Live stunt performances utilizing gymnastics, martial arts, and parkour.'
 				]
 			},
 			{
