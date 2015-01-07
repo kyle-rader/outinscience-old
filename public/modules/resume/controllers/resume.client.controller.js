@@ -107,5 +107,59 @@ angular.module('resume').controller('ResumeController', ['$scope',
 				]
 			}
 		];
+
+		$scope.awards = [
+			{
+				'name':'WWU Computer Science Citizenship Award',
+				'date':'June, 2014'
+			},
+			{
+				'name':'Technology Alliance Group (NW): Technology Leader of Tomorrow',
+				'date':'Dec, 2013'
+			},
+			{
+				'name':'WWU Computer Science Citizenship Scholarship',
+				'date':'Sept, 2013'
+			},
+			{
+				'name':'Logos Bible Software Scholarship',
+				'date':'Sept, 2012'
+			},
+			{
+				'name':'Dealer Information Systems Scholarship',
+				'date':'Sept, 2011'
+			}
+		];
+
+		$scope.activities = [
+			{
+				'name':'WWU ACM: Director of Activities',
+				'date':'March 2013 - Present'
+			},
+			{
+				'name':'WWU ACM Mentor',
+				'date':'March, 2013 - June 2013'
+			},
+			{
+				'name':'WWU Robotics Club: President',
+				'date':'Sept, 2010 - June 2012'
+			},
+			{
+				'name':'CCDC/ Cyber Defense Club',
+				'date':'Sept, 2012 - June, 2013'
+			},
+			{
+				'name':'WWU IEEE: Vice Chair',
+				'date':'Sept, 2011 - June, 2012'
+			},
+			{
+				'name':'Bellingham A.I. and Robotics Society: Jr. Supervisor',
+				'date':'Jan, 2011 - Jan, 2013'
+			},
+			{
+				'name':'Associated Students Inter Club Council: Academic Representative',
+				'date':'Sept, 2010 - June, 2011'
+			}
+		];
 	}
 ]);

@@ -39,6 +39,36 @@
 	</div>
 	<br>
 
+	<!-- Awards -->
+	<div class="row">
+		<div class="col-xs-12 col-md-3">
+			<h4 class="resume-section-header hidden-xs">Awards</h4>
+			<h5 class="resume-section-header visible-xs">Awards</h5>
+		</div>
+		<div class="col-cs-12 col-md-9">
+			<ul class="list-unstyled">
+				<li class="job-definition" ng-repeat="award in awards">
+					<span>{{award.name}}</span>  <span class="pull-right">{{award.date}}</span>
+				</li>
+			</ul>
+		</div>
+	</div>
+
+	<!-- Activities -->
+	<div class="row">
+		<div class="col-xs-12 col-md-3">
+			<h4 class="resume-section-header hidden-xs">Activities</h4>
+			<h5 class="resume-section-header visible-xs">Activities</h5>
+		</div>
+		<div class="col-cs-12 col-md-9">
+			<ul class="list-unstyled">
+				<li class="job-definition" ng-repeat="activity in activities">
+					<span>{{activity.name}}</span>  <span class="pull-right">{{activity.date}}</span>
+				</li>
+			</ul>
+		</div>
+	</div>
+
 	<!-- Experience -->
 	<div class="row">
 		<div class="col-xs-12 col-md-3">
