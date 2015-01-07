@@ -23,7 +23,7 @@
 		<div class="col-cs-12 col-md-9">
 			<ul class="list-unstyled">
 				<li class="school-definition" ng-repeat="school in schools">
-					<span class="h5"><strong>{{school.name}}</strong> &nbsp;|&nbsp; {{school.degree}}</span>
+					<span class="h5"><strong>{{school.name}}</strong></span> &nbsp;|&nbsp; {{school.degree}}
 					<span ng-if="school.minors">
 						<ul class="list-inline minors">
 							<li><strong>Minors:</strong> </li>
@@ -46,7 +46,19 @@
 			<h5 class="resume-section-header visible-xs">Experience</h5>
 		</div>
 		<div class="col-cs-12 col-md-9">
-			My Experience ...
+			<ul class="list-unstyled">
+				<li class="job-definition" ng-repeat="job in jobs">
+					<span class="h5"><strong>{{job.company}}</strong></span> &nbsp;|&nbsp; {{job.title}}
+					<span class="pull-right">{{job.dates}}</span>
+					<br>
+					<span>{{job.location}}</span>
+					<ul class="list-square" ng-if="job.info">
+						<li ng-repeat="info in job.info">
+							{{info}}
+						</li>
+					</ul>
+				</li>
+			</ul>
 		</div>
 	</div>
 

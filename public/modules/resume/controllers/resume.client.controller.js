@@ -21,7 +21,7 @@ angular.module('resume').controller('ResumeController', ['$scope',
 
 		$scope.jobs = [
 			{
-				'comapny':'Code Lily',
+				'company':'Code Lily',
 				'title':'Co-Founder',
 				'location':'Bellingham, WA',
 				'dates':'Nov 2014 - Present',
@@ -31,7 +31,7 @@ angular.module('resume').controller('ResumeController', ['$scope',
 				]
 			},
 			{
-				'comapny':'Western Washington University',
+				'company':'Western Washington University',
 				'title':'Graduate Teaching Assistant',
 				'location':'Bellingham, WA',
 				'dates':'Sept 2014 - Present',
@@ -41,7 +41,7 @@ angular.module('resume').controller('ResumeController', ['$scope',
 				]
 			},
 			{
-				'comapny':'Uzility',
+				'company':'Uzility',
 				'title':'Director of Engineering',
 				'location':'Bellingham, WA',
 				'dates':'Dec 2013 - Nov 2013',
@@ -52,13 +52,13 @@ angular.module('resume').controller('ResumeController', ['$scope',
 				]
 			},
 			{
-				'comapny':'Western Washington University',
+				'company':'Western Washington University',
 				'title':'Undergraduate Teaching Assistant',
 				'location':'Bellingham, WA',
 				'dates':'Sept 2011 - June 2014'
 			},
 			{
-				'comapny':'Brer Technical Inc.',
+				'company':'Brer Technical Inc.',
 				'title':'Lead Software Engineer',
 				'location':'Bellingham, WA',
 				'dates':'June 2012 - March 2014',
@@ -69,7 +69,7 @@ angular.module('resume').controller('ResumeController', ['$scope',
 				]
 			},
 			{
-				'comapny':'Logos Research Systems',
+				'company':'Logos Research Systems',
 				'title':'Software Developer',
 				'location':'Bellingham, WA',
 				'dates':'June 2013 - Jan 2014',
@@ -79,7 +79,7 @@ angular.module('resume').controller('ResumeController', ['$scope',
 				]
 			},
 			{
-				'comapny':'Western Washington University',
+				'company':'Western Washington University',
 				'title':'Undergraduate Research Assistant',
 				'location':'Bellingham, WA',
 				'dates':'Sept 2011 - June 2013',
@@ -88,7 +88,7 @@ angular.module('resume').controller('ResumeController', ['$scope',
 				]
 			},
 			{
-				'comapny':'Wing-It Productions',
+				'company':'Wing-It Productions',
 				'title':'Stunt Actor',
 				'location':'Seattle, WA',
 				'dates':'June 2010 - July 2010',
@@ -97,7 +97,7 @@ angular.module('resume').controller('ResumeController', ['$scope',
 				]
 			},
 			{
-				'comapny':'Hwang\'s TaeKwonDo',
+				'company':'Hwang\'s TaeKwonDo',
 				'title':'Instructor',
 				'location':'Redmond, WA',
 				'dates':'Sept 2006 - Sept 2009',
