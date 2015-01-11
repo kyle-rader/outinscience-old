@@ -1,7 +1,7 @@
 {
-	"name": "my-mean-blog",
+	"name": "CodeLily",
 	"version": "0.0.1",
-	"description": "A blog and web development playground.",
+	"description": "Computer Science and Web Development education studio.",
 	"dependencies": {
 		"bootstrap": "~3",
 		"angular": "~1.2",

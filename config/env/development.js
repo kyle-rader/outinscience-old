@@ -1,10 +1,10 @@
 'use strict';
 
 module.exports = {
-	db: 'mongodb://localhost/my-mean-blog-dev',
-	port: 3001,
+	db: 'mongodb://localhost/CodeLily-dev',
+	port: 4001,
 	app: {
-		title: 'Kyle Rader\'s playground - Development Environment'
+		title: 'Computer Science and Web Development education studio. (Development Environment)'
 	},
 	facebook: {
 		clientID: process.env.FACEBOOK_ID || 'APP_ID',

@@ -1,7 +1,7 @@
 'use strict';
 
 module.exports = {
-	db: 'mongodb://localhost/my-mean-blog-test',
+	db: 'mongodb://localhost/CodeLily-test',
 	app: {
 		title: 'Kyle Rader\'s playground - Test Environment'
 	},

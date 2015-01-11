@@ -2,11 +2,11 @@
 
 module.exports = {
 	app: {
-		title: 'Kyle Rader\'s playground',
-		description: 'A blog and web development playground.',
-		keywords: 'MongoDB, Express, SWIG, AngularJS, NodeJS, MEAN.js, Node.js, WebDev, KyleRader'
+		title: 'CodeLily',
+		description: 'Computer Science and Web Development education studio.',
+		keywords: 'CodeLily, Computer Science, Web Development, Education, STEM, Computer Science Education, Web Training'
 	},
-	port: process.env.PORT || 3000,
+	port: process.env.PORT || 4000,
 	templateEngine: 'swig',
 	sessionSecret: 'MEAN',
 	sessionCollection: 'sessions',
