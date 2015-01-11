@@ -1,9 +1,11 @@
 'use strict';
 
 module.exports = {
-	db: process.env.MONGOHQ_URL || process.env.MONGOLAB_URI || 'mongodb://' + (process.env.DB_1_PORT_27017_TCP_ADDR || 'localhost') + '/my-mean-blog',
+	db: 'mongodb://localhost/my-mean-blog',
+	port:3000,
 	assets: {
 		lib: {
+			css: [],
 			js: [
 				'public/lib/angular/angular.min.js',
 				'public/lib/angular-resource/angular-resource.js',
@@ -12,7 +14,10 @@ module.exports = {
 				'public/lib/angular-bootstrap/ui-bootstrap-tpls.min.js'
 			]
 		},
-		js: 'public/dist/application.min.js'
+		js: 'public/dist/application.min.js',
+		css: [
+			'public/dist/application.min.css'
+		]
 	},
 	facebook: {
 		clientID: process.env.FACEBOOK_ID || 'APP_ID',

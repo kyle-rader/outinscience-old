@@ -2,6 +2,7 @@
 
 module.exports = {
 	db: 'mongodb://localhost/my-mean-blog-dev',
+	port: 3001,
 	app: {
 		title: 'Kyle Rader\'s playground - Development Environment'
 	},
