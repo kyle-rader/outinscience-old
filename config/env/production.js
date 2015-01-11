@@ -3,22 +3,6 @@
 module.exports = {
 	db: 'mongodb://localhost/my-mean-blog',
 	port:3000,
-	assets: {
-		lib: {
-			css: [],
-			js: [
-				'public/lib/angular/angular.min.js',
-				'public/lib/angular-resource/angular-resource.js',
-				'public/lib/angular-ui-router/release/angular-ui-router.min.js',
-				'public/lib/angular-ui-utils/ui-utils.min.js',
-				'public/lib/angular-bootstrap/ui-bootstrap-tpls.min.js'
-			]
-		},
-		js: 'public/dist/application.min.js',
-		css: [
-			'public/dist/application.min.css'
-		]
-	},
 	facebook: {
 		clientID: process.env.FACEBOOK_ID || 'APP_ID',
 		clientSecret: process.env.FACEBOOK_SECRET || 'APP_SECRET',
