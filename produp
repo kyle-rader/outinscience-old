@@ -1,0 +1,4 @@
+#!/bin/bash
+
+export NODE_ENV=production
+forever start --uid prod -a server.js
