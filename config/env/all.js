@@ -3,7 +3,7 @@
 module.exports = {
 	app: {
 		title: 'CodeLily',
-		description: 'Computer Science and Web Development education studio.',
+		description: 'CodeLily: Computer Science and Web Development education studio.',
 		keywords: 'CodeLily, Computer Science, Web Development, Education, STEM, Computer Science Education, Web Training'
 	},
 	port: process.env.PORT || 4000,
