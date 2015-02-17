@@ -1,9 +1,25 @@
 'use strict';
 
 
-angular.module('core').controller('HomeController', ['$scope', 'Authentication',
-	function($scope, Authentication) {
+angular.module('core').controller('HomeController', ['$scope', 'Authentication', '$location', '$http',
+	function($scope, Authentication, $location, $http) {
 		// This provides Authentication context.
 		$scope.authentication = Authentication;
+
+		$scope.formData = {};
+
+		$scope.emailSubscribe = function() {
+			$http.post($location.protocol() + '://' + $location.host() + '/mail/subscribe/d7142be008/' + $scope.formData.email)
+			.success(function(data, status, headers, config) {
+				if(!data.error) {
+					$scope.formData.success = $scope.formData.email + ' has been subscribed to the CodeLily mailing list.  Thanks! We look forward to talking with you soon ^_^';
+				} else {
+					$scope.formData.error = data.error;
+				}
+			}).
+			error(function(data, status, headers, config) {
+				$scope.formData.error = data.error;
+			});
+		}
 	}
 ]);
