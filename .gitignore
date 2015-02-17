@@ -9,3 +9,4 @@ public/dist/application*
 app/tests/coverage/
 .bower-*/
 .idea/
+config/mc-config.json
