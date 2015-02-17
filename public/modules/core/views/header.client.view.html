@@ -1,4 +1,5 @@
 <div class="container" data-ng-controller="HeaderController">
+
 	<div class="navbar-header">
 		<button class="navbar-toggle" type="button" data-ng-click="toggleCollapsibleMenu()">
 			<span class="sr-only">Toggle navigation</span>
@@ -8,9 +9,11 @@
 		</button>
 		<a href="/#!/" class="navbar-logo"><img src="/modules/core/img/brand/logo.svg" alt="CodeLily LogoType" width="120px"></a>
 	</div>
+
 	<nav class="collapse navbar-collapse" collapse="!isCollapsed" role="navigation">
 		<ul class="nav navbar-nav" ><!--data-ng-if="menu.shouldRender(authentication.user);">-->
 			<li data-ng-repeat="item in menu.items | orderBy: 'position'" data-ng-if="item.shouldRender(authentication.user);" ng-switch="item.menuItemType" ui-route="{{item.uiRoute}}" class="{{item.menuItemClass}}" ng-class="{active: ($uiRoute)}" dropdown="item.menuItemType === 'dropdown'">
+
 				<a href="#" ng-switch-when="dropdown" class="dropdown-toggle">
 					<span data-ng-bind="item.title"></span>
 				</a>
@@ -19,8 +22,10 @@
 						<a href="/#!/{{subitem.link}}" data-ng-bind="subitem.title"></a>
 					</li>
 				</ul>
+
 				<a ng-switch-default href="/#!/{{item.link}}" data-ng-bind="item.title"></a>
 			</li>
 		</ul>
 	</nav>
+
 </div>

@@ -45,27 +45,15 @@
 
 <body class="ng-cloak">
 	<header data-ng-include="'/modules/core/views/header.client.view.html'" class="navbar navbar-fixed-top"></header>
+
 	<section class="content">
 		<section class="container-fluid">
 			{% block content %}{% endblock %}
 		</section>
 	</section>
-	<footer class="footer">
-		<section class="container">
-			<div class="row">
-				<div class="col-md-4 left-col">
-					CodeLily &copy; 2015
-				</div>
-				<div class="col-md-4 center-col">
-					<a href="mailto:helloworld@codelily.education">helloworld@codelily.education</a>
-				</div>
-				<div class="col-md-4 right-col" style="line-eight: 10px;">
-					<span>Powered By:</span>
-					<a style="margin-left: 10px;" target="_blank" href="http://meanjs.org/"><img alt="MEAN.JS" width="75px" src="modules/core/img/brand/logo.png" /></a>
-				</div>
-			</div>
-		</section>
-	</footer>
+
+	<footer class="footer" data-ng-include="'/modules/core/views/footer.client.view.html'"></footer>
+
 	<!--Embedding The User Object-->
 	<script type="text/javascript">
 		var user = {{ user | json | safe }};
