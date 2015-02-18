@@ -30,6 +30,6 @@ exports.emailSubscribe = function(req, res) {
 	} else if (process.env.NODE_ENV == 'development') {
 		res.send({email: null, error: 'This email "' + req.params.email + '" would have been subscribe - but you are hitting a dev server.'});
 	} else {
-		res.send({email: req.params.email + ' - Running on dev - no email sent.', error: 'Invalid email address format'});
+		res.send({email: null, error: 'Invalid email address format'});
 	}
 };
