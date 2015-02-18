@@ -4,7 +4,7 @@ module.exports = {
 	db: 'mongodb://localhost/CodeLily',
 	port:4000,
 	facebook: {
-		clientID: process.env.FACEBOOK_ID || 'APP_ID',
+		clientID: process.env.FACEBOOK_ID || '867283329990397',
 		clientSecret: process.env.FACEBOOK_SECRET || 'APP_SECRET',
 		callbackURL: '/auth/facebook/callback'
 	},
