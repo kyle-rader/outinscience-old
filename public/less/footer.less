@@ -4,19 +4,21 @@ html {
 }
 
 body {
-	margin-bottom: 65px;
+	margin-bottom: 75px;
 }
 
 footer.footer {
 	position: absolute;
 	bottom: 0;
 	width: 100%;
-	height: 65px;
+	height: 75px;
 	background-color: @body-bg;
 	border-top: 1px solid @body-off-color;
 
-	div.row > div {
-		padding-top: 20px;
+	.social-icons {
+		li + li {
+			margin-left: 15px;
+		}
 	}
 }
 

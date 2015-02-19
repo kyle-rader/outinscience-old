@@ -4,7 +4,7 @@ module.exports = {
 	db: 'mongodb://localhost/CodeLily-dev',
 	port: 4001,
 	app: {
-		title: 'Computer Science and Web Development education studio. (Development Environment)'
+		title: 'CodeLily (Dev)'
 	},
 	facebook: {
 		clientID: process.env.FACEBOOK_ID || 'APP_ID',
