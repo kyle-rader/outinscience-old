@@ -11,7 +11,7 @@
 	height: 100%;
 	width: calc(100% * 0.57735);
 	display: inline-block;
-	z-index: -2;
+	z-index: -10;
 	box-shadow: 0 0 15px rgba(0,0,0,0.35);
 	background-color: inherit;
 
@@ -24,7 +24,7 @@
 		width: inherit;
 		height: inherit;
 		background-color: inherit;
-		z-index: -2;
+		z-index: -10;
 		box-shadow: 0 0 15px rgba(0,0,0,0.35);
 	}
 	&:before {
@@ -38,7 +38,7 @@
 		height: 100%;
 		width: 100%;
 		display: inline-block;
-		z-index: 2;
+		z-index: -5;
 		background-color: inherit;
 		&:before,
 		&:after {
@@ -49,13 +49,19 @@
 			width: calc(100% * 0.57735);
 			height: inherit;
 			background-color: inherit;
-			z-index: 2;
+			z-index: 0;
 		}
 		&:before {
 			transform: rotateZ(60deg);
 		}
 		&:after {
 			transform: rotateZ(-60deg);
+		}
+		> i.icon {
+			&:before { color: white; }
+			font-size: 58pt;
+			position: relative;
+			z-index: 15;
 		}
 	}
 }
@@ -82,5 +88,5 @@
 	background-color: #FF9933;
 }
 .red-hex-bg {
-	background-position: #D11919;
+	background-color: #D11919;
 }
