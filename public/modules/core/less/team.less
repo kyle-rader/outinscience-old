@@ -1,0 +1,26 @@
+@media (min-width: @screen-sm-min) {
+    div.team-pictures div[class^=col-] {
+
+	img {
+	    filter: grayscale(100%);
+	    // Browser Specific
+	    -webkit-filter: grayscale(100%);
+	    -moz-filter: grayscale(100%);
+	    -o-filter: grayscale(100%);
+	    -ms-filter: grayscale(100%);
+
+	    transition: all linear .5s;
+	}
+
+	&:hover img {
+	    filter: none;
+	    -webkit-filter: none;
+	    -moz-filter: none;
+	    -o-filter: none;
+	    -ms-filter: none;
+
+	    transition: all linear .5s;
+	}
+    }
+}
+
