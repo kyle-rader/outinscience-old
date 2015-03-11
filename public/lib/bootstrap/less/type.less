@@ -233,6 +233,25 @@ dd {
   }
 }
 
+.dl-horizontal-left {
+  dd {
+    &:extend(.clearfix all); // Clear the floated `dt` if an empty `dd` is present
+  }
+
+  @media (min-width: @grid-float-breakpoint) {
+    dt {
+      float: left;
+      width: (@dl-horizontal-offset - 80);
+      clear: left;
+      text-align: left;
+      .text-overflow();
+    }
+    dd {
+      margin-left: @dl-horizontal-offset - 60;
+    }
+  }
+}
+
 
 // Misc
 // -------------------------
