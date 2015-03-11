@@ -1,31 +1,34 @@
 <div class="container" data-ng-controller="HeaderController">
 
-	<div class="navbar-header">
-		<button class="navbar-toggle" type="button" data-ng-click="toggleCollapsibleMenu()">
-			<span class="sr-only">Toggle navigation</span>
-			<span class="icon-bar"></span>
-			<span class="icon-bar"></span>
-			<span class="icon-bar"></span>
-		</button>
-		<a href="/#!/" class="navbar-logo"><img src="/modules/core/img/brand/logotype.svg" alt="CodeLily LogoType" width="120px"></a>
-	</div>
+  <div class="navbar-header">
+    <button class="navbar-toggle" type="button" data-ng-click="toggleCollapsibleMenu()">
+      <span class="sr-only">Toggle navigation</span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+    </button>
+    <a href="/#!/" class="navbar-logo"><img src="/modules/core/img/brand/logotype.svg" alt="CodeLily LogoType" width="120px"></a>
+  </div>
 
-	<nav class="collapse navbar-collapse" collapse="!isCollapsed" role="navigation">
-		<ul class="nav navbar-nav" ><!--data-ng-if="menu.shouldRender(authentication.user);">-->
-			<li data-ng-repeat="item in menu.items | orderBy: 'position'" data-ng-if="item.shouldRender(authentication.user);" ng-switch="item.menuItemType" ui-route="{{item.uiRoute}}" class="{{item.menuItemClass}}" ng-class="{active: ($uiRoute)}" dropdown="item.menuItemType === 'dropdown'">
+  <nav class="collapse navbar-collapse" collapse="!isCollapsed" role="navigation">
+    <ul class="nav navbar-nav" ><!--data-ng-if="menu.shouldRender(authentication.user);">-->
+      <li data-ng-repeat="item in menu.items | orderBy: 'position'" data-ng-if="item.shouldRender(authentication.user);" ng-switch="item.menuItemType" ui-route="{{item.uiRoute}}" class="{{item.menuItemClass}}" ng-class="{active: ($uiRoute)}" dropdown="item.menuItemType === 'dropdown'">
 
-				<a href="#" ng-switch-when="dropdown" class="dropdown-toggle">
-					<span data-ng-bind="item.title"></span>
-				</a>
-				<ul ng-switch-when="dropdown" class="dropdown-menu">
-					<li data-ng-repeat="subitem in item.items | orderBy: 'position'" data-ng-if="subitem.shouldRender(authentication.user);" ui-route="{{subitem.uiRoute}}" ng-class="{active: $uiRoute}">
-						<a href="/#!/{{subitem.link}}" data-ng-bind="subitem.title"></a>
-					</li>
-				</ul>
+	<a href="#" ng-switch-when="dropdown" class="dropdown-toggle">
+	  <span data-ng-bind="item.title"></span>
+	</a>
+	<ul ng-switch-when="dropdown" class="dropdown-menu">
+	  <li data-ng-repeat="subitem in item.items | orderBy: 'position'" data-ng-if="subitem.shouldRender(authentication.user);" ui-route="{{subitem.uiRoute}}" ng-class="{active: $uiRoute}">
+	    <a href="/#!/{{subitem.link}}" data-ng-bind="subitem.title"></a>
+	  </li>
+	</ul>
 
-				<a ng-switch-default href="/#!/{{item.link}}" data-ng-bind="item.title"></a>
-			</li>
-		</ul>
-	</nav>
+	<a ng-switch-default href="/#!/{{item.link}}" data-ng-bind="item.title"></a>
+      </li>
+    </ul>
+    <form class="navbar-form navbar-right">
+      <a class="btn btn-primary" href="/#!/classes">Sign up for our first FREE classes!</a>
+    </form>
+  </nav>
 
 </div>
