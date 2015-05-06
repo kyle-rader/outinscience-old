@@ -14,21 +14,37 @@
     <ul class="nav navbar-nav" ><!--data-ng-if="menu.shouldRender(authentication.user);">-->
       <li data-ng-repeat="item in menu.items | orderBy: 'position'" data-ng-if="item.shouldRender(authentication.user);" ng-switch="item.menuItemType" ui-route="{{item.uiRoute}}" class="{{item.menuItemClass}}" ng-class="{active: ($uiRoute)}" dropdown="item.menuItemType === 'dropdown'">
 
-	<a href="#" ng-switch-when="dropdown" class="dropdown-toggle">
-	  <span data-ng-bind="item.title"></span>
-	</a>
-	<ul ng-switch-when="dropdown" class="dropdown-menu">
-	  <li data-ng-repeat="subitem in item.items | orderBy: 'position'" data-ng-if="subitem.shouldRender(authentication.user);" ui-route="{{subitem.uiRoute}}" ng-class="{active: $uiRoute}">
-	    <a href="/#!/{{subitem.link}}" data-ng-bind="subitem.title"></a>
-	  </li>
-	</ul>
-
-	<a ng-switch-default href="/#!/{{item.link}}" data-ng-bind="item.title"></a>
-      </li>
+      	<a href="#" ng-switch-when="dropdown" class="dropdown-toggle">
+      	  <span data-ng-bind="item.title"></span>
+      	</a>
+      	<ul ng-switch-when="dropdown" class="dropdown-menu">
+      	  <li data-ng-repeat="subitem in item.items | orderBy: 'position'" data-ng-if="subitem.shouldRender(authentication.user);" ui-route="{{subitem.uiRoute}}" ng-class="{active: $uiRoute}">
+      	    <a href="/#!/{{subitem.link}}" data-ng-bind="subitem.title"></a>
+      	  </li>
+      	</ul>
+	       <a ng-switch-default href="/#!/{{item.link}}" data-ng-bind="item.title"></a>
+       </li>
     </ul>
-    <form class="navbar-form navbar-right">
-      <a class="btn btn-primary" href="/#!/classes">Our first FREE classes are already full!</a>
-    </form>
+
+    <form class="navbar-form navbar-right navbar-form-group" ng-submit="emailSubscribe()">
+  	  <div class="form-group">
+  	    <label for="joinMailingListEmail" class="sr-only">Email</label>
+  	    <input type="email" class="form-control" id="joinMailingListEmail" placeholder="Email address" ng-model="formData.email">
+      </div>
+  	  <input class="btn btn-default" type="submit" value="Join the Mailing List">
+  	</form>
+
   </nav>
+
+  <div class="alert alert-warning" role="alert" ng-show="formData.error">
+      <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+      <span class="sr-only">Error:</span>
+      <span ng-bind="formData.error"></span>
+  </div>
+  <div class="alert alert-success" role="alert" ng-show="formData.success">
+      <span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span>
+      <span class="sr-only">Success:</span>
+      <span ng-bind="formData.success"></span>
+  </div>
 
 </div>
