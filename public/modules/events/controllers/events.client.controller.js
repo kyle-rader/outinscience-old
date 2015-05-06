@@ -12,7 +12,7 @@ angular.module('events').controller('EventsController', ['$scope',
 				month: 'May',
 				monthNum: 5,
 				description: 'Dive into the world of open source and see how you can contribute to projects and make a difference today!',
-				link: 'https://cse.wwu.edu/computer-science/event/open-source-day'
+				link: 'http://www.wwu.edu/emarket/opensourceday/'
 			},
 			{
 				title: 'Whatcom Robotics Expo',
