@@ -19,7 +19,7 @@ exports.index = function(req, res) {
 exports.emailSubscribe = function(req, res) {
 	var validEmail = validator.validate(req.params.email);
 
-	if (process.env.NODE_ENV == 'production' && validEmail) {
+	if (process.env.NODE_ENV === 'production' && validEmail) {
 		mc.lists.subscribe({id: req.params.listId, email:{email:req.params.email}},
 		function(data) {
 			res.send({email: req.params.eamil});
@@ -27,7 +27,7 @@ exports.emailSubscribe = function(req, res) {
 		function(error) {
 			res.send({email: null, error: 'There was an error subscribing that email.\n' + error.error});
 		});
-	} else if (process.env.NODE_ENV == 'development') {
+	} else if (process.env.NODE_ENV === 'development') {
 		res.send({email: null, error: 'This email "' + req.params.email + '" would have been subscribe - but you are hitting a dev server.'});
 	} else {
 		res.send({email: null, error: 'Invalid email address format'});

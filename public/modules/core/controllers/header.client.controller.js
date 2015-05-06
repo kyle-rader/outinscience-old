@@ -29,7 +29,7 @@ angular.module('core').controller('HeaderController', ['$scope', 'Authentication
 			.error(function(data, status, headers, config) {
 				$scope.formData.error = data.error;
 			});
-		}
+		};
 
 	}
 ]);
