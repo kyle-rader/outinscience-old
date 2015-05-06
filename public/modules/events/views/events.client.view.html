@@ -1,3 +1,27 @@
 <section data-ng-controller="EventsController">
-	This is the Events view
+
+	<div class="container">
+		<div class="row">
+			<div class="col-xs-12">
+				<h1>Upcoming Events</h1>
+				<hr>
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="col-xs-12">
+				<ul class="event-list">
+					<li class="event" ng-repeat="event in events">
+						<div class="date">
+							{{event.month}}
+							<span class="day">{{event.dayNum}}</span>
+						</div>
+						<div class="title">{{event.title}}</div>
+						<div class="description">{{event.description}}</div>
+						<a href="{{event.link}}">{{event.link}}</a>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</div>
 </section>

@@ -1,3 +1,8 @@
+html, body, header, section {
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
 h1.super-big {
     font-family: @headings-font-family;
     font-weight: 100;
@@ -31,4 +36,7 @@ body {
 }
 header ul.nav.navbar-nav li.active a {
   background-color: #eeeeee;
+}
+@media screen and (max-width: @screen-xs-max) {
+  .container { padding: 0; }
 }
