@@ -27,6 +27,7 @@ angular.module('events').controller('EventsController', ['$scope',
 	<dd><strong>KeyMail (NachoBits)</strong> (Aaron Griffin) <br><a target="_blank" href="https://github.com/NachoBits/keymail">https://github.com/NachoBits/keymail</a></dd>\
 	<dd><strong>Language of Languages</strong> (Jamie & Andi Douglass) <br><a target="_blank" href="https://github.com/jamiedouglass/LanguageOfLanguages">https://github.com/jamiedouglass/LanguageOfLanguages</a></dd>\
 	<dd><strong>Able Player</strong> (Terry Thompson) <br><a target="_blank" href="https://github.com/ableplayer/ableplayer">https://github.com/ableplayer/ableplayer</a></dd>\
+	<dd><strong>cpython</strong> (Alex Lord) <br><a target="_blank" href="https://openhatch.org/search/?q=&language=Python">https://openhatch.org/search/?q=&language=Python</a></dd>\
 	<dt>Other Suggested Projects</dt>\
 	<dd><strong>MediaWiki</strong> (lots of bite-size bugs, written in PHP) <br><a target="_blank" href="https://openhatch.org/projects/MediaWiki">https://openhatch.org/projects/MediaWiki</a> </dd>\
 	<dd><strong>openemr</strong> (social interest, looks beginner friendly) <br><a target="_blank" href="https://openhatch.org/projects/openemr">https://openhatch.org/projects/openemr</a> </dd>\
