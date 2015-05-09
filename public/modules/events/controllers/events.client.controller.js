@@ -39,7 +39,9 @@ angular.module('events').controller('EventsController', ['$scope',
 	<dd><strong>openspending</strong> (social/political interest, written in Python) <br><a target="_blank" href="https://openhatch.org/projects/openspending">https://openhatch.org/projects/openspending</a> </dd>\
 	<dd><strong>sympy</strong> (for math lovers, lots of bite-sized bugs, written in Python) <br><a target="_blank" href="https://openhatch.org/projects/sympy">https://openhatch.org/projects/sympy</a> </dd>\
 	<dd><strong>Firefox</strong> (lots of bite-sized bugs) <br><a target="_blank" href="https://openhatch.org/projects/Firefox">https://openhatch.org/projects/Firefox</a> </dd>\
-</dl>'
+</dl>\
+<hr>\
+Open Source Day <strong><a target=_"blank" href="http://goo.gl/forms/n1xiQEI6GD">Survey</a></strong>'
 			},
 			{
 				title: 'Whatcom Robotics Expo',
