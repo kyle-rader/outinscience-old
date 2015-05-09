@@ -14,7 +14,8 @@ angular.module('events').controller('EventsController', ['$scope',
 				description: 'Dive into the world of open source and see how you can contribute to projects and make a difference today!',
 				link: 'http://www.wwu.edu/emarket/opensourceday/',
 				info:
-'<dl>\
+'<strong>Max Bronsema\'s Open Source Speech</strong><br><a target="_blank" href="http://slides.com/maxbronsema/deck-1">http://slides.com/maxbronsema/deck-1</a> \
+<dl>\
 	<dt>Suggested Resources</dt>\
 	<dd>Github\'s Atom text editor. <br><a target="_BLANK" href="https://atom.io/">https://atom.io/</a></dd>\
 	<dt>Git Resources</dt>\
