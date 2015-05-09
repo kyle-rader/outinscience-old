@@ -19,6 +19,9 @@
 						<div class="title">{{event.title}}</div>
 						<div class="description">{{event.description}}</div>
 						<a target="_BLANK" href="{{event.link}}">{{event.link}}</a>
+						<a ng-show="event.info && !event.showInfo" class="more-info-btn" href ng-click="event.showInfo = !event.showInfo">More Info</a>
+						<a ng-show="event.info && event.showInfo" class="less-info-btn" href ng-click="event.showInfo = !event.showInfo">Less Info</a>
+						<div class="more-info" ng-show="event.showInfo" ng-animate ng-bind-html="event.info"></div>
 					</li>
 				</ul>
 			</div>
