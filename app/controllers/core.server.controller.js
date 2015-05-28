@@ -4,10 +4,10 @@
  * Module dependencies.
  */
 var mailChimp = require('../../node_modules/mailchimp-api/mailchimp'),
-	validator = require('../../node_modules/email-validator'),
-	config = require('../../config/mc-config.json');
+	validator = require('../../node_modules/email-validator');
+	//config = require('../../config/mc-config.json');
 
-var mc = new mailChimp.Mailchimp(config.apikey);
+//var mc = new mailChimp.Mailchimp(config.apikey);
 
 exports.index = function(req, res) {
 	res.render('index', {
@@ -15,7 +15,7 @@ exports.index = function(req, res) {
 		request: req
 	});
 };
-
+/*
 exports.emailSubscribe = function(req, res) {
 	var validEmail = validator.validate(req.params.email);
 
@@ -33,3 +33,5 @@ exports.emailSubscribe = function(req, res) {
 		res.send({email: null, error: 'Invalid email address format'});
 	}
 };
+*/
+ 

@@ -2,13 +2,13 @@
 
 module.exports = {
 	app: {
-		title: 'CodeLily',
-		description: 'CodeLily: Computer Science and Web Development education studio.',
-		keywords: 'CodeLily, Computer Science, Web Development, Education, STEM, Computer Science Education, Web Training'
+		title: 'Out in Science',
+		description: 'Out in Science: A community space for the promotion and inclusion of LGBT in math and science.',
+		keywords: 'Out in science, Computer Science, Web Development, Education, STEM, LGBT, Gay, Lesbian, Queer, Trans, Transgender, Chemistry, Biology, Physics, Math, engineering, electronics'
 	},
-	port: process.env.PORT || 4000,
+	port: process.env.PORT || 3010,
 	templateEngine: 'swig',
-	sessionSecret: 'MEAN',
+	sessionSecret: 'LGBT',
 	sessionCollection: 'sessions',
 	assets: {
 		lib: {

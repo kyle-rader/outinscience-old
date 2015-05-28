@@ -18,6 +18,7 @@ angular.module('core').controller('HeaderController', ['$scope', 'Authentication
 		$scope.formData = {};
 
 		$scope.emailSubscribe = function() {
+			/*
 			$http.post($location.protocol() + '://' + $location.host() + '/mail/subscribe/d7142be008/' + $scope.formData.email)
 			.success(function(data, status, headers, config) {
 				if(!data.error) {
@@ -29,6 +30,7 @@ angular.module('core').controller('HeaderController', ['$scope', 'Authentication
 			.error(function(data, status, headers, config) {
 				$scope.formData.error = data.error;
 			});
+			*/
 		};
 
 	}

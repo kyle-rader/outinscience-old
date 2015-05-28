@@ -1,8 +1,8 @@
 'use strict';
 
 module.exports = {
-	db: 'mongodb://localhost/CodeLily-dev',
-	port: 4001,
+	db: 'mongodb://localhost/outinscience-dev',
+	port: 3010,
 	app: {
 		title: 'CodeLily (Dev)'
 	},

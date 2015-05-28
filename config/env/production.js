@@ -1,10 +1,10 @@
 'use strict';
 
 module.exports = {
-	db: 'mongodb://localhost/CodeLily',
-	port:4000,
+	db: 'mongodb://localhost/outinscience',
+	port: 3010,
 	facebook: {
-		clientID: process.env.FACEBOOK_ID || '867283329990397',
+		clientID: process.env.FACEBOOK_ID || 'APP_ID',
 		clientSecret: process.env.FACEBOOK_SECRET || 'APP_SECRET',
 		callbackURL: '/auth/facebook/callback'
 	},
