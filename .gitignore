@@ -10,3 +10,4 @@ app/tests/coverage/
 .bower-*/
 .idea/
 config/mc-config.json
+config/fb-config.json
