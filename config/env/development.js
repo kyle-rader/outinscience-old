@@ -4,7 +4,7 @@ module.exports = {
 	db: 'mongodb://localhost/outinscience-dev',
 	port: 3010,
 	app: {
-		title: 'CodeLily (Dev)'
+		title: 'Out in Science (Dev)'
 	},
 	facebook: {
 		clientID: process.env.FACEBOOK_ID || 'APP_ID',
