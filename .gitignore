@@ -11,3 +11,4 @@ app/tests/coverage/
 .idea/
 config/mc-config.json
 config/fb-config.json
+config/mail-config.json

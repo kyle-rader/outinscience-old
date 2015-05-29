@@ -1,12 +1,13 @@
 'use strict';
-var fbConfig = require('../fb-config.json');
+var fbConfig = require('../fb-config.json'),
+		mailConfig = require('../mail-config.json');
 
 module.exports = {
 	db: 'mongodb://localhost/outinscience',
 	port: 3010,
 	facebook: {
-		clientID: process.env.FACEBOOK_ID || fbConfig["app_id"],
-		clientSecret: process.env.FACEBOOK_SECRET || fbConfig["app_secret"],
+		clientID: process.env.FACEBOOK_ID || fbConfig.app_id,
+		clientSecret: process.env.FACEBOOK_SECRET || fbConfig.app_secret,
 		callbackURL: '/auth/facebook/callback'
 	},
 	twitter: {
@@ -30,12 +31,12 @@ module.exports = {
 		callbackURL: '/auth/github/callback'
 	},
 	mailer: {
-		from: process.env.MAILER_FROM || 'MAILER_FROM',
+		from: process.env.MAILER_FROM || mailConfig.from,
 		options: {
-			service: process.env.MAILER_SERVICE_PROVIDER || 'MAILER_SERVICE_PROVIDER',
+			service: process.env.MAILER_SERVICE_PROVIDER || mailConfig.service,
 			auth: {
-				user: process.env.MAILER_EMAIL_ID || 'MAILER_EMAIL_ID',
-				pass: process.env.MAILER_PASSWORD || 'MAILER_PASSWORD'
+				user: process.env.MAILER_EMAIL_ID || mailConfig.user,
+				pass: process.env.MAILER_PASSWORD || mailConfig.pass
 			}
 		}
 	}
