@@ -1,1 +1,16 @@
 // My LESS Mixins to override Bootstrap Mixins.
+
+.li-rb-color-btn(@color) {
+	a {
+    color: @color;
+  	transition: all .3s ease;
+
+  	&:hover {
+  		transition: all .3s ease;
+  		background-color: fadeout(color(@color), 85%) !important;
+  	}
+  }
+  &.active a {
+    background-color: fadeout(color(@color), 85%) !important;
+  }
+}

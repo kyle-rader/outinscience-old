@@ -34,9 +34,26 @@ body {
     -moz-box-shadow: 3px 3px 10px 0px rgba(0,0,0,0.5);
     box-shadow: 3px 3px 10px 0px rgba(0,0,0,0.5);
 }
-header ul.nav.navbar-nav li.active a {
-  background-color: #eeeeee;
-}
+
 @media screen and (max-width: @screen-xs-max) {
   .container { padding: 0; }
+}
+/* Color buttons */
+li.li-rb-red {
+	.li-rb-color-btn(@rb-red);
+}
+li.li-rb-orange {
+	.li-rb-color-btn(@rb-orange);
+}
+li.li-rb-yellow {
+	.li-rb-color-btn(@rb-yellow);
+}
+li.li-rb-green {
+	.li-rb-color-btn(@rb-green);
+}
+li.li-rb-blue {
+	.li-rb-color-btn(@rb-blue);
+}
+li.li-rb-purple {
+	.li-rb-color-btn(@rb-purple);
 }
