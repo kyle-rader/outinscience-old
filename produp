@@ -1,4 +1,4 @@
 #!/bin/bash
 
 export NODE_ENV=production
-forever start --uid codelily-prod -a server.js
+forever start --uid ois-prod -a server.js
