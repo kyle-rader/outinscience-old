@@ -1,11 +1,12 @@
 'use strict';
+var fbConfig = require('../fb-config.json');
 
 module.exports = {
 	db: 'mongodb://localhost/outinscience',
 	port: 3010,
 	facebook: {
-		clientID: process.env.FACEBOOK_ID || 'APP_ID',
-		clientSecret: process.env.FACEBOOK_SECRET || 'APP_SECRET',
+		clientID: process.env.FACEBOOK_ID || fbConfig["app_id"],
+		clientSecret: process.env.FACEBOOK_SECRET || fbConfig["app_secret"],
 		callbackURL: '/auth/facebook/callback'
 	},
 	twitter: {
