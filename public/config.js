@@ -4,7 +4,7 @@
 var ApplicationConfiguration = (function() {
 	// Init module configuration options
 	var applicationModuleName = 'CodeLily';
-	var applicationModuleVendorDependencies = ['ngResource', 'ui.router', 'ui.bootstrap', 'ui.utils', 'ngAnimate', 'ngSanitize'];
+	var applicationModuleVendorDependencies = ['ngResource', 'ngRoute', 'ui.router', 'ui.bootstrap', 'ui.utils', 'ngAnimate', 'ngSanitize'];
 
 	// Add a new vertical module
 	var registerModule = function(moduleName, dependencies) {
