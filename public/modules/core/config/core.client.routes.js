@@ -8,6 +8,10 @@ angular.module('core').config(['$stateProvider', '$urlRouterProvider',
 
 		// Home state routing
 		$stateProvider.
+		state('user-agreement-terms-of-service', {
+			url: '/user-agreement-terms-of-service',
+			templateUrl: 'modules/core/views/user-agreement-terms-of-service.client.view.html'
+		}).
 		state('team', {
 			url: '/team',
 			templateUrl: 'modules/core/views/team.client.view.html'
