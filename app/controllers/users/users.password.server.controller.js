@@ -66,7 +66,7 @@ exports.forgot = function(req, res, next) {
 			res.render('templates/reset-password-email', {
 				name: user.displayName,
 				appName: config.app.title,
-				url: 'http://' + req.headers.host + '/auth/reset/' + token
+				url: req.protocol + '://' + req.headers.host + '/auth/reset/' + token
 			}, function(err, emailHTML) {
 				done(err, emailHTML, user);
 			});
@@ -77,7 +77,7 @@ exports.forgot = function(req, res, next) {
 			  from: config.mailer.from,
 			  to: user.email, // An array if you have multiple recipients.
 			  subject: 'Out In Science: Password Reset',
-			  'h:Reply-To': 'outinscience@gmail.com',
+			  'h:Reply-To': config.mailer.reply_to,
 			  //You can use "html:" to send HTML email content. It's magic!
 			  html: emailHTML,
 			  //You can use "text:" to send plain-text content. It's oldschool!
@@ -180,7 +180,7 @@ exports.reset = function(req, res, next) {
 			  from: config.mailer.from,
 			  to: user.email, // An array if you have multiple recipients.
 			  subject: 'Out In Science: Password Change Successful',
-			  'h:Reply-To': 'outinscience@gmail.com',
+			  'h:Reply-To': config.mailer.reply_to,
 			  //You can use "html:" to send HTML email content. It's magic!
 			  html: emailHTML,
 			  //You can use "text:" to send plain-text content. It's oldschool!

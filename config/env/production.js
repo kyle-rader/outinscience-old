@@ -32,12 +32,8 @@ module.exports = {
 	},
 	mailer: {
 		from: process.env.MAILER_FROM || mailConfig.from,
-		options: {
-			service: process.env.MAILER_SERVICE_PROVIDER || mailConfig.service,
-			auth: {
-				user: process.env.MAILER_EMAIL_ID || mailConfig.user,
-				pass: process.env.MAILER_PASSWORD || mailConfig.pass
-			}
-		}
+		api_key: mailConfig.api_key,
+		domain: mailConfig.domain,
+		reply_to: mailConfig.reply_to
 	}
 };

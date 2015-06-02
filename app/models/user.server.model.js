@@ -86,6 +86,12 @@ var UserSchema = new Schema({
 	},
 	resetPasswordExpires: {
 		type: Date
+	},
+	confirmEmailToken: {
+		type: String
+	},
+	confirmEmailExpires: {
+		type: String
 	}
 });
 

@@ -36,6 +36,7 @@ module.exports = {
 	mailer: {
 		from: process.env.MAILER_FROM || mailConfig.from,
 		api_key: mailConfig.api_key,
-		domain: mailConfig.domain
+		domain: mailConfig.domain,
+		reply_to: mailConfig.reply_to
 	}
 };

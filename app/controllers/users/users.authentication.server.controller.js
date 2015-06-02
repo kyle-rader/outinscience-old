@@ -10,8 +10,16 @@ var _ = require('lodash'),
 	User = mongoose.model('User'),
 	config = require('../../../config/config'),
 	nodemailer = require('nodemailer'),
+	mg = require('nodemailer-mailgun-transport'),
 	async = require('async'),
 	crypto = require('crypto');
+var auth = {
+  auth: {
+    api_key: config.mailer.api_key,
+    domain: config.mailer.domain
+  }
+};
+var nodemailerMailgun = nodemailer.createTransport(mg(auth));
 
 /**
  * Signup
@@ -20,49 +28,74 @@ exports.signup = function(req, res) {
 	// For security measurement we remove the roles from the req.body object
 	delete req.body.roles;
 
-	// Init Variables
-	var newUser = new User(req.body);
-	var message = null;
-
-	// Add missing user fields
-	newUser.provider = 'local';
-	newUser.displayName = newUser.firstName + ' ' + newUser.lastName;
-
-	// Then save the user
-	newUser.save(function(err) {
-		if (err) {
-			return res.status(400).send({
-				message: err.message || errorHandler.getErrorMessage(err)
+	async.waterfall([
+		// Generate random token
+		function(done) {
+			crypto.randomBytes(20, function(err, buffer) {
+				var token = buffer.toString('hex');
+				done(err, token);
 			});
-		} else {
-			// Remove sensitive data before login
-			newUser.password = undefined;
-			newUser.salt = undefined;
+		},
+		// Create user with verify token
+		function(token, done) {
 
-			req.login(newUser, function(err) {
+			// Init Variables
+			var newUser = new User(req.body);
+			var message = null;
+
+			// Add missing user fields
+			newUser.provider = 'local';
+			newUser.displayName = newUser.firstName + ' ' + newUser.lastName;
+
+			newUser.confirmEmailToken = token;
+			newUser.confirmEmailExpires = Date.now() + 86400000; // 24 hours
+
+			// Then save the user
+			newUser.save(function(err) {
 				if (err) {
-					res.status(400).send(err);
+					return res.status(400).send({
+						message: err.message || errorHandler.getErrorMessage(err)
+					});
 				} else {
-					var emailHTML = 'Dear ' + newUser.displayName + ',\nWelcome to Out in Science!\nLet\'s get you confirmed';
-					var smtpTransport = nodemailer.createTransport(config.mailer.options);
-					var mailOptions = {
-						to: newUser.email,
-						from: config.mailer.from,
-						subject: 'Out in Science Welcome Confirmation',
-						html: emailHTML
-					};
-					smtpTransport.sendMail(mailOptions, function(err) {
-						if (err && process.env.NODE_ENV === 'PRODUCTION') {
-							return res.status(400).send({
-								message: 'Failed to send verification email'
-							});
+					// Remove sensitive data before login
+					newUser.password = undefined;
+					newUser.salt = undefined;
+
+					req.login(newUser, function(err) {
+						if (err) {
+							res.status(400).send(err);
 						} else {
-							res.json(newUser);
+							done(err, token, newUser);
 						}
 					});
 				}
 			});
+		},
+		// Send verification email
+		function(token, user, done) {
+			res.render('templates/email-confirmation-email', {
+				name: user.displayName,
+				appname: config.app.title,
+				url: req.protocol + '://' + req.headers.host + '/auth/confirm-email/' + token
+			}, function(err, emailHTML) {
+				done(err, emailHTML, user);
+			});
+		},
+		function(emailHTML, user, done) {
+			nodemailerMailgun.sendMail({
+				from: config.mailer.from,
+				to: user.email,
+				subject: 'Out In Science: Confirm Email',
+				'h:Reply-To': config.mailer.reply_to,
+				html: emailHTML,
+				text: emailHTML
+			}, function(err) {
+				done(err, 'done');
+			});
 		}
+	],
+	function(err) {
+		if (err) res.status(400).send(err);
 	});
 };
 
