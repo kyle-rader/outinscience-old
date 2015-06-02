@@ -176,15 +176,16 @@ exports.reset = function(req, res, next) {
 		},
 		// If valid email, send reset email success message
 		function(emailHTML, user, done) {
-			var smtpTransport = nodemailer.createTransport(config.mailer.options);
-			var mailOptions = {
-				to: user.email,
-				from: config.mailer.from,
-				subject: 'Out in Science: Password Change Successful',
-				html: emailHTML
-			};
-
-			smtpTransport.sendMail(mailOptions, function(err) {
+			nodemailerMailgun.sendMail({
+			  from: config.mailer.from,
+			  to: user.email, // An array if you have multiple recipients.
+			  subject: 'Out In Science: Password Change Successful',
+			  'h:Reply-To': 'outinscience@gmail.com',
+			  //You can use "html:" to send HTML email content. It's magic!
+			  html: emailHTML,
+			  //You can use "text:" to send plain-text content. It's oldschool!
+			  text: emailHTML
+			}, function(err) {
 				done(err, 'done');
 			});
 		}
