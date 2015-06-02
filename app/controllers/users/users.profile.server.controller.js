@@ -29,7 +29,7 @@ exports.update = function(req, res) {
 		user.save(function(err) {
 			if (err) {
 				return res.status(400).send({
-					message: errorHandler.getErrorMessage(err)
+					message: err.message || errorHandler.getErrorMessage(err)
 				});
 			} else {
 				req.login(user, function(err) {

@@ -21,43 +21,43 @@ exports.signup = function(req, res) {
 	delete req.body.roles;
 
 	// Init Variables
-	var user = new User(req.body);
+	var newUser = new User(req.body);
 	var message = null;
 
 	// Add missing user fields
-	user.provider = 'local';
-	user.displayName = user.firstName + ' ' + user.lastName;
+	newUser.provider = 'local';
+	newUser.displayName = newUser.firstName + ' ' + newUser.lastName;
 
 	// Then save the user
-	user.save(function(err) {
+	newUser.save(function(err) {
 		if (err) {
 			return res.status(400).send({
-				message: errorHandler.getErrorMessage(err)
+				message: err.message || errorHandler.getErrorMessage(err)
 			});
 		} else {
 			// Remove sensitive data before login
-			user.password = undefined;
-			user.salt = undefined;
+			newUser.password = undefined;
+			newUser.salt = undefined;
 
-			req.login(user, function(err) {
+			req.login(newUser, function(err) {
 				if (err) {
 					res.status(400).send(err);
 				} else {
-					var emailHTML = 'Dear ' + user.displayName + ',\nWelcome to Out in Science!\nLet\'s get you confirmed';
+					var emailHTML = 'Dear ' + newUser.displayName + ',\nWelcome to Out in Science!\nLet\'s get you confirmed';
 					var smtpTransport = nodemailer.createTransport(config.mailer.options);
 					var mailOptions = {
-						to: user.email,
+						to: newUser.email,
 						from: config.mailer.from,
 						subject: 'Out in Science Welcome Confirmation',
 						html: emailHTML
 					};
 					smtpTransport.sendMail(mailOptions, function(err) {
-						if (err) {
+						if (err && process.env.NODE_ENV === 'PRODUCTION') {
 							return res.status(400).send({
-								message: errorHandler.getErrorMessage(err)
+								message: 'Failed to send verification email'
 							});
 						} else {
-							res.json(user);
+							res.json(newUser);
 						}
 					});
 				}

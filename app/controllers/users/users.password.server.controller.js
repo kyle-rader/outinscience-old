@@ -165,7 +165,7 @@ exports.reset = function(req, res, next) {
 				done(err, emailHTML, user);
 			});
 		},
-		// If valid email, send reset email using service
+		// If valid email, send reset email success message
 		function(emailHTML, user, done) {
 			var smtpTransport = nodemailer.createTransport(config.mailer.options);
 			var mailOptions = {
