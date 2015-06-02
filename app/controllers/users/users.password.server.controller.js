@@ -10,8 +10,16 @@ var _ = require('lodash'),
 	User = mongoose.model('User'),
 	config = require('../../../config/config'),
 	nodemailer = require('nodemailer'),
+	mg = require('nodemailer-mailgun-transport'),
 	async = require('async'),
 	crypto = require('crypto');
+var auth = {
+  auth: {
+    api_key: config.mailer.api_key,
+    domain: config.mailer.domain
+  }
+};
+var nodemailerMailgun = nodemailer.createTransport(mg(auth));
 
 /**
  * Forgot for reset password (forgot POST)
@@ -65,20 +73,21 @@ exports.forgot = function(req, res, next) {
 		},
 		// If valid email, send reset email using service
 		function(emailHTML, user, done) {
-			var smtpTransport = nodemailer.createTransport(config.mailer.options);
-			var mailOptions = {
-				to: user.email,
-				from: config.mailer.from,
-				subject: 'Password Reset',
-				html: emailHTML
-			};
-			smtpTransport.sendMail(mailOptions, function(err) {
+			nodemailerMailgun.sendMail({
+			  from: config.mailer.from,
+			  to: user.email, // An array if you have multiple recipients.
+			  subject: 'Out In Science: Password Reset',
+			  'h:Reply-To': 'outinscience@gmail.com',
+			  //You can use "html:" to send HTML email content. It's magic!
+			  html: emailHTML,
+			  //You can use "text:" to send plain-text content. It's oldschool!
+			  text: emailHTML
+			}, function(err) {
 				if (!err) {
 					res.send({
 						message: 'An email has been sent to ' + user.email + ' with further instructions.'
 					});
 				}
-
 				done(err);
 			});
 		}
