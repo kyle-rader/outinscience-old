@@ -7,7 +7,11 @@ var _ = require('lodash'),
 	errorHandler = require('../errors.server.controller'),
 	mongoose = require('mongoose'),
 	passport = require('passport'),
-	User = mongoose.model('User');
+	User = mongoose.model('User'),
+	config = require('../../../config/config'),
+	nodemailer = require('nodemailer'),
+	async = require('async'),
+	crypto = require('crypto');
 
 /**
  * Signup
@@ -24,7 +28,7 @@ exports.signup = function(req, res) {
 	user.provider = 'local';
 	user.displayName = user.firstName + ' ' + user.lastName;
 
-	// Then save the user 
+	// Then save the user
 	user.save(function(err) {
 		if (err) {
 			return res.status(400).send({
@@ -39,7 +43,23 @@ exports.signup = function(req, res) {
 				if (err) {
 					res.status(400).send(err);
 				} else {
-					res.json(user);
+					var emailHTML = 'Dear ' + user.displayName + ',\nWelcome to Out in Science!\nLet\'s get you confirmed';
+					var smtpTransport = nodemailer.createTransport(config.mailer.options);
+					var mailOptions = {
+						to: user.email,
+						from: config.mailer.from,
+						subject: 'Out in Science Welcome Confirmation',
+						html: emailHTML
+					};
+					smtpTransport.sendMail(mailOptions, function(err) {
+						if (err) {
+							return res.status(400).send({
+								message: errorHandler.getErrorMessage(err)
+							});
+						} else {
+							res.json(user);
+						}
+					});
 				}
 			});
 		}

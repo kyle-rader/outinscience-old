@@ -25,15 +25,15 @@ exports.forgot = function(req, res, next) {
 				done(err, token);
 			});
 		},
-		// Lookup user by username
+		// Lookup user by email
 		function(token, done) {
-			if (req.body.username) {
+			if (req.body.email) {
 				User.findOne({
-					username: req.body.username
+					email: req.body.email
 				}, '-salt -password', function(err, user) {
 					if (!user) {
 						return res.status(400).send({
-							message: 'No account with that username has been found'
+							message: 'No account with that email has been found'
 						});
 					} else if (user.provider !== 'local') {
 						return res.status(400).send({
@@ -50,7 +50,7 @@ exports.forgot = function(req, res, next) {
 				});
 			} else {
 				return res.status(400).send({
-					message: 'Username field must not be blank'
+					message: 'Email field must not be blank'
 				});
 			}
 		},
@@ -137,7 +137,7 @@ exports.reset = function(req, res, next) {
 									if (err) {
 										res.status(400).send(err);
 									} else {
-										// Return authenticated user 
+										// Return authenticated user
 										res.json(user);
 
 										done(err, user);
@@ -171,7 +171,7 @@ exports.reset = function(req, res, next) {
 			var mailOptions = {
 				to: user.email,
 				from: config.mailer.from,
-				subject: 'Your password has been changed',
+				subject: 'Out in Science: Password Change Successful',
 				html: emailHTML
 			};
 
