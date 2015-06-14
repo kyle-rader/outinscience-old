@@ -58,16 +58,17 @@ exports.signup = function(req, res) {
 					});
 				} else {
 					// Remove sensitive data before login
-					newUser.password = undefined;
-					newUser.salt = undefined;
+					//newUser.password = undefined;
+					//newUser.salt = undefined;
 
-					req.login(newUser, function(err) {
-						if (err) {
-							res.status(400).send(err);
-						} else {
-							done(err, token, newUser);
-						}
-					});
+					// req.login(newUser, function(err) {
+					// 	if (err) {
+					// 		res.status(400).send(err);
+					// 	} else {
+					// 		done(err, token, newUser);
+					// 	}
+					// });
+					done(err, token, newUser);
 				}
 			});
 		},
@@ -75,7 +76,7 @@ exports.signup = function(req, res) {
 		function(token, user, done) {
 			res.render('templates/email-confirmation-email', {
 				name: user.displayName,
-				appname: config.app.title,
+				appName: config.app.title,
 				url: req.protocol + '://' + req.headers.host + '/auth/confirm-email/' + token
 			}, function(err, emailHTML) {
 				done(err, emailHTML, user);
@@ -90,12 +91,37 @@ exports.signup = function(req, res) {
 				html: emailHTML,
 				text: emailHTML
 			}, function(err) {
-				done(err, 'done');
+				if (err) done(err);
+				else res.send({message: 'A confirmation email has been sent to '+ user.email + '.'});
 			});
 		}
 	],
 	function(err) {
 		if (err) res.status(400).send(err);
+	});
+};
+
+/**
+ * Confirm email after account creation
+ */
+exports.confirmEmail = function(req, res) {
+	User.findOne({
+		confirmEmailToken: req.params.token
+	}, function(err, user) {
+		if (!user) {
+			return res.redirect('/#!/auth/confirm-email-invalid');
+		}
+		req.login(user, function(err) {
+			if (err) {
+				return res.redirect('/#!/auth/confirm-email-invalid');
+			} else {
+				// Return authenticated user
+				user.verified = true;
+				user.save(function(err) {
+					res.redirect('/#!/settings/profile');
+				});
+			}
+		});
 	});
 };
 
@@ -114,6 +140,8 @@ exports.signin = function(req, res, next) {
 			req.login(user, function(err) {
 				if (err) {
 					res.status(400).send(err);
+				} else if (!user.verified) {
+					res.status(400).send({message: 'That email is not yet verified.'});
 				} else {
 					res.json(user);
 				}
