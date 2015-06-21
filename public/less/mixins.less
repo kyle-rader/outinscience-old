@@ -7,10 +7,12 @@
 
   	&:hover {
   		transition: all .3s ease;
+			color: @color;
   		background-color: fadeout(color(@color), 90%) !important;
   	}
   }
   &.active a {
+		color: @color;
     background-color: fadeout(color(@color), 90%) !important;
   }
 }

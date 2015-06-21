@@ -37,16 +37,13 @@
     	</li>
     </ul>
     <ul class="nav navbar-nav navbar-right" data-ng-show="authentication.user">
-    	<li class="dropdown">
+    	<li class="dropdown li-rb-green">
     		<a href="#" class="dropdown-toggle" data-toggle="dropdown">
     			<span data-ng-bind="authentication.user.displayName"></span>
     		</a>
     		<ul class="dropdown-menu">
     			<li>
     				<a href="/#!/settings/profile">Edit Profile</a>
-    			</li>
-    			<li>
-    				<a href="/#!/settings/visibility">Manage Visibility</a>
     			</li>
     			<li data-ng-show="authentication.user.provider === 'local'">
     				<a href="/#!/settings/password">Change Password</a>
