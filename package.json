@@ -1,6 +1,6 @@
 {
-  "name": "CodeLily",
-  "description": "Computer Science and Web Development education studio.",
+  "name": "OutInScience",
+  "description": "A group devoted to the promotion and inclusion of LGBTQ+ in STEM",
   "version": "0.0.1",
   "author": "KyleRader",
   "engines": {
@@ -35,7 +35,7 @@
     "mailchimp-api": "^2.0.7",
     "method-override": "~2.3.0",
     "mocha": "^2.1.0",
-    "mongoose": "^3.9.7",
+    "mongoose": "~3.8.8",
     "morgan": "~1.4.1",
     "nodemailer": "~1.3.0",
     "passport": "~0.2.0",
