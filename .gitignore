@@ -6,6 +6,7 @@ node_modules/
 public/lib/angular*
 public/lib/jquery
 public/dist/application*
+public/lib/bootstrap*
 app/tests/coverage/
 .bower-*/
 .idea/
