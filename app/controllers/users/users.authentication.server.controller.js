@@ -111,19 +111,29 @@ exports.confirmEmail = function(req, res) {
 		if (!user) {
 			return res.redirect('/#!/auth/confirm-email-invalid');
 		}
-		req.login(user, function(err) {
+	        else {
+		    user.verified = true;
+		    user.updated = Date.now();
+
+		    user.save(function(err) {
 			if (err) {
-				return res.redirect('/#!/auth/confirm-email-invalid');
+			    return res.status(400).send({
+				message: err.message || errorHandler.getErrorMessage(err)
+			    });
 			} else {
-				// Return authenticated user
-				user.verified = true;
-				user.save(function(err) {
-					res.redirect('/#!/settings/profile');
-				});
+			    req.login(user, function(err) {
+				if (err) {
+				    res.status(400).send(err);
+				} else {
+				    res.redirect('/#!/settings/profile');
+				}
+			    });
 			}
-		});
+		    });
+		}
 	});
 };
+
 
 /**
  * Signin after passport authentication
@@ -141,7 +151,8 @@ exports.signin = function(req, res, next) {
 				if (err) {
 					res.status(400).send(err);
 				} else if (!user.verified) {
-					res.status(400).send({message: 'That email is not yet verified.'});
+				    req.logout();
+				    res.status(400).send({message: 'That email is not yet verified.'});
 				} else {
 					res.json(user);
 				}
