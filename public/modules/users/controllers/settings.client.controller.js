@@ -1,7 +1,7 @@
 'use strict';
 
-angular.module('users').controller('SettingsController', ['$scope', '$http', '$location', 'Users', 'Authentication',
-	function($scope, $http, $location, Users, Authentication) {
+angular.module('users').controller('SettingsController', ['$scope', '$http', '$location', 'Users', 'Authentication', '$route',
+	function($scope, $http, $location, Users, Authentication, $route) {
 		$scope.user = Authentication.user;
 
 		// If user is not signed in then redirect back home
@@ -45,8 +45,14 @@ angular.module('users').controller('SettingsController', ['$scope', '$http', '$l
 				var user = new Users($scope.user);
 
 				user.$update(function(response) {
-					$scope.success = true;
-					Authentication.user = response;
+					console.log(response);
+					if(response.message && response.message === 'logout') {
+						delete Authentication.user;
+						$location.path('/signin');
+					} else {
+						$scope.success = true;
+						Authentication.user = response;
+					}
 				}, function(response) {
 					$scope.error = response.data.message;
 				});

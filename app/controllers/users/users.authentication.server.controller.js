@@ -88,7 +88,7 @@ exports.signup = function(req, res) {
 							done(err, emailHTML, user, 'Out In Science: Attempted Account Creation');
 						});
 					} else {
-						done({message: "Account creation failed.  For support, email support@outinscience.com"});
+						done({message: 'Account creation failed.  For support, email support@outinscience.com'});
 					}
 				});
 			}
