@@ -111,8 +111,12 @@ exports.confirmEmail = function(req, res) {
 		if (!user) {
 			return res.redirect('/#!/auth/confirm-email-invalid');
 		}
+		else if (parseInt(user.confirmEmailExpires) < parseInt(Date.now())) {
+			return res.redirect('/#!/auth/confirm-email-invalid');
+		}
 		else {
 			user.verified = true;
+			user.confirmEmailExpires = 0;
 			user.updated = Date.now();
 			user.skipHash = true;
 
