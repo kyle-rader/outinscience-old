@@ -29,12 +29,14 @@ var UserSchema = new Schema({
 		type: String,
 		trim: true,
 		default: '',
+		required: 'A first name is required',
 		validate: [validateLocalStrategyProperty, 'Please fill in your first name']
 	},
 	lastName: {
 		type: String,
 		trim: true,
 		default: '',
+		required: 'A last name is required',
 		validate: [validateLocalStrategyProperty, 'Please fill in your last name']
 	},
 	displayName: {
@@ -45,13 +47,14 @@ var UserSchema = new Schema({
 		type: String,
 		trim: true,
 		default: '',
+		required: 'An email is required',
 		validate: [validateLocalStrategyProperty, 'Please fill in your email'],
 		match: [/.+\@.+\..+/, 'Please fill a valid email address']
 	},
 	password: {
 		type: String,
 		default: '',
-		validate: [validateLocalStrategyPassword, 'Password must be at least 8 characters']
+		validate: [function(val) { return val && val.length >= 8; }, 'Password must be at least 8 characters']
 	},
 	salt: {
 		type: String
@@ -105,7 +108,7 @@ UserSchema.pre('save', function(next) {
 		_id: { '$ne' : this._id }
 	}, function(err, user) {
 		if (!err && user) {
-			next(new Error('That email is already in use'));
+			next(new mongoose.Error('That email is already in use'));
 		} else {
 			next();
 		}

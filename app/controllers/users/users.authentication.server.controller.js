@@ -54,7 +54,7 @@ exports.signup = function(req, res) {
 			newUser.save(function(err) {
 				if (err) {
 					return res.status(400).send({
-						message: err.message || errorHandler.getErrorMessage(err)
+						message: errorHandler.getErrorMessage(err)
 					});
 				} else {
 					// Remove sensitive data before login
@@ -111,26 +111,26 @@ exports.confirmEmail = function(req, res) {
 		if (!user) {
 			return res.redirect('/#!/auth/confirm-email-invalid');
 		}
-	        else {
-		    user.verified = true;
-		    user.updated = Date.now();
-		    user.skipHash = true;
+		else {
+			user.verified = true;
+			user.updated = Date.now();
+			user.skipHash = true;
 
-		    user.save(function(err) {
+			user.save(function(err) {
 			if (err) {
-			    return res.status(400).send({
-				message: err.message || errorHandler.getErrorMessage(err)
-			    });
+				return res.status(400).send({
+					message: err.message || errorHandler.getErrorMessage(err)
+				});
 			} else {
-			    req.login(user, function(err) {
-				if (err) {
-				    res.status(400).send(err);
-				} else {
-				    res.redirect('/#!/settings/profile');
-				}
-			    });
+				req.login(user, function(err) {
+					if (err) {
+						res.status(400).send(err);
+					} else {
+						res.redirect('/#!/settings/profile');
+					}
+				});
 			}
-		    });
+			});
 		}
 	});
 };
