@@ -17,7 +17,6 @@ module.exports = function() {
 			User.findOne({
 				email: email
 			}, function(err, user) {
-				console.log(user);
 				if (err) {
 					return done(err);
 				}
@@ -28,7 +27,7 @@ module.exports = function() {
 				}
 				if (!user.authenticate(password)) {
 					return done(null, false, {
-						message: 'Unknown user or invalid password'
+						message: 'Failed to authenticate'
 					});
 				}
 

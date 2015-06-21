@@ -114,6 +114,7 @@ exports.confirmEmail = function(req, res) {
 	        else {
 		    user.verified = true;
 		    user.updated = Date.now();
+		    user.skipHash = true;
 
 		    user.save(function(err) {
 			if (err) {
