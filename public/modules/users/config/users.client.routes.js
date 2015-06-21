@@ -6,8 +6,8 @@ angular.module('users').config(['$stateProvider',
 		// Users state routing
 		$stateProvider.
 		state('confirm-email-invalid', {
-			url: '/authconfirm-email-invalid',
-			templateUrl: 'modules/users/views/confirm-email-invalid.client.view.html'
+			url: '/auth/confirm-email-invalid',
+			templateUrl: 'modules/users/views/authentication/confirm-email-invalid.client.view.html'
 		}).
 		state('profile', {
 			url: '/settings/profile',
