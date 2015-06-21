@@ -10,9 +10,11 @@ var mailChimp = require('../../node_modules/mailchimp-api/mailchimp'),
 //var mc = new mailChimp.Mailchimp(config.apikey);
 
 exports.index = function(req, res) {
+
 	res.render('index', {
 		user: req.user || null,
-		request: req
+		request: req,
+		faviconId: Math.floor(Math.random() * (12 - 1) + 1)
 	});
 };
 /*
@@ -34,4 +36,3 @@ exports.emailSubscribe = function(req, res) {
 	}
 };
 */
- 
