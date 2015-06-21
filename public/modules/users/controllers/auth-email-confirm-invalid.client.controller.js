@@ -11,7 +11,7 @@ angular.module('users').controller('ConfirmEmailInvalidController', ['$scope', '
 				$timeout($scope.onTimeout, 1000);
 			else
 			$location.path('/');
-		}
+		};
 
 		$timeout($scope.onTimeout, 1000);
 	}

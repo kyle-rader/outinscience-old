@@ -108,7 +108,7 @@ UserSchema.pre('save', function(next) {
 		_id: { '$ne' : this._id }
 	}, function(err, user) {
 		if (!err && user) {
-			next(new mongoose.Error('That email is already in use'));
+			next(new mongoose.Error('email-in-use'));
 		} else {
 			next();
 		}

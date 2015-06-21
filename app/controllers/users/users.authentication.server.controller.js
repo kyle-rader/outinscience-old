@@ -52,41 +52,52 @@ exports.signup = function(req, res) {
 
 			// Then save the user
 			newUser.save(function(err) {
-				if (err) {
+				if (err && err.message !== 'email-in-use') {
 					return res.status(400).send({
 						message: errorHandler.getErrorMessage(err)
 					});
 				} else {
-					// Remove sensitive data before login
-					//newUser.password = undefined;
-					//newUser.salt = undefined;
-
-					// req.login(newUser, function(err) {
-					// 	if (err) {
-					// 		res.status(400).send(err);
-					// 	} else {
-					// 		done(err, token, newUser);
-					// 	}
-					// });
-					done(err, token, newUser);
+					console.log('Made it else case');
+					done(null, token, newUser, (err && err.message === 'email-in-use'));
 				}
 			});
 		},
 		// Send verification email
-		function(token, user, done) {
-			res.render('templates/email-confirmation-email', {
-				name: user.displayName,
-				appName: config.app.title,
-				url: req.protocol + '://' + req.headers.host + '/auth/confirm-email/' + token
-			}, function(err, emailHTML) {
-				done(err, emailHTML, user);
-			});
+		function(token, user, emailInUse, done) {
+			if (!emailInUse) {
+				// Send the normal confirm email
+				res.render('templates/email-confirmation-email', {
+					name: user.displayName,
+					appName: config.app.title,
+					url: req.protocol + '://' + req.headers.host + '/auth/confirm-email/' + token
+				}, function(err, emailHTML) {
+					done(err, emailHTML, user, 'Out In Science: Confirm Email');
+				});
+			} else {
+				// Send a warning email to the existing user about this potential attempt
+				// of breach in security.
+				User.findOne({
+					email: user.email
+				}, function(err, existingUser) {
+					if (!err && existingUser) {
+						res.render('templates/email-in-use-warning-email', {
+							name: existingUser.displayName,
+							appName: config.app.title,
+							imposter: user.displayName
+						}, function(err, emailHTML) {
+							done(err, emailHTML, user, 'Out In Science: Attempted Account Creation');
+						});
+					} else {
+						done({message: "Account creation failed.  For support, email support@outinscience.com"});
+					}
+				});
+			}
 		},
-		function(emailHTML, user, done) {
+		function(emailHTML, user, subject, done) {
 			nodemailerMailgun.sendMail({
 				from: config.mailer.from,
 				to: user.email,
-				subject: 'Out In Science: Confirm Email',
+				subject: subject,
 				'h:Reply-To': config.mailer.reply_to,
 				html: emailHTML,
 				text: emailHTML
