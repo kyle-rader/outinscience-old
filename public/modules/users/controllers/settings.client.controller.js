@@ -61,6 +61,8 @@ angular.module('users').controller('SettingsController', ['$scope', '$http', '$l
 			}
 		};
 
+		$scope.user.emailPrivacy = 'public';
+
 		// Change user password
 		$scope.changeUserPassword = function() {
 			$scope.success = $scope.error = null;
@@ -74,4 +76,13 @@ angular.module('users').controller('SettingsController', ['$scope', '$http', '$l
 			});
 		};
 	}
-]);
+]).directive('privacySelector', function() {
+	return {
+		restrict: 'E',
+		scope: {
+			privacyOption: '=privacy',
+			name: '=name'
+		},
+		templateUrl: '/modules/users/views/templates/privacySelector.client.template.html'
+	};
+});
