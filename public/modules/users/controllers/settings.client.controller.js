@@ -45,7 +45,6 @@ angular.module('users').controller('SettingsController', ['$scope', '$http', '$l
 				var user = new Users($scope.user);
 
 				user.$update(function(response) {
-					console.log(response);
 					if(response.message && response.message === 'logout') {
 						delete Authentication.user;
 						$location.path('/signin');
