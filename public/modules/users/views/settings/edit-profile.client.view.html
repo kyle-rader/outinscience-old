@@ -8,13 +8,17 @@
 
 						<div class="row">
 							<div class="col-xs-12">
-								<label for="email">Email</label>
+								<label for="email">Email </label>
 								<div class="input-group">
-									<input type="email" id="email" name="email" class="form-control" data-ng-model="user.email" placeholder="Email">
+									<input type="email" id="email" name="email" class="form-control" data-ng-model="user.email" ng-disabled="!enableEmailEdit" placeholder="Email">
 									<span class="input-group-btn">
-										<button class="btn btn-default" id="emailEditBtn" type="button">Edit</button>
+										<button class="btn btn-default" id="emailEditBtn" type="button" ng-click="enableEmailEdit = !enableEmailEdit">
+											<i class="icon edit" ng-show="!enableEmailEdit"></i>
+											<i class="icon x" ng-show="enableEmailEdit"></i>
+										</button>
 										</span>
 								</div>
+								<span ng-show="enableEmailEdit"> (Updating you're email will automatically log you out and <strong>lock</strong> your account until the new email is verified.)</span>
 							</div>
 						</div>
 

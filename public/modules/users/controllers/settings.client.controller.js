@@ -50,6 +50,7 @@ angular.module('users').controller('SettingsController', ['$scope', '$http', '$l
 						$location.path('/signin');
 					} else {
 						$scope.success = true;
+						$scope.enableEmailEdit = false;
 						Authentication.user = response;
 					}
 				}, function(response) {
