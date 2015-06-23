@@ -24,5 +24,10 @@ a.social-auth-link {
 form.signin {
 	.row {
 		margin-bottom: 15px;
+		@media (max-width: @screen-xs-max) {
+			div[class^="col-"]:not(:last-child) {
+				margin-bottom: 15px;
+			}
+		}
 	}
 }
