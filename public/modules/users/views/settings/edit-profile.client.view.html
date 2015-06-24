@@ -46,6 +46,21 @@
 							</div>
 						</div>
 
+						<!-- PRONOUNS -->
+						<div class="row">
+							<div class="col-xs-12 col-sm-6">
+								<label for="pronouns">Preferred gender pronouns</label>
+								<input type="text" id="pronouns" name="pronouns" class="form-control" ng-model="user.pronouns" placeholder="She/He/Ze   His/Hers/Hir   Her/Him">
+								<privacy-selector privacy="user.privacy.pronouns" name="'pronounsPrivacy'"></privacySelector>
+							</div>
+
+							<div class="col-xs-12 col-sm-6">
+								<label for="orientation">Orientation</label>
+								<input type="text" id="orientation" name="orientation" class="form-control" ng-model="user.orientation" placeholder="(Straight, Gay, Bi, ??)">
+								<privacy-selector privacy="user.privacy.orientation" name="'orientationPrivacy'"></privacySelector>
+							</div>
+						</div>
+
 					</fieldset>
 
 					<!-- PRIVACY FIELDS

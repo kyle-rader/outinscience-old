@@ -61,6 +61,11 @@ var UserSchema = new Schema({
 		trim: true,
 		default: ''
 	},
+	orientation: {
+		type: String,
+		default: '',
+		trim: true,
+	},
 	bio: {
 		type: String,
 		trim: true,
@@ -93,6 +98,11 @@ var UserSchema = new Schema({
 			default: 'private'
 		},
 		pronouns: {
+			type: String,
+			trim: true,
+			default: 'private'
+		},
+		orientation: {
 			type: String,
 			trim: true,
 			default: 'private'
