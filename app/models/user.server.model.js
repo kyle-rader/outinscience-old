@@ -76,6 +76,138 @@ var UserSchema = new Schema({
 		default: '',
 		validate: [function(val) { return val && val.length >= 8; }, 'Password must be at least 8 characters']
 	},
+	primaryTags: {
+		biology: {
+			type: Boolean,
+			default: false
+		},
+		astronomy: {
+			type: Boolean,
+			default: false
+		},
+		vehicleDesign: {
+			type: Boolean,
+			default: false
+		},
+		scienceEducation: {
+			type: Boolean,
+			default: false
+		},
+		plasticsComposites: {
+			type: Boolean,
+			default: false
+		},
+		physics: {
+			type: Boolean,
+			default: false
+		},
+		neuroscience: {
+			type: Boolean,
+			default: false
+		},
+		math: {
+			type: Boolean,
+			default: false
+		},
+		materialScience: {
+			type: Boolean,
+			default: false
+		},
+		manufacturingEngineering: {
+			type: Boolean,
+			default: false
+		},
+		industrialDesign: {
+			type: Boolean,
+			default: false
+		},
+		environmentalScience: {
+			type: Boolean,
+			default: false
+		},
+		electricalEngineering: {
+			type: Boolean,
+			default: false
+		},
+		computerScience: {
+			type: Boolean,
+			default: false
+		},
+		chemistry: {
+			type: Boolean,
+			default: false
+		},
+		geology: {
+			type: Boolean,
+			default: false
+		}
+	},
+	secondaryTags: {
+		biology: {
+			type: Boolean,
+			default: false
+		},
+		astronomy: {
+			type: Boolean,
+			default: false
+		},
+		vehicleDesign: {
+			type: Boolean,
+			default: false
+		},
+		scienceEducation: {
+			type: Boolean,
+			default: false
+		},
+		plasticsComposites: {
+			type: Boolean,
+			default: false
+		},
+		physics: {
+			type: Boolean,
+			default: false
+		},
+		neuroscience: {
+			type: Boolean,
+			default: false
+		},
+		math: {
+			type: Boolean,
+			default: false
+		},
+		materialScience: {
+			type: Boolean,
+			default: false
+		},
+		manufacturingEngineering: {
+			type: Boolean,
+			default: false
+		},
+		industrialDesign: {
+			type: Boolean,
+			default: false
+		},
+		environmentalScience: {
+			type: Boolean,
+			default: false
+		},
+		electricalEngineering: {
+			type: Boolean,
+			default: false
+		},
+		computerScience: {
+			type: Boolean,
+			default: false
+		},
+		chemistry: {
+			type: Boolean,
+			default: false
+		},
+		geology: {
+			type: Boolean,
+			default: false
+		}
+	},
 	privacy: {
 		firstName: {
 			type: String,
@@ -112,6 +244,21 @@ var UserSchema = new Schema({
 			trim: true,
 			default: 'private'
 		},
+		primaryTags: {
+			type: String,
+			trim: true,
+			default: 'private'
+		},
+		secondaryTags: {
+			type: String,
+			trim: true,
+			default: 'private'
+		},
+		otherTags: {
+			type: String,
+			trim: true,
+			default: 'private'
+		}
 	},
 	salt: {
 		type: String

@@ -84,4 +84,13 @@ angular.module('users').controller('SettingsController', ['$scope', '$http', '$l
 		},
 		templateUrl: '/modules/users/views/templates/privacySelector.client.template.html'
 	};
+}).directive('interestSelector', function() {
+	return {
+		restrict: 'E',
+		replace: true,
+		scope: {
+			interests: '=interests'
+		},
+		templateUrl: '/modules/users/views/templates/interestSelector.client.template.html'
+	};
 });

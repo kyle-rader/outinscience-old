@@ -50,6 +50,36 @@ form.profile {
 		text-align: center;
 		padding: 0;
 		width: 50px;
+	}
+	div.input-group.interests > label.checkbox-inline {
+		padding: 0;
+		border-radius: 5px;
+		margin-top: 10px;
+		float: left;
+		@media screen and (max-width: @screen-xs-max) {
+			margin-left: 5px;
+			&:nth-child(4n + 1) {
+				margin-left: 0;
+				clear: left;
+			}
+			> i.sci-icon > img {
+				width: 50px;
+			}
+		}
+		@media screen and (min-width: @screen-xs-min) {
+			margin-left: 25px;
+			&:nth-child(8n + 1) {
+				margin-left: 0;
+				clear: left;
+			}
+			> i.sci-icon > img {
+				width: 60px;
+			}
+		}
 
+		&:not(.active) > i {
+		  -webkit-filter: opacity(.50);
+			filter: opacity(.50);
+		}
 	}
 }
