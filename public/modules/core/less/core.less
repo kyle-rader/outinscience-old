@@ -19,3 +19,40 @@
 .navbar-header .navbar-logo > img {
 	max-width: 200px;
 }
+
+ul.field-list {
+	list-style-type: none;
+	text-align: center;
+	margin-left: auto;
+	margin-right: auto;
+	width: 460px;
+	display: block;
+
+	> li {
+		display: inline-block;
+		float: left;
+		margin: 15px;
+
+		@media screen and (max-width: @screen-xs-max) {
+			&:nth-child(3n + 1) {
+				clear: left;
+			}
+			width: 50px;
+		}
+		@media screen and (min-width: @screen-sm-min) {
+			&:nth-child(4n + 1) {
+				clear: left;
+			}
+			width: 75px;
+		}
+		> i.sci-icon {
+			width: 80%;
+		  margin-right: auto;
+		  margin-left: auto;
+		}
+		> i.sci-icon > img {
+			width: 100%;
+			display: block;
+		}
+	}
+}
