@@ -25,6 +25,7 @@ module.exports = function(app) {
 	app.route('/auth/confirm-email/:token').get(users.confirmEmail);
 	app.route('/auth/signin').post(users.signin);
 	app.route('/auth/signout').get(users.signout);
+	app.route('/auth/revert-email-update/:token').get(users.revertEmailUpdate);
 
 	// Setting the facebook oauth routes
 	app.route('/auth/facebook').get(passport.authenticate('facebook', {

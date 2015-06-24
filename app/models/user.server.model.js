@@ -299,6 +299,12 @@ var UserSchema = new Schema({
 	},
 	confirmEmailExpires: {
 		type: String
+	},
+	revertEmailToken: {
+		type: String
+	},
+	oldEmail: {
+		type: String
 	}
 });
 

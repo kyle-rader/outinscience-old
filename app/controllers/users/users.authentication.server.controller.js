@@ -150,6 +150,41 @@ exports.confirmEmail = function(req, res) {
 	});
 };
 
+/**
+ * Revert Email Update
+ */
+exports.revertEmailUpdate = function(req, res) {
+	User.findOne({
+		revertEmailToken: req.params.token,
+		verified: false
+	}, function(err, user) {
+		if (!user) {
+			return res.redirect('/#!/auth/confirm-email-invalid');
+		} else {
+			user.verified = true;
+			user.email = user.oldEmail;
+			user.updated = Date.now();
+			user.skipHash = true;
+			user.revertEmailToken = null;
+
+			user.save(function(err) {
+				if (err) {
+					return res.status(400).send({
+						message: err.message || errorHandler.getErrorMessage(err)
+					});
+				} else {
+					req.login(user, function(err) {
+						if (err) {
+							res.status(400).send(err);
+						} else {
+							res.redirect('/#!/settings/profile');
+						}
+					});
+				}
+			});
+		}
+	});
+};
 
 /**
  * Signin after passport authentication

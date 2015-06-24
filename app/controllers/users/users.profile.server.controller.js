@@ -41,10 +41,15 @@ exports.update = function(req, res) {
 				user.confirmEmailExpires = Date.now() + 86400000; // 24 hours
 				user.verified = false;
 			});
+			crypto.randomBytes(20, function(err, buffer) {
+				var token = buffer.toString('hex');
+				user.revertEmailToken = token;
+			});
+			user.oldEmail = user.email;
 		}
 
 		// Merge existing user
-		var originalEmail = user.email;
+		var originalName = user.firstName + ' ' + user.lastName;
 		user = _.extend(user, req.body);
 		user.updated = Date.now();
 		user.displayName = user.firstName + ' ' + user.lastName;
@@ -55,10 +60,12 @@ exports.update = function(req, res) {
 					message: err.message || errorHandler.getErrorMessage(err)
 				});
 			} else if (err && err.message === 'email-in-use') {
-				user.email = originalEmail;
+				// revert email now and save so as to un-verify and lock.
+				user.email = user.oldEmail;
 				user.save();
+				// Send warning email to existing user
 				User.findOne({
-					email: user.email
+					email: req.body.email
 				}, function(err, existingUser) {
 					if (!err && existingUser) {
 						res.render('templates/email-in-use-warning-email', {
@@ -68,7 +75,7 @@ exports.update = function(req, res) {
 						}, function(err, emailHTML) {
 							nodemailerMailgun.sendMail({
 								from: config.mailer.from,
-								to: user.email,
+								to: req.body.email,
 								subject: 'Out In Science: Account Email Update Attempted',
 								'h:Reply-To': config.mailer.reply_to,
 								html: emailHTML,
@@ -103,6 +110,20 @@ exports.update = function(req, res) {
 				});
 			}
 			if (newEmail) {
+				res.render('templates/revert-email-update', {
+					name: originalName,
+					appName: config.app.title,
+					url: req.protocol + '://' + req.headers.host + '/auth/revert-email-update/' + user.revertEmailToken
+				}, function(err, emailHTML) {
+					nodemailerMailgun.sendMail({
+						from: config.mailer.from,
+						to: user.oldEmail,
+						subject: 'Out In Science: Email Changed',
+						'h:Reply-To': config.mailer.reply_to,
+						html: emailHTML,
+						text: emailHTML
+					});
+				});
 				req.logout();
 				return res.status(200).send({message: 'logout'});
 			}
