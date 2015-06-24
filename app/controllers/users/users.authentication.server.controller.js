@@ -57,7 +57,6 @@ exports.signup = function(req, res) {
 						message: errorHandler.getErrorMessage(err)
 					});
 				} else {
-					console.log('Made it else case');
 					done(null, token, newUser, (err && err.message === 'email-in-use'));
 				}
 			});
