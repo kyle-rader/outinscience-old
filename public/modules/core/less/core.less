@@ -22,26 +22,27 @@
 
 ul.field-list {
 	list-style-type: none;
+	padding: 0;
 	text-align: center;
-	margin-left: auto;
-	margin-right: auto;
-	width: 460px;
 	display: block;
 
 	> li {
 		display: inline-block;
-		float: left;
 		margin: 15px;
+		vertical-align: top;
 
 		@media screen and (max-width: @screen-xs-max) {
-			&:nth-child(3n + 1) {
-				clear: left;
+			&:nth-child(3n + 1):after {
+				content: ' ';
+				display: block;
 			}
 			width: 50px;
 		}
 		@media screen and (min-width: @screen-sm-min) {
-			&:nth-child(4n + 1) {
-				clear: left;
+			&:nth-child(4n + 1):after {
+				content: ' ';
+				display: block;
+				clear: both;
 			}
 			width: 75px;
 		}

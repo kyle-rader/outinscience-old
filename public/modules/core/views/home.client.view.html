@@ -10,21 +10,22 @@
     </div>
 
     <div class="row">
+      <div class="col-xs-12">
+        <ul class="field-list">
+          <li ng-repeat="(key,val) in fields" class="text-center">
+            <i class="sci-icon {{key}}"><img src="/modules/core/img/icons/{{key}}.png"></i>
+            <small>{{val}}</small>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="row">
       <div class="col-xs-12 col-sm-8 col-sm-offset-2">
 	        <h4 class="margin-top-10 text-center">Have Questions? Email us at <a href="mailto:info@outinscience.com">info@outinscience.com</a></h4>
       </div>
     </div>
-  </div>
 
-  <div class="row">
-    <div class="col-xs-12">
-      <ul class="field-list">
-        <li ng-repeat="(key,val) in fields" class="text-center">
-          <i class="sci-icon {{key}}"><img src="/modules/core/img/icons/{{key}}.png"></i>
-          <small>{{val}}</small>
-        </li>
-      </ul>
-    </div>
   </div>
 
 </section>
