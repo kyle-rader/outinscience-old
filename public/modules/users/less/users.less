@@ -31,6 +31,11 @@ form.profile {
 		}
 	}
 
+	textarea {
+		resize: none;
+		margin-bottom: 5px;
+	}
+
 	input + span.text-info {
 		display: none;
 	}
@@ -52,6 +57,7 @@ form.profile {
 		border-radius: 5px;
 		margin-top: 10px;
 		float: left;
+
 		@media screen and (max-width: @screen-xs-max) {
 			margin-left: 9px;
 			&:nth-child(4n + 1) {
