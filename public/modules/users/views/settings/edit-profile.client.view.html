@@ -6,12 +6,12 @@
 				<form name="userForm" data-ng-submit="updateUserProfile(userForm.$valid)" class="profile form-horizontal" autocomplete="off">
 					<fieldset>
 
-						<!-- EMAIL -->
+						<!-- EMAIL / PHONE -->
 						<div class="row">
-							<div class="col-xs-12">
+							<div class="col-xs-12 col-sm-6">
 								<label for="email">Email </label>
 								<div class="input-group">
-									<input type="email" id="email" name="email" class="form-control" data-ng-model="user.email" ng-disabled="!enableEmailEdit" placeholder="Email">
+									<input type="email" id="email" name="email" class="form-control" ng-model="user.email" ng-disabled="!enableEmailEdit" placeholder="Email">
 									<span class="input-group-btn">
 										<button class="btn btn-default" id="emailEditBtn" type="button" ng-click="enableEmailEdit = !enableEmailEdit">
 											<i class="icon edit" ng-show="!enableEmailEdit"></i>
@@ -20,6 +20,14 @@
 										</span>
 								</div>
 								<span ng-show="enableEmailEdit" class="text-danger"> (Updating you're email will automatically log you out and <strong>lock</strong> your account until the new email is verified.)</span>
+								<privacy-selector privacy="user.privacy.email" name="'emailPrivacy'"></privacySelector>
+							</div>
+
+							<div class="col-xs-12 col-sm-6">
+								<label for="phone">Phone</label>
+								<input type="tel" ng-model="user.phone" name="phone" class="form-control" placeholder="3601119999" ng-pattern="/[0-9]{9}/" maxlength="10">
+								<span ng-show="userForm.phone.$error" class="text-info">Phone number must 10 digits.</span>
+								<privacy-selector privacy="user.privacy.phone" name="'phonePrivacy'"></privacySelector>
 							</div>
 						</div>
 
@@ -27,43 +35,26 @@
 						<div class="row">
 							<div class="col-xs-12 col-sm-6">
 								<label for="firstName">First Name</label>
-								<input type="text" id="firstName" name="firstName" class="form-control" data-ng-model="user.firstName" placeholder="First Name">
+								<input type="text" id="firstName" name="firstName" class="form-control" ng-model="user.firstName" placeholder="First Name">
+								<privacy-selector privacy="user.privacy.firstName" name="'firstNamePrivacy'"></privacySelector>
 							</div>
 
 							<div class="col-xs-12 col-sm-6">
 								<label for="lastName">Last Name</label>
 								<input type="text" id="lastName" name="lastName" class="form-control" data-ng-model="user.lastName" placeholder="Last Name">
+								<privacy-selector privacy="user.privacy.lastName" name="'lastNamePrivacy'"></privacySelector>
 							</div>
 						</div>
 
 					</fieldset>
 
-					<!-- PRIVACY CONTROLS -->
-					<fieldset>
-						<!-- PRIVACY LEGEND -->
-						<div class="row text-center">
-							<div class="col-xs-12">
-								<h3>Control your privacy</h3>
-							</div>
-							<div class="col-xs-4">
-								<h4><strong>Public</strong></h4> <i class="icon earth fsize-34"></i><br> The Internet
-							</div>
-							<div class="col-xs-4">
-								<h4><strong>Internal</strong></h4> <i class="icon people fsize-34"></i><br> Must be logged into Out In Science
-							</div>
-							<div class="col-xs-4">
-								<h4><strong>Private</strong></h4> <i class="icon locked fsize-34"></i><br> You and only you
-							</div>
+					<!-- PRIVACY FIELDS
+					<div class="row pad-not-last-3">
+						<div class="col-xs-12 col-sm-4" ng-repeat="(name, privacy) in user.privacy">
+							<label for="{{name}}" class="text-capitalize">{{name}}</label>
+							<privacy-selector privacy="user.privacy[name]" name="'{{name}}Privacy'"></privacySelector>
 						</div>
-
-						<!-- PRIVACY FIELDS -->
-						<div class="row pad-not-last-3">
-							<div class="col-xs-12 col-sm-4" ng-repeat="(name, privacy) in user.privacy">
-								<label for="{{name}}" class="text-capitalize">{{name}}</label>
-								<privacy-selector privacy="user.privacy[name]" name="'{{name}}Privacy'"></privacySelector>
-							</div>
-						</div>
-					</fieldset>
+					</div>-->
 
 					<!-- SAVE PROFILE -->
 					<div class="row text-center">
@@ -79,6 +70,22 @@
 							<div data-ng-show="error" class="text-center text-danger">
 								<strong data-ng-bind="error"></strong>
 							</div>
+						</div>
+					</div>
+
+					<!-- PRIVACY LEGEND -->
+					<div class="row text-center">
+						<div class="col-xs-12">
+							<h3>Control your privacy</h3>
+						</div>
+						<div class="col-xs-4">
+							<h4><strong>Public</strong></h4> <i class="icon earth fsize-34"></i><br> The Internet
+						</div>
+						<div class="col-xs-4">
+							<h4><strong>Internal</strong></h4> <i class="icon people fsize-34"></i><br> Must be logged into Out In Science
+						</div>
+						<div class="col-xs-4">
+							<h4><strong>Private</strong></h4> <i class="icon locked fsize-34"></i><br> You and only you
 						</div>
 					</div>
 

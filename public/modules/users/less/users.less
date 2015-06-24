@@ -29,9 +29,13 @@ form.profile {
 				margin-bottom: 15px;
 			}
 		}
-		&.pad-not-last-3 > div[class^="col-"] {
-			margin-bottom: 15px;
-		}
+	}
+
+	input + span.text-info {
+		display: none;
+	}
+	input.ng-invalid + span.text-info {
+		display: block;
 	}
 
 	div.input-group > label.radio-inline {
