@@ -75,7 +75,7 @@
 						<div class="col-xs-12">
 							<label for="bio">Bio</label>
 							<textarea name="bio" class="form-control" ng-model="user.bio" maxlength="500" rows="4" wrap="true" placeholder="Everyone has a story. What's yours?"></textarea>
-							<privacy-selector class="pull-left" privacy="user.privacy.primaryTags" name="'primaryTagsPrivacy'"></privacy-selector>
+							<privacy-selector class="pull-left" privacy="user.privacy.bio" name="'primaryTagsPrivacy'"></privacy-selector>
 							<span class="pull-right"><span class="badge text-info" ng-bind="500 - user.bio.length"></span> remaining</span>
 						</div>
 					</div>
