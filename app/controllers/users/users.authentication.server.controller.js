@@ -203,7 +203,7 @@ exports.signin = function(req, res, next) {
 					res.status(400).send(err);
 				} else if (!user.verified) {
 				    req.logout();
-				    res.status(400).send({message: 'That email is not yet verified.'});
+				    res.status(400).send({message: 'No account with that email exists or that email is not yet verified.'});
 				} else {
 					res.json(user);
 				}
