@@ -23,6 +23,6 @@ angular.module('core').controller('HomeController', ['$scope', 'Authentication',
 			'computerScience': 'Computer Science',
 			'chemistry': 'Chemistry',
 			'geology': 'Geology'
-		}
+		};
 	}
 ]);
