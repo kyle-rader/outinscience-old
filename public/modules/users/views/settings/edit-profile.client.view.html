@@ -56,11 +56,11 @@
 							</div>
 						</div>
 
-						<!-- EMAIL PRIVACY -->
-						<div class="row">
-							<div class="col-xs-12">
-								<label for="email">Email Privacy</label>
-								<privacy-selector privacy="user.emailPrivacy" name="'emailPrivacy'"></privacySelector>
+						<!-- PRIVACY FIELDS -->
+						<div class="row pad-not-last-3">
+							<div class="col-xs-12 col-sm-4" ng-repeat="(name, privacy) in user.privacy">
+								<label for="{{name}}" class="text-capitalize">{{name}}</label>
+								<privacy-selector privacy="user.privacy[name]" name="'{{name}}Privacy'"></privacySelector>
 							</div>
 						</div>
 					</fieldset>

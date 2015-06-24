@@ -18,7 +18,7 @@ var validateLocalStrategyProperty = function(property) {
  * A Validation function for local strategy password
  */
 var validateLocalStrategyPassword = function(password) {
-	return (this.provider !== 'local' || (password && password.length > 8));
+	return (this.provider !== 'local' || (password && password.length >= 8));
 };
 
 /**
@@ -51,10 +51,57 @@ var UserSchema = new Schema({
 		validate: [validateLocalStrategyProperty, 'Please fill in your email'],
 		match: [/.+\@.+\..+/, 'Please fill a valid email address']
 	},
+	phone: {
+		type: String,
+		default: '',
+		match: [/[0-9]{10}/, 'Phone number must be 10 digits']
+	},
+	pronouns: {
+		type: String,
+		trim: true,
+		default: ''
+	},
+	bio: {
+		type: String,
+		trim: true,
+		default: ''
+	},
 	password: {
 		type: String,
 		default: '',
 		validate: [function(val) { return val && val.length >= 8; }, 'Password must be at least 8 characters']
+	},
+	privacy: {
+		firstName: {
+			type: String,
+			trim: true,
+			default: 'private'
+		},
+		lastName: {
+			type: String,
+			trim: true,
+			default: 'private'
+		},
+		email: {
+			type: String,
+			trim: true,
+			default: 'private'
+		},
+		phone: {
+			type: String,
+			trim: true,
+			default: 'private'
+		},
+		pronouns: {
+			type: String,
+			trim: true,
+			default: 'private'
+		},
+		bio: {
+			type: String,
+			trim: true,
+			default: 'private'
+		},
 	},
 	salt: {
 		type: String
