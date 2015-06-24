@@ -6,6 +6,21 @@
 				<form name="userForm" data-ng-submit="updateUserProfile(userForm.$valid)" class="profile form-horizontal" autocomplete="off">
 					<fieldset>
 
+						<!-- FIRST NAME / LAST NAME -->
+						<div class="row">
+							<div class="col-xs-12 col-sm-6">
+								<label for="firstName">First Name</label>
+								<input type="text" id="firstName" name="firstName" class="form-control" ng-model="user.firstName" placeholder="First Name">
+								<privacy-selector privacy="user.privacy.firstName" name="'firstNamePrivacy'"></privacySelector>
+							</div>
+
+							<div class="col-xs-12 col-sm-6">
+								<label for="lastName">Last Name</label>
+								<input type="text" id="lastName" name="lastName" class="form-control" data-ng-model="user.lastName" placeholder="Last Name">
+								<privacy-selector privacy="user.privacy.lastName" name="'lastNamePrivacy'"></privacySelector>
+							</div>
+						</div>
+
 						<!-- EMAIL / PHONE -->
 						<div class="row">
 							<div class="col-xs-12 col-sm-6">
@@ -28,21 +43,6 @@
 								<input type="tel" ng-model="user.phone" name="phone" class="form-control" placeholder="3601119999" ng-pattern="/[0-9]{9}/" maxlength="10">
 								<span ng-show="userForm.phone.$error" class="text-info">Phone number must 10 digits.</span>
 								<privacy-selector privacy="user.privacy.phone" name="'phonePrivacy'"></privacySelector>
-							</div>
-						</div>
-
-						<!-- FIRST NAME / LAST NAME -->
-						<div class="row">
-							<div class="col-xs-12 col-sm-6">
-								<label for="firstName">First Name</label>
-								<input type="text" id="firstName" name="firstName" class="form-control" ng-model="user.firstName" placeholder="First Name">
-								<privacy-selector privacy="user.privacy.firstName" name="'firstNamePrivacy'"></privacySelector>
-							</div>
-
-							<div class="col-xs-12 col-sm-6">
-								<label for="lastName">Last Name</label>
-								<input type="text" id="lastName" name="lastName" class="form-control" data-ng-model="user.lastName" placeholder="Last Name">
-								<privacy-selector privacy="user.privacy.lastName" name="'lastNamePrivacy'"></privacySelector>
 							</div>
 						</div>
 
