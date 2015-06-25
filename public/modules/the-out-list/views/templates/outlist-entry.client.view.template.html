@@ -1,0 +1,27 @@
+<div class="row outlist-entry">
+  <div class="col-xs-12">
+    <span class="name">{{user.firstName}} {{user.lastName}}</span>
+    <span class="pronouns" ng-show="user.pronouns">({{user.pronouns}})</span>
+  </div>
+
+  <div class="col-xs-8 col-sm-9">
+    <span class="email">{{user.email}}</span>
+  </div>
+  <div class="col-xs-4 col-sm-3">
+    <span class="phone">{{user.phone}}</span>
+  </div>
+
+  <div class="col-xs-12" ng-show="user.orientation">
+    <strong class="orientation">Orientation:</strong>{{user.orientation}}
+  </div>
+
+  <div class="col-xs-12" ng-show="user.primaryTags">
+    <primary-tags tags="user.primaryTags"></primary-tags>
+  </div>
+
+  <div class="col-xs-12 bio" ng-show="user.bio">
+    <strong>Bio:</strong>
+    <p ng-bind="user.bio"></p>
+  </div>
+
+</div>

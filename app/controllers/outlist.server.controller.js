@@ -20,9 +20,13 @@ exports.getOutList = function(req, res) {
   // Init Variables
 	var loggedInUser = req.user;
   var outlist = [];
+	var query = {verified: true};
+	if (loggedInUser && loggedInUser._id) {
+		query._id = { '$ne' : loggedInUser._id };
+	}
 
   User.find(
-    {verified: true},
+		query,
     {firstName: 1, lastName: 1, email: 1, phone: 1, pronouns: 1, orientation: 1, primaryTags: 1, bio: 1, privacy: 1},
     function(err, users) {
       if (err && !users) {
@@ -35,27 +39,27 @@ exports.getOutList = function(req, res) {
       // Make private fields anonymous
       users.forEach(function(user) {
         if (!visible(loggedInUser, user.privacy.firstName)) {
-          user.firstName = 'Xxxxx';
+          user.firstName = 'Anonymous';
         }
 
         if (!visible(loggedInUser, user.privacy.lastName)) {
-          user.lastName = 'Xxxxx';
+          user.lastName = 'Fox';
         }
 
         if (!visible(loggedInUser, user.privacy.email)) {
-          user.email = 'Xxxxx';
+          user.email = '';
         }
 
         if (!visible(loggedInUser, user.privacy.phone)) {
-          user.phone = 'Xxxxx';
+          user.phone = '';
         }
 
         if (!visible(loggedInUser, user.privacy.pronouns)) {
-          user.pronouns = 'Xxxxx';
+          user.pronouns = '';
         }
 
         if (!visible(loggedInUser, user.privacy.orientation)) {
-          user.orientation = 'Xxxxx';
+          user.orientation = '';
         }
 
         if (!visible(loggedInUser, user.privacy.primaryTags)) {
@@ -63,15 +67,14 @@ exports.getOutList = function(req, res) {
         }
 
         if (!visible(loggedInUser, user.privacy.bio)) {
-          user.bio = 'Xxxxxx';
+          user.bio = '';
         }
 
         user.privacy = {};
         user._id = null;
       });
-
-      res.status(200).send(users);
-
+			res.status(200).send(users);
   });
+
 
 };
