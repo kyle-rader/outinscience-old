@@ -4,16 +4,16 @@ html {
 }
 
 body {
-	margin-bottom: 75px;
+	margin-bottom: @footer-height;
 }
 
 footer.footer {
 	position: absolute;
 	bottom: 0;
 	width: 100%;
-	height: 75px;
+	height: @footer-height;
 	background-color: @body-bg;
-	border-top: 1px solid @body-off-color;
+	border-top: 1px solid @gray-lighter;
 
 	.social-icons {
 		li + li {

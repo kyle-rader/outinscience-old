@@ -1,0 +1,11 @@
+<div class="input-group privacy-selector">
+  <label ng-class="{'radio-inline': true, 'active': privacyOption === 'public'}">
+    <input type="radio" name="{{name}}" value="public" class="hide" ng-model="privacyOption"><i class="icon earth fsize-16" title="Public"></i>
+  </label>
+  <label ng-class="{'radio-inline': true, 'active': privacyOption === 'internal'}">
+    <input type="radio" name="{{name}}" value="internal" class="hide" ng-model="privacyOption"><i class="icon people fsize-16" title="Internal"></i>
+  </label>
+  <label ng-class="{'radio-inline': true, 'active': privacyOption === 'private'}">
+    <input type="radio" name="{{name}}" value="private" class="hide" ng-model="privacyOption"><i class="icon locked fsize-16" title="Private"></i>
+  </label>
+</div>

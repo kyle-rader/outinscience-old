@@ -18,7 +18,7 @@ var validateLocalStrategyProperty = function(property) {
  * A Validation function for local strategy password
  */
 var validateLocalStrategyPassword = function(password) {
-	return (this.provider !== 'local' || (password && password.length > 8));
+	return (this.provider !== 'local' || (password && password.length >= 8));
 };
 
 /**
@@ -51,10 +51,219 @@ var UserSchema = new Schema({
 		validate: [validateLocalStrategyProperty, 'Please fill in your email'],
 		match: [/.+\@.+\..+/, 'Please fill a valid email address']
 	},
+	phone: {
+		type: String,
+		default: '',
+		match: [/[0-9]{10}/, 'Phone number must be 10 digits']
+	},
+	pronouns: {
+		type: String,
+		trim: true,
+		default: ''
+	},
+	orientation: {
+		type: String,
+		default: '',
+		trim: true,
+	},
+	bio: {
+		type: String,
+		trim: true,
+		default: ''
+	},
 	password: {
 		type: String,
 		default: '',
-		validate: [function(val) { return val && val.length >= 8; }, 'Password must be at least 8 characters']
+		validate: [validateLocalStrategyPassword, 'Password must be at least 8 characters']
+	},
+	userAgree: {
+		type: Boolean,
+		default: false,
+		validate: [function(val) {return val === true;}, 'You must read and accept the intentions and terms']
+	},
+	primaryTags: {
+		biology: {
+			type: Boolean,
+			default: false
+		},
+		astronomy: {
+			type: Boolean,
+			default: false
+		},
+		vehicleDesign: {
+			type: Boolean,
+			default: false
+		},
+		scienceEducation: {
+			type: Boolean,
+			default: false
+		},
+		plasticsComposites: {
+			type: Boolean,
+			default: false
+		},
+		physics: {
+			type: Boolean,
+			default: false
+		},
+		neuroscience: {
+			type: Boolean,
+			default: false
+		},
+		math: {
+			type: Boolean,
+			default: false
+		},
+		materialScience: {
+			type: Boolean,
+			default: false
+		},
+		manufacturingEngineering: {
+			type: Boolean,
+			default: false
+		},
+		industrialDesign: {
+			type: Boolean,
+			default: false
+		},
+		environmentalScience: {
+			type: Boolean,
+			default: false
+		},
+		electricalEngineering: {
+			type: Boolean,
+			default: false
+		},
+		computerScience: {
+			type: Boolean,
+			default: false
+		},
+		chemistry: {
+			type: Boolean,
+			default: false
+		},
+		geology: {
+			type: Boolean,
+			default: false
+		}
+	},
+	secondaryTags: {
+		biology: {
+			type: Boolean,
+			default: false
+		},
+		astronomy: {
+			type: Boolean,
+			default: false
+		},
+		vehicleDesign: {
+			type: Boolean,
+			default: false
+		},
+		scienceEducation: {
+			type: Boolean,
+			default: false
+		},
+		plasticsComposites: {
+			type: Boolean,
+			default: false
+		},
+		physics: {
+			type: Boolean,
+			default: false
+		},
+		neuroscience: {
+			type: Boolean,
+			default: false
+		},
+		math: {
+			type: Boolean,
+			default: false
+		},
+		materialScience: {
+			type: Boolean,
+			default: false
+		},
+		manufacturingEngineering: {
+			type: Boolean,
+			default: false
+		},
+		industrialDesign: {
+			type: Boolean,
+			default: false
+		},
+		environmentalScience: {
+			type: Boolean,
+			default: false
+		},
+		electricalEngineering: {
+			type: Boolean,
+			default: false
+		},
+		computerScience: {
+			type: Boolean,
+			default: false
+		},
+		chemistry: {
+			type: Boolean,
+			default: false
+		},
+		geology: {
+			type: Boolean,
+			default: false
+		}
+	},
+	privacy: {
+		firstName: {
+			type: String,
+			trim: true,
+			default: 'private'
+		},
+		lastName: {
+			type: String,
+			trim: true,
+			default: 'private'
+		},
+		email: {
+			type: String,
+			trim: true,
+			default: 'private'
+		},
+		phone: {
+			type: String,
+			trim: true,
+			default: 'private'
+		},
+		pronouns: {
+			type: String,
+			trim: true,
+			default: 'private'
+		},
+		orientation: {
+			type: String,
+			trim: true,
+			default: 'private'
+		},
+		bio: {
+			type: String,
+			trim: true,
+			default: 'private'
+		},
+		primaryTags: {
+			type: String,
+			trim: true,
+			default: 'private'
+		},
+		secondaryTags: {
+			type: String,
+			trim: true,
+			default: 'private'
+		},
+		otherTags: {
+			type: String,
+			trim: true,
+			default: 'private'
+		}
 	},
 	salt: {
 		type: String
@@ -95,6 +304,12 @@ var UserSchema = new Schema({
 	},
 	confirmEmailExpires: {
 		type: String
+	},
+	revertEmailToken: {
+		type: String
+	},
+	oldEmail: {
+		type: String
 	}
 });
 
@@ -108,7 +323,7 @@ UserSchema.pre('save', function(next) {
 		_id: { '$ne' : this._id }
 	}, function(err, user) {
 		if (!err && user) {
-			next(new mongoose.Error('That email is already in use'));
+			next(new mongoose.Error('email-in-use'));
 		} else {
 			next();
 		}

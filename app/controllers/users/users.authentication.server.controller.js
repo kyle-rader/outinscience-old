@@ -52,41 +52,51 @@ exports.signup = function(req, res) {
 
 			// Then save the user
 			newUser.save(function(err) {
-				if (err) {
+				if (err && err.message !== 'email-in-use') {
 					return res.status(400).send({
 						message: errorHandler.getErrorMessage(err)
 					});
 				} else {
-					// Remove sensitive data before login
-					//newUser.password = undefined;
-					//newUser.salt = undefined;
-
-					// req.login(newUser, function(err) {
-					// 	if (err) {
-					// 		res.status(400).send(err);
-					// 	} else {
-					// 		done(err, token, newUser);
-					// 	}
-					// });
-					done(err, token, newUser);
+					done(null, token, newUser, (err && err.message === 'email-in-use'));
 				}
 			});
 		},
 		// Send verification email
-		function(token, user, done) {
-			res.render('templates/email-confirmation-email', {
-				name: user.displayName,
-				appName: config.app.title,
-				url: req.protocol + '://' + req.headers.host + '/auth/confirm-email/' + token
-			}, function(err, emailHTML) {
-				done(err, emailHTML, user);
-			});
+		function(token, user, emailInUse, done) {
+			if (!emailInUse) {
+				// Send the normal confirm email
+				res.render('templates/email-confirmation-email', {
+					name: user.displayName,
+					appName: config.app.title,
+					url: req.protocol + '://' + req.headers.host + '/auth/confirm-email/' + token
+				}, function(err, emailHTML) {
+					done(err, emailHTML, user, 'Out In Science: Confirm Email');
+				});
+			} else {
+				// Send a warning email to the existing user about this potential attempt
+				// of breach in security.
+				User.findOne({
+					email: user.email
+				}, function(err, existingUser) {
+					if (!err && existingUser) {
+						res.render('templates/email-in-use-warning-email', {
+							name: existingUser.displayName,
+							appName: config.app.title,
+							imposter: user.displayName
+						}, function(err, emailHTML) {
+							done(err, emailHTML, user, 'Out In Science: Attempted Account Creation');
+						});
+					} else {
+						done({message: 'Account creation failed.  For support, email support@outinscience.com'});
+					}
+				});
+			}
 		},
-		function(emailHTML, user, done) {
+		function(emailHTML, user, subject, done) {
 			nodemailerMailgun.sendMail({
 				from: config.mailer.from,
 				to: user.email,
-				subject: 'Out In Science: Confirm Email',
+				subject: subject,
 				'h:Reply-To': config.mailer.reply_to,
 				html: emailHTML,
 				text: emailHTML
@@ -111,8 +121,12 @@ exports.confirmEmail = function(req, res) {
 		if (!user) {
 			return res.redirect('/#!/auth/confirm-email-invalid');
 		}
+		else if (parseInt(user.confirmEmailExpires) < parseInt(Date.now())) {
+			return res.redirect('/#!/auth/confirm-email-invalid');
+		}
 		else {
 			user.verified = true;
+			user.confirmEmailExpires = 0;
 			user.updated = Date.now();
 			user.skipHash = true;
 
@@ -135,6 +149,41 @@ exports.confirmEmail = function(req, res) {
 	});
 };
 
+/**
+ * Revert Email Update
+ */
+exports.revertEmailUpdate = function(req, res) {
+	User.findOne({
+		revertEmailToken: req.params.token,
+		verified: false
+	}, function(err, user) {
+		if (!user) {
+			return res.redirect('/#!/auth/confirm-email-invalid');
+		} else {
+			user.verified = true;
+			user.email = user.oldEmail;
+			user.updated = Date.now();
+			user.skipHash = true;
+			user.revertEmailToken = null;
+
+			user.save(function(err) {
+				if (err) {
+					return res.status(400).send({
+						message: err.message || errorHandler.getErrorMessage(err)
+					});
+				} else {
+					req.login(user, function(err) {
+						if (err) {
+							res.status(400).send(err);
+						} else {
+							res.redirect('/#!/settings/profile');
+						}
+					});
+				}
+			});
+		}
+	});
+};
 
 /**
  * Signin after passport authentication
@@ -153,7 +202,7 @@ exports.signin = function(req, res, next) {
 					res.status(400).send(err);
 				} else if (!user.verified) {
 				    req.logout();
-				    res.status(400).send({message: 'That email is not yet verified.'});
+				    res.status(400).send({message: 'No account with that email exists or that email is not yet verified.'});
 				} else {
 					res.json(user);
 				}

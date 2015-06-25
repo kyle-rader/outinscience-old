@@ -23,7 +23,7 @@ var getUniqueErrorMessage = function(err) {
 exports.getErrorMessage = function(err) {
 	var message = '';
 
-	if (err.message) {
+	if (err.message && err.message !== 'Validation failed') {
 		message = err.message;
 	}	else if (err.code) {
 		switch (err.code) {
@@ -36,7 +36,8 @@ exports.getErrorMessage = function(err) {
 		}
 	} else {
 		for (var errName in err.errors) {
-			if (err.errors[errName].message) message = err.errors[errName].message;
+			if (err.errors[errName].message)
+				message += (message.length === 0 ? '' : '<br>') + err.errors[errName].message;
 		}
 	}
 

@@ -37,11 +37,12 @@ exports.forgot = function(req, res, next) {
 		function(token, done) {
 			if (req.body.email) {
 				User.findOne({
-					email: req.body.email
+					email: req.body.email,
+					verified: true
 				}, '-salt -password', function(err, user) {
 					if (!user) {
-						return res.status(400).send({
-							message: 'No account with that email has been found'
+						res.send({
+							message: 'If we find an account with that email we will send further instructions.'
 						});
 					} else if (user.provider !== 'local') {
 						return res.status(400).send({
@@ -85,7 +86,7 @@ exports.forgot = function(req, res, next) {
 			}, function(err) {
 				if (!err) {
 					res.send({
-						message: 'An email has been sent to ' + user.email + ' with further instructions.'
+						message: 'If we find an account with that email we will send further instructions.'
 					});
 				}
 				done(err);

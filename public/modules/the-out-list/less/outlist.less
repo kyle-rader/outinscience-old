@@ -1,0 +1,54 @@
+div.row.outlist-entry {
+  margin: 5px 0 15px 0;
+  span.name,
+  strong.orientation {
+    margin-right: 5px;
+  }
+
+  @media screen and (max-width: @screen-xs-max) {
+    span.name {
+      font-size: 18px;
+    }
+    font-size: 14px;
+    div.tags {
+      label {
+        float: left;
+        &:nth-child(9) {
+          clear: left;
+        }
+      }
+      label + label:not(:nth-child(9)) {
+        margin-left: 5px;
+      }
+      img {
+        width: 20px;
+      }
+    }
+  }
+  @media screen and (min-width: @screen-sm-min) {
+    span.name {
+      font-size: 24px;
+    }
+    font-size: 16px;
+    div.tags {
+      label + label {
+        margin-left: 11px;
+      }
+      img {
+        width: 35px;
+      }
+    }
+  }
+}
+strong.tags-label {
+  display: block;
+  margin-bottom: 5px;
+}
+div.tags {
+  margin: 10px 0px;
+  label:not(.active) {
+    -moz-filter: opacity(.15);
+    -webkit-filter: opacity(.15);
+    filter: opacity(.15);
+  }
+}

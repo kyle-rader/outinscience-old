@@ -20,3 +20,68 @@ a.social-auth-link {
 		width: 100%;
 	}
 }
+
+form.profile {
+	.row {
+		margin-bottom: 15px;
+		@media (max-width: @screen-xs-max) {
+			> div[class^="col-"]:not(:last-child) {
+				margin-bottom: 15px;
+			}
+		}
+	}
+
+	textarea {
+		resize: none;
+		margin-bottom: 5px;
+	}
+
+	input + span.text-info {
+		display: none;
+	}
+	input.ng-invalid + span.text-info {
+		display: block;
+	}
+
+	div.input-group.privacy-selector > label.radio-inline {
+		&:not(.active) > i {
+		  -webkit-filter: opacity(.25);
+			filter: opacity(.25);
+		}
+		text-align: center;
+		padding: 0;
+		width: 50px;
+	}
+	div.input-group.interests > label.checkbox-inline {
+		padding: 0;
+		border-radius: 5px;
+		margin-top: 10px;
+		float: left;
+
+		@media screen and (max-width: @screen-xs-max) {
+			margin-left: 9px;
+			&:nth-child(4n + 1) {
+				margin-left: 0;
+				clear: left;
+			}
+			> i.sci-icon > img {
+				width: 50px;
+			}
+		}
+		@media screen and (min-width: @screen-xs-min) {
+			margin-left: 25px;
+			&:nth-child(8n + 1) {
+				margin-left: 0;
+				clear: left;
+			}
+			> i.sci-icon > img {
+				width: 60px;
+			}
+		}
+
+		&:not(.active) > i {
+		  -webkit-filter: opacity(.25);
+			filter: opacity(.25);
+		}
+	}
+}
