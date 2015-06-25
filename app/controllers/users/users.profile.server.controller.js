@@ -57,7 +57,7 @@ exports.update = function(req, res) {
 		user.save(function(err) {
 			if (err && err.message !== 'email-in-use') {
 				return res.status(400).send({
-					message: err.message || errorHandler.getErrorMessage(err)
+					message: errorHandler.getErrorMessage(err)
 				});
 			} else if (err && err.message === 'email-in-use') {
 				// revert email now and save so as to un-verify and lock.

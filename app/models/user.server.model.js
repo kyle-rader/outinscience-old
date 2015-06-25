@@ -74,7 +74,12 @@ var UserSchema = new Schema({
 	password: {
 		type: String,
 		default: '',
-		validate: [function(val) { return val && val.length >= 8; }, 'Password must be at least 8 characters']
+		validate: [validateLocalStrategyPassword, 'Password must be at least 8 characters']
+	},
+	userAgree: {
+		type: Boolean,
+		default: false,
+		validate: [function(val) {return val === true;}, 'You must read and accept the intentions and terms']
 	},
 	primaryTags: {
 		biology: {
