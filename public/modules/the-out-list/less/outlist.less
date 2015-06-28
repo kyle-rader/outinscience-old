@@ -4,12 +4,15 @@
   }
 }
 
-div.row.outlist-entry {
+div.outlist-entry {
   margin: 5px 0 15px 0;
   span.name,
   strong.orientation {
     margin-right: 5px;
   }
+  background-color: fadeout(color(@rb-purple), 96.5%);
+  border-radius: 10px;
+  padding: 5px 0px;  
 
   @media screen and (max-width: @screen-sm-max) {
     div.tags {
@@ -63,10 +66,12 @@ div.row.outlist-entry {
     }
   }
 }
+
 strong.tags-label {
   display: block;
   margin-bottom: 5px;
 }
+
 div.tags {
   margin: 10px 0px;
   label:not(.active) {
