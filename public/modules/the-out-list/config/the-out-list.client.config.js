@@ -4,7 +4,7 @@
 angular.module('core').run(['Menus',
 	function(Menus) {
 		// Set top bar menu items
-		Menus.addMenuItem('topbar', 'The Out list', 'the-out-list', 'li-rb-purple', '/the-out-list', true);
+		Menus.addMenuItem('topbar', 'The Out List', 'the-out-list', 'li-rb-purple', '/the-out-list', true);
 
 	}
 ]);

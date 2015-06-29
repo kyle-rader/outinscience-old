@@ -1,0 +1,14 @@
+<section data-ng-controller="TermsController">
+	<div class="container">
+		<div class="col-xs-12">
+			<dl class="terms-list">
+				<dt ng-repeat-start="term in terms" class="term-header">
+					{{term.term}}
+				</dt>
+				<dd ng-repeat-end class="term-def">
+					{{term.def}}
+				</dd>
+			</dl>
+		</div>
+	</div>
+</section>
