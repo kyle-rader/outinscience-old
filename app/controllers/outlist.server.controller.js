@@ -34,7 +34,6 @@ exports.getOutList = function(req, res) {
           message: err.message || errorHandler.getErrorMessage(err)
         });
       }
-      console.log(loggedInUser ? 'Logged in' : 'Public viewer');
 
       // Make private fields anonymous
       users.forEach(function(user) {
