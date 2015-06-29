@@ -4,11 +4,11 @@
     <span class="pronouns" ng-show="user.pronouns">({{user.pronouns}})</span>
   </div>
 
-  <div class="col-xs-8 col-sm-9">
-    <span class="email">{{user.email}}</span>
+  <div class="col-xs-2">
+    <span class="email" ng-show="user.email.length > 0"><a href="mailto:{{user.email}}"><i class="icon email fsize-24"></i></a></span>
   </div>
-  <div class="col-xs-4 col-sm-3">
-    <span class="phone">{{user.phone}}</span>
+  <div class="col-xs-10">
+    <span class="phone" ng-show="user.phone.length > 0"><a href="tel:{{user.phone}}"><i class="icon tel fsize-24"></i></a></span>
   </div>
 
   <div class="col-xs-12" ng-show="user.orientation">

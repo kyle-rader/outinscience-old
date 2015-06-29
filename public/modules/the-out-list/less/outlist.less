@@ -1,10 +1,39 @@
-div.row.outlist-entry {
+@media screen and (max-width: @screen-xs-max) {
+  section[data-ng-controller="TheOutListController"] div.container {
+    padding: 0;
+  }
+}
+
+div.outlist-entry {
   margin: 5px 0 15px 0;
   span.name,
   strong.orientation {
     margin-right: 5px;
   }
+  background-color: fadeout(color(@rb-purple), 96.5%);
+  border-radius: 10px;
+  padding: 5px 0px;  
 
+  @media screen and (max-width: @screen-sm-max) {
+    div.tags {
+      label {
+        float: left;
+        &:nth-child(10) {
+          clear: left;
+        }
+      }
+      label + label:not(:nth-child(10)) {
+        margin-left: 5px;
+      }
+    }
+  }
+  @media screen and (min-width: @screen-md-min) {
+    div.tags {
+        label + label {
+        margin-left: 11px;
+      }
+    }
+  }
   @media screen and (max-width: @screen-xs-max) {
     span.name {
       font-size: 18px;
@@ -13,11 +42,11 @@ div.row.outlist-entry {
     div.tags {
       label {
         float: left;
-        &:nth-child(9) {
+        &:nth-child(10) {
           clear: left;
         }
       }
-      label + label:not(:nth-child(9)) {
+      label + label:not(:nth-child(10)) {
         margin-left: 5px;
       }
       img {
@@ -31,19 +60,18 @@ div.row.outlist-entry {
     }
     font-size: 16px;
     div.tags {
-      label + label {
-        margin-left: 11px;
-      }
       img {
         width: 35px;
       }
     }
   }
 }
+
 strong.tags-label {
   display: block;
   margin-bottom: 5px;
 }
+
 div.tags {
   margin: 10px 0px;
   label:not(.active) {
