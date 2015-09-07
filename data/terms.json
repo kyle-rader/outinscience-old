@@ -13,7 +13,7 @@
   },
   {
     "term": "ASEXUAL",
-    "def": "A term used to identify someone who does not experience sexual attraction to anyone. There are varying degrees of asexuality with titles such as grey-a and demisexual. A lack of sexual attraction does not necessarily mean an aversion to touch or sex. as there are often romantic attractions romantic relationships. It differs from celibacy, which refers to someone who experiences sexual attraction and chooses not to act on it."
+    "def": "A term used to identify someone who does not experience sexual attraction to anyone. There are varying degrees of asexuality with titles such as grey-a and demisexual. A lack of sexual attraction does not necessarily mean an aversion to touch or sex, as there are often romantic attractions romantic relationships. It differs from celibacy, which refers to someone who experiences sexual attraction and chooses not to act on it."
   },
   {
     "term": "BIPHOBIA",
@@ -45,7 +45,7 @@
   },
   {
     "term": "COMING OUT",
-    "def": "It is the process by which LGBT individuals recognize, acknowledge, accept, and appreciate their sexual identity. It is commonly thought of as the act of telling the people in one's life about their identity which may be unknown to others. This may occur multiple times in different contexts (meeting someone new, work environment, social groups, family, etc.). Coming out can also be an internal process by which someone accepts themselves and their identity."
+    "def": "It is the process by which LGBTQ+ individuals recognize, acknowledge, accept, and appreciate their sexual identity. It is commonly thought of as the act of telling the people in one's life about their identity which may be unknown to others. This may occur multiple times in different contexts (meeting someone new, work environment, social groups, family, etc.). Coming out can also be an internal process by which someone accepts themselves and their identity."
   },
   {
     "term": "DRAG",
@@ -97,7 +97,7 @@
   },
   {
     "term": "GENDER ROLE",
-    "def": "The accepted behaviors, thoughts, and emotions of a specific Bender based upon the views of a particular society or culture."
+    "def": "The accepted behaviors, thoughts, and emotions of a specific gender based upon the views of a particular society or culture."
   },
   {
     "term": "GENDERQUEER(GQ)",
@@ -105,7 +105,7 @@
   },
   {
     "term": "GSM/GSRM",
-    "def": "Gender and Sexual Minority/Gender, Sexual, and Romantic Minority. An inclusive alternative to LGBT that includes all minority identities under the queer umbrella."
+    "def": "Gender and Sexual Minority/Gender, Sexual, and Romantic Minority. An inclusive alternative to LGBTQ+ that includes all minority identities under the queer umbrella."
   },
   {
     "term": "HATE CRIMES",
@@ -125,7 +125,7 @@
   },
   {
     "term": "HETEROSEXUAL PRIVILEGE",
-    "def": "he benefits and advantages that heterosexuals receive in a heterosexist culture."
+    "def": "The benefits and advantages that heterosexuals receive in a heterosexist culture."
   },
   {
     "term": "HOMOPHOBIA",
@@ -136,7 +136,7 @@
     "def": "A person who has romantic and sexual feelings for or attractions to someone of the same gender.  Historically, the term came from Dr Karoly Benkert (1869) to define \"perversion\" medically for gay/lesbian behavior and was once a diagnosis in the <i>Diagnostic and Statistical Manual of Mental Disorders</i> (Version III)."
   },
   {
-    "term": "INTERNALIZED HONOPHOBIA",
+    "term": "INTERNALIZED HOMOPHOBIA",
     "def": "A term used to describe lesbians, gay men, and bisexuals who have internalized and accepted societal prejudices, myths and lies about them."
   },
   {
@@ -145,7 +145,7 @@
   },
   {
     "term": "LAMBDA",
-    "def": "A symbol originally chosen by the Gay Activists Alliance of New York in 1970 and used to identify other members of the gay community.  The reasoning was that the symbol would easily be mistaken for a fraternity symbol and therefore ignored by the majority of people.  In December of 1974, the lambda was officially declared the international symbol for gay and lesbian rights by the international Fay Rights Congress in Edinburgh, Scotland."
+    "def": "A symbol originally chosen by the Gay Activists Alliance of New York in 1970 and used to identify other members of the gay community.  The reasoning was that the symbol would easily be mistaken for a fraternity symbol and therefore ignored by the majority of people.  In December of 1974, the lambda was officially declared the international symbol for gay and lesbian rights by the international Gay Rights Congress in Edinburgh, Scotland."
   },
   {
     "term": "LESBIAN",
@@ -245,7 +245,7 @@
   },
   {
     "term": "TRANSSEXUAL",
-    "def": "A transgender person who chose to undergo gender affirming surgery gender (reassignment surgery)."
+    "def": "A transgender person who chose to undergo gender affirming surgery (gender reassignment surgery)."
   },
   {
     "term": "TRANSVESTITE",

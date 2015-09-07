@@ -5,8 +5,8 @@
 				<dt ng-repeat-start="term in terms" class="term-header">
 					{{term.term}}
 				</dt>
-				<dd ng-repeat-end class="term-def">
-					{{term.def}}
+				<dd ng-repeat-end class="term-def" ng-bind-html="term.def">
+					
 				</dd>
 			</dl>
 		</div>
