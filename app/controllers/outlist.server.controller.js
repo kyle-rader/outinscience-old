@@ -42,7 +42,7 @@ exports.getOutList = function(req, res) {
         }
 
         if (!visible(loggedInUser, user.privacy.lastName)) {
-          user.lastName = '-------';
+          user.lastName = '';
         }
 
         if (!visible(loggedInUser, user.privacy.email)) {
