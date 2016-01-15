@@ -43,16 +43,12 @@ section[data-ng-controller="PuzzleHuntController"] {
   }
 
   dl.puzzle-hunt-info {
-    @media screen and (max-width: @screen-xs-max) {
-      dt {
-        .h5
-      }
-    }
-    @media screen and (min-width: @screen-sm-min) {
-      dt {
-        .h4
-      }
+    dt {
+      .h4
     }
   }
 
+  a.title-link, a.title-link:hover {
+    text-decoration: none;
+  }
 }
