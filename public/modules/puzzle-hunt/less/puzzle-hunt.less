@@ -1,80 +1,59 @@
 @media screen and (max-width: @screen-xs-max) {
-  section[data-ng-controller="TheOutListController"] div.container {
+  section[data-ng-controller="PuzzleHuntController"] div.container {
     padding: 0;
   }
+
+  h1.title {
+    .h3
+  }
 }
 
-div.outlist-entry {
-  margin: 5px 0 15px 0;
-  span.name,
-  strong.orientation {
-    margin-right: 5px;
+section[data-ng-controller="PuzzleHuntController"] {
+  img.puzzle-logo {
+    max-width: 150px;
   }
-  background-color: fadeout(color(@rb-purple), 96.5%);
-  border-radius: 10px;
-  padding: 5px 0px;  
 
-  @media screen and (max-width: @screen-sm-max) {
-    div.tags {
-      label {
-        float: left;
-        &:nth-child(10) {
-          clear: left;
-        }
+  div.puzzle-hunt-title {
+    text-align: center;
+
+    @media screen and (max-width: @screen-xs-max) {
+      h1 {
+        display: block;
       }
-      label + label:not(:nth-child(10)) {
-        margin-left: 5px;
-      }
-    }
-  }
-  @media screen and (min-width: @screen-md-min) {
-    div.tags {
-        label + label {
-        margin-left: 11px;
-      }
-    }
-  }
-  @media screen and (max-width: @screen-xs-max) {
-    span.name {
-      font-size: 18px;
-    }
-    font-size: 14px;
-    div.tags {
-      label {
-        float: left;
-        &:nth-child(10) {
-          clear: left;
-        }
-      }
-      label + label:not(:nth-child(10)) {
-        margin-left: 5px;
-      }
+
       img {
-        width: 20px;
+        max-height: 115px;
+        display: block;
       }
     }
-  }
-  @media screen and (min-width: @screen-sm-min) {
-    span.name {
-      font-size: 24px;
-    }
-    font-size: 16px;
-    div.tags {
+    @media screen and (min-width: @screen-sm-min) {
+      h1 {
+        display: inline-block;
+        line-height: 130px;
+        vertical-align: bottom;
+        font-size: 3em;
+      }
+
       img {
-        width: 35px;
+        max-height: 150px;
+        padding: 15px;
+        display: inline-block;
       }
     }
   }
-}
 
-strong.tags-label {
-  display: block;
-  margin-bottom: 5px;
-}
+  dl.puzzle-hunt-info {
+    dt {
+      .h4;
+      text-align: center;
+    }
+  }
 
-div.tags {
-  margin: 10px 0px;
-  label:not(.active) {
-      opacity: .15;
+  a.title-link, a.title-link:hover {
+    text-decoration: none;
+  }
+
+  ul.info-list li {
+    padding-top: 10px;
   }
 }
