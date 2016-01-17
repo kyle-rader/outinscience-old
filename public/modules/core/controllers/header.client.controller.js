@@ -4,6 +4,8 @@ angular.module('core').controller('HeaderController', ['$scope', 'Authentication
 	function($scope, Authentication, Menus, $location, $http) {
 		$scope.authentication = Authentication;
 		$scope.isCollapsed = false;
+
+    $scope.$location = $location;
 		$scope.menu = Menus.getMenu('topbar');
 
 		$scope.toggleCollapsibleMenu = function() {

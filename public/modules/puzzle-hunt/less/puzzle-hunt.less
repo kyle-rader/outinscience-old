@@ -51,9 +51,69 @@ section[data-ng-controller="PuzzleHuntController"] {
 
   a.title-link, a.title-link:hover {
     text-decoration: none;
+    display: block;
   }
 
-  ul.info-list li {
+  ul.info-list li + li {
     padding-top: 10px;
+  }
+}
+
+div.puzzle-hunt-title-small {
+  text-align: left;
+  h2, a {
+    display: inline-block;
+  }
+  img, small {
+    display: block;
+  }
+  small {
+    display: block;
+    padding: 3px;
+  }
+  a, a:hover {
+    color: @rb-black;
+    text-decoration: none;
+  }
+
+  @media screen and (max-width: @screen-xs-max) {
+    h2 {
+      vertical-align: top;
+      padding-left: 10px;
+    }
+    img {
+      max-width: 5em;
+    }
+  }
+  @media screen and (min-width: @screen-sm-min) {
+    h2 {
+      vertical-align: top;
+      padding-left: 15px;
+    }
+    img {
+      max-width: 6em;
+    }
+  }
+}
+
+dl.info-list {
+  dd + dt {
+    padding-top: 10px;
+  }
+  dt {
+    .h3;
+  }
+  dd {
+    font-size: 1.1em;
+  }
+  i {
+    display: inline-block;
+    padding-right: 10px;
+    @media screen and (max-width: @screen-xs-max) {
+      font-size: 34pt;
+    }
+    @media screen and (min-width: @screen-sm-min) {
+      font-size: 48pt;
+    }
   }
 }
