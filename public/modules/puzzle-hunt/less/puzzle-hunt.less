@@ -59,11 +59,29 @@ section[data-ng-controller="PuzzleHuntController"] {
 }
 
 div.puzzle-hunt-title-small {
-  h3, img {
+  text-align: left;
+  h2, img {
     display: inline-block;
   }
-  img {
-    max-width: 4em;
-    padding: 0px 5px;
+
+  @media screen and (max-width: @screen-xs-max) {
+    h2 {
+      line-height: 1.5em;
+      vertical-align: bottom;
+    }
+    img {
+      max-width: 5em;
+      padding: 0px 5px;
+    }
+  }
+  @media screen and (min-width: @screen-sm-min) {
+    h2 {
+      line-height: 1.5em;
+      vertical-align: bottom;
+    }
+    img {
+      max-width: 6em;
+      padding: 0px 10px;
+    }
   }
 }
