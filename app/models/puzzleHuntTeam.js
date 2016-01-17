@@ -23,7 +23,7 @@ var validateLocalStrategyPassword = function(password) {
 	return (this.provider !== 'local' || (password && password.length >= 8));
 };
 
-var PuzzleHuntUserSchema = new Schema({
+var PuzzleHuntTeamSchema = new Schema({
 	teamName: {
 		type: String,
 		trim: true,
@@ -70,26 +70,9 @@ var PuzzleHuntUserSchema = new Schema({
 });
 
 /**
- * Hook a pre save method to check for email already in use
- */
-PuzzleHuntUserSchema.pre('save', function(next) {
-
-	this.constructor.findOne({
-		email: this.email,
-		_id: { '$ne' : this._id }
-	}, function(err, user) {
-		if (!err && user) {
-			next(new mongoose.Error('email-in-use'));
-		} else {
-			next();
-		}
-	});
-});
-
-/**
  * Hook a pre save method to hash the password
  */
-PuzzleHuntUserSchema.pre('save', function(next) {
+PuzzleHuntTeamSchema.pre('save', function(next) {
 
 	if (!this.skipHash && this.password && this.password.length > 8) {
 		this.salt = new Buffer(crypto.randomBytes(16).toString('base64'), 'base64');
@@ -102,7 +85,7 @@ PuzzleHuntUserSchema.pre('save', function(next) {
 /**
  * Create instance method for hashing a password
  */
-PuzzleHuntUserSchema.methods.hashPassword = function(password) {
+PuzzleHuntTeamSchema.methods.hashPassword = function(password) {
 	if (this.salt && password) {
 		return crypto.pbkdf2Sync(password, this.salt, 10000, 64).toString('base64');
 	} else {
@@ -113,30 +96,8 @@ PuzzleHuntUserSchema.methods.hashPassword = function(password) {
 /**
  * Create instance method for authenticating user
  */
-PuzzleHuntUserSchema.methods.authenticate = function(password) {
+PuzzleHuntTeamSchema.methods.authenticate = function(password) {
 	return this.password === this.hashPassword(password);
 };
 
-/**
- * Find possible not used username
- */
-PuzzleHuntUserSchema.statics.findUniqueUsername = function(username, suffix, callback) {
-	var _this = this;
-	var possibleUsername = username + (suffix || '');
-
-	_this.findOne({
-		username: possibleUsername
-	}, function(err, user) {
-		if (!err) {
-			if (!user) {
-				callback(possibleUsername);
-			} else {
-				return _this.findUniqueUsername(username, (suffix || 0) + 1, callback);
-			}
-		} else {
-			callback(null);
-		}
-	});
-};
-
-mongoose.model('PuzzleHuntTeam', PuzzleHuntUserSchema);
+mongoose.model('PuzzleHuntTeam', PuzzleHuntTeamSchema);
