@@ -1,7 +1,7 @@
 'use strict';
 
 /**
- * User schema for WWU Puzzle Hunt
+ * Team schema for WWU Puzzle Hunt
  * @author Noah Strong <strongn@wwu.edu>
  */
 
@@ -24,68 +24,37 @@ var validateLocalStrategyPassword = function(password) {
 };
 
 var PuzzleHuntUserSchema = new Schema({
-	firstName: {
+	teamName: {
 		type: String,
 		trim: true,
+		unique: true,
 		default: '',
-		required: 'A first name is required',
-		validate: [validateLocalStrategyProperty, 'Please fill in your first name']
+		required: 'A team name is required',
+		validate: [validateLocalStrategyProperty, 'Please fill in your team name']
 	},
-	lastName: {
-		type: String,
-		trim: true,
-		default: '',
-		required: 'A last name is required',
-		validate: [validateLocalStrategyProperty, 'Please fill in your last name']
+	members: {
+		/* Array of _ids of team members */
+		type: [Schema.ObjectId]
 	},
-	displayName: {
-		type: String,
-		trim: true
+	owner_id: {
+		type: Schema.ObjectId
 	},
-	email: {
-		type: String,
-		trim: true,
-		default: '',
-		required: 'An email is required',
-		validate: [validateLocalStrategyProperty, 'Please fill in your email'],
-		match: [/.+\@.+\..+/, 'Please fill a valid email address']
+	lookingForMembers: {
+		type: Boolean,
+		default: true
+	},
+	approved: {
+		/* Team names must be approved by Kyle */
+		type: Boolean,
+		default: false
 	},
 	password: {
 		type: String,
 		default: '',
 		validate: [validateLocalStrategyPassword, 'Password must be at least 8 characters']
 	},
-	major: {
-		type: String,
-		default: ''
-	},
-	privacy: {
-		email: {
-			type: String,
-			trim: true,
-			default: 'private'
-		},
-		phone: {
-			type: String,
-			trim: true,
-			default: 'private'
-		}
-	},
 	salt: {
 		type: String
-	},
-	provider: {
-		type: String,
-		required: 'Provider is required'
-	},
-	providerData: {},
-	additionalProvidersData: {},
-	roles: {
-		type: [{
-			type: String,
-			enum: ['user', 'admin']
-		}],
-		default: ['user']
 	},
 	updated: {
 		type: Date
@@ -97,25 +66,6 @@ var PuzzleHuntUserSchema = new Schema({
 	created: {
 		type: Date,
 		default: Date.now
-	},
-	/* For reset password */
-	resetPasswordToken: {
-		type: String
-	},
-	resetPasswordExpires: {
-		type: Date
-	},
-	confirmEmailToken: {
-		type: String
-	},
-	confirmEmailExpires: {
-		type: String
-	},
-	revertEmailToken: {
-		type: String
-	},
-	oldEmail: {
-		type: String
 	}
 });
 

@@ -50,15 +50,26 @@ var PuzzleHuntUserSchema = new Schema({
 		validate: [validateLocalStrategyProperty, 'Please fill in your email'],
 		match: [/.+\@.+\..+/, 'Please fill a valid email address']
 	},
+	phone: {
+		type: String,
+		default: '',
+		match: [/[0-9]{10}/, 'Phone number must be 10 digits']
+	},
 	password: {
 		type: String,
 		default: '',
 		validate: [validateLocalStrategyPassword, 'Password must be at least 8 characters']
 	},
 	major: {
+		/* Field of study */
 		type: String,
 		default: '',
 		trim: true
+	},
+	teamId: {
+		/* _id of team that this user is a member of, if any */
+		type: Schema.ObjectId,
+		default: null
 	},
 	privacy: {
 		email: {
