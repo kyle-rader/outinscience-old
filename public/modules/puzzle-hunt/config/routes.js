@@ -17,9 +17,9 @@ angular.module('puzzle-hunt').config(['$stateProvider',
       url: '/puzzle-hunt/sign-up',
       templateUrl: 'modules/puzzle-hunt/views/sign-up.html'
     })
-    .state('puzzle-hunt-sign-in', {
-      url: '/puzzle-hunt/sign-in',
-      templateUrl: 'modules/puzzle-hunt/views/sign-in.html'
+    .state('puzzle-hunt-login', {
+      url: '/puzzle-hunt/login',
+      templateUrl: 'modules/puzzle-hunt/views/login.html'
     })
     .state('puzzle-hunt-puzzles', {
       url: '/puzzle-hunt/puzzles',
