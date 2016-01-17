@@ -106,4 +106,14 @@ dl.info-list {
   dd {
     font-size: 1.1em;
   }
+  i {
+    display: inline-block;
+    padding-right: 10px;
+    @media screen and (max-width: @screen-xs-max) {
+      font-size: 34pt;
+    }
+    @media screen and (min-width: @screen-sm-min) {
+      font-size: 48pt;
+    }
+  }
 }
