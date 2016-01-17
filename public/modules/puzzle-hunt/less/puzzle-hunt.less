@@ -51,6 +51,7 @@ section[data-ng-controller="PuzzleHuntController"] {
 
   a.title-link, a.title-link:hover {
     text-decoration: none;
+    display: block;
   }
 
   ul.info-list li + li {
@@ -60,28 +61,49 @@ section[data-ng-controller="PuzzleHuntController"] {
 
 div.puzzle-hunt-title-small {
   text-align: left;
-  h2, img {
+  h2, a {
     display: inline-block;
+  }
+  img, small {
+    display: block;
+  }
+  small {
+    display: block;
+    padding: 3px;
+  }
+  a, a:hover {
+    color: @rb-black;
+    text-decoration: none;
   }
 
   @media screen and (max-width: @screen-xs-max) {
     h2 {
-      line-height: 1.5em;
-      vertical-align: bottom;
+      vertical-align: top;
+      padding-left: 10px;
     }
     img {
       max-width: 5em;
-      padding: 0px 5px;
     }
   }
   @media screen and (min-width: @screen-sm-min) {
     h2 {
-      line-height: 1.5em;
-      vertical-align: bottom;
+      vertical-align: top;
+      padding-left: 15px;
     }
     img {
       max-width: 6em;
-      padding: 0px 10px;
     }
+  }
+}
+
+dl.info-list {
+  dd + dt {
+    padding-top: 10px;
+  }
+  dt {
+    .h3;
+  }
+  dd {
+    font-size: 1.1em;
   }
 }
