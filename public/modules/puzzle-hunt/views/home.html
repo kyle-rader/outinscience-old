@@ -1,6 +1,7 @@
 <section data-ng-controller="PuzzleHuntController">
   <div class="container">
 
+    <!-- MAIN TITLE -->
     <div class="row">
       <div class="xs-col-12">
         <h2 class="text-center">The First Annual</h2>
@@ -8,21 +9,41 @@
           <h1 class="">WWU Great</h1>
           <img class="img-responsive center-block puzzle-logo" src="/modules/puzzle-hunt/img/logo-250.png" />
           <h1 class="">Puzzle Hunt</h1>
+          <h5>April 9th, 2016 &nbsp;&nbsp; 10AM - 3PM</h5>
         </div>
       </div>
     </div>
 
     <br>
 
+    <!-- PAGE COLUMNS -->
     <div class="row">
 
-      <div class="col-xs-6 col-sm-4 text-center">
+      <!-- LOGIN -->
+      <div class="col-xs-6 col-sm-3 text-center">
+        <!-- Column Icon & Link -->
+        <a href="/#!/puzzle-hunt/login" class="title-link rb-blue text-center">
+          <i class="icon login fsize-48 rb-blue"></i>
+          <h2 class="text-center">Login</h2>
+        </a>
+        <!-- Column data list -->
+        <dl class="puzzle-hunt-info text-left">
+          <dt>Don't have an account yet?</dt>
+          <dd>
+            <a  class="text-center display-block" href="/#!/puzzle-hunt/sign-up">
+              Create an account!
+            </a>
+          </dd>
+        </dl>
+      </div>
+
+      <!-- SIGN UP -->
+      <div class="col-xs-6 col-sm-3 text-center">
         <!-- Column Icon & Link -->
         <a href="/#!/puzzle-hunt/sign-up" class="title-link rb-green text-center">
           <i class="icon android-add-person fsize-48 rb-green"></i>
-          <h2 class="text-center">Sign Up</h2><small><a href="/#!/puzzle-hunt/login">Or log in</a></small>
+          <h2 class="text-center">Sign Up</h2>
         </a>
-        <!-- Column data list -->
         <dl class="puzzle-hunt-info text-left">
           <dt>Sign up coming soon!</dt>
           <dd>
@@ -30,22 +51,11 @@
               Get notified when registration opens.
             </a>
           </dd>
-          <br>
-          <dt>Logistics</dt>
-          <dd>
-            <ul class="list-unstyled info-list text-center">
-              <li>Free to register this year!</li>
-              <li>Limited space so sign up fast!</li>
-              <li>Must register with a <strong>students.wwu.edu</strong> or <strong>wwu.edu</strong> email.</li>
-              <li>Form a new team or join your friends.</li>
-              <li>Team size limit is 6</li>
-              <li>Awesome T-Shirts will be ~ $18</li>
-            </ul>
-          </dd>
         </dl>
       </div>
 
-      <div class="col-xs-6 col-sm-4 text-center">
+      <!-- INFORMATION -->
+      <div class="col-xs-6 col-sm-3 text-center">
         <!-- Column Icon & Link -->
         <a href="/#!/puzzle-hunt/info" class="title-link rb-red">
           <i class="icon info fsize-48 rb-red"></i>
@@ -55,21 +65,11 @@
         <dl class="puzzle-hunt-info text-left">
           <dt>What is a puzzle hunt?</dt>
           <dd>The puzzle hunt is an event for anyone and everyone to come together, solve fun puzzles, and win prizes!</dd>
-          <br>
-          <dt>When is it?</dt>
-          <dd class="text-center">April 9th 2016<br>11:00 AM - 3:00 PM</dd>
-          <br>
-          <dt>Contact</dt>
-          <dd>
-            Primary Event Coordinator: <a href="mailto:Millie.Johnson@wwu.edu">Millie Johnson</a><br>
-            Puzzles Committee: <a href="mailto:Millie.Johnson@wwu.edu">Millie Johnson</a><br>
-            Technology Committee: <a href="mailto:kyle.rader@ieee.org">Kyle Rader</a><br>
-            Volunteer & Budget Committee: <a href="mailto:regina.barberdegraaff@wwu.edu">Regina Barber DeGraaff</a>
-          </dd>
         </dl>
       </div>
 
-      <div class="col-xs-12 col-sm-4 text-center">
+      <!-- PUZZLES -->
+      <div class="col-xs-6 col-sm-3 text-center">
         <!-- Column Icon & Link -->
         <a href="/#!/puzzle-hunt/puzzles" class="title-link rb-purple">
           <i class="icon cube fsize-48 rb-purple"></i>
@@ -82,6 +82,37 @@
         </dl>
       </div>
 
+    </div>
+    <br>
+    <div class="row">
+      <!-- LOGISTICS -->
+      <div class="col-xs-6 col-sm-4 col-sm-offset-2 text-center">
+        <dl class="puzzle-hunt-info">
+          <dt>Logistics</dt>
+          <dd>
+            <ul class="list-unstyled info-list">
+              <li>Free to register this year!</li>
+              <li>Limited space so sign up fast!</li>
+              <li>Must register with a <strong>students.wwu.edu</strong> or <strong>wwu.edu</strong> email.</li>
+              <li>Form a new team or join your friends.</li>
+              <li>Team size limit is 6</li>
+              <li>Awesome T-Shirts will be ~ $18</li>
+            </ul>
+          </dd>
+        </dl>
+      </div>
+      <!-- CONTACTS -->
+      <div class="col-xs-6 col-sm-4 text-center">
+        <dl class="puzzle-hunt-info">
+          <dt class="text-center">Contact</dt>
+          <dd>
+            Primary Event Coordinator:<br> <a href="mailto:Millie.Johnson@wwu.edu">Millie Johnson</a><br>
+            Puzzles Committee:<br> <a href="mailto:Millie.Johnson@wwu.edu">Millie Johnson</a><br>
+            Technology Committee:<br> <a href="mailto:kyle.rader@ieee.org">Kyle Rader</a><br>
+            Volunteer & Budget Committee:<br> <a href="mailto:regina.barberdegraaff@wwu.edu">Regina Barber DeGraaff</a>
+          </dd>
+        </dl>
+      </div>
     </div>
   </div>
   <br>
