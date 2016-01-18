@@ -12,7 +12,9 @@ var _ = require('lodash'),
 	nodemailer = require('nodemailer'),
 	mg = require('nodemailer-mailgun-transport'),
 	async = require('async'),
-	crypto = require('crypto');
+	crypto = require('crypto'),
+	Validator = require('is-my-json-valid'),
+	JSONSchema = require('../../models/puzzleHuntUsersRequired.json');
 var auth = {
   auth: {
     api_key: config.mailer.api_key,
@@ -21,14 +23,37 @@ var auth = {
 };
 var nodemailerMailgun = nodemailer.createTransport(mg(auth));
 
+var signupValidate = new Validator({
+	type: 'object',
+	properties: JSONSchema.properties,
+	required: JSONSchema.required
+}, {greedy: true});
+
 /**
- * Signup
+ * /puzzlehunt/users/signup POST
  */
 exports.signup = function(req, res) {
 	// For security measurement we remove the roles from the req.body object
 	delete req.body.roles;
 
 	async.waterfall([
+		// Make sure the new User object conforms (in part) to our schema
+		function(done){
+			if(signupValidate(req.body)){
+				done(null);
+			} else {
+				var errMessage = {
+					message: 'One or more invalid field(s)',
+					errors: {}
+				};
+				var errors = signupValidate.errors;
+				for(var i=0; i<errors.length; i++){
+					var fieldName = errors[i].field.substr(5);
+					errMessage.errors[fieldName] = fieldName + ' ' + errors[i].message;
+				}
+				done(errMessage);
+			}
+		},
 		// Generate random token
 		function(done) {
 			crypto.randomBytes(20, function(err, buffer) {
@@ -39,11 +64,11 @@ exports.signup = function(req, res) {
 		// Restrict email address to a WWU email
 		function(token, done){
 			// "done" argument is appended automatically
-			var err = null;
 			var newUser = new User(req.body);
+			var err = null;
 			// Todo: Use npm tool to validate email here
-			if(!(newUser.email.endsWith('@students.wwu.edu') ||
-				newUser.email.endsWith('@wwu.edu'))){
+			var email = String(newUser.email);
+			if(!(_.endsWith(email, '@students.wwu.edu') || _.endsWith(email, '@wwu.edu'))){
 					err = 'Please use your WWU email address.';
 			}
 			done(err, token, newUser);
@@ -358,12 +383,12 @@ exports.removeOAuthProvider = function(req, res, next) {
 	}
 };
 
-exports.listAllUsers = function(req, res){
+exports.list = function(req, res){
 	User.find({}, function(err, users){
 		if(err){
-			res(err).code(400);
+			res.status(400).send(err);
 		} else {
-			res(users);
+			res.json(users);
 		}
 	});
 };
