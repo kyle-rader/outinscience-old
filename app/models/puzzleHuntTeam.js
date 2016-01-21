@@ -37,6 +37,7 @@ var PuzzleHuntTeamSchema = new Schema({
 		type: [Schema.ObjectId]
 	},
 	owner_id: {
+		required: true,
 		type: Schema.ObjectId
 	},
 	lookingForMembers: {
