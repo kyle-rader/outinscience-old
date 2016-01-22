@@ -15,6 +15,8 @@ var signupValidate = new Validator({
 }, {greedy: true});
 
 
+var MAX_TEAM_SIZE = 6;
+
 /* Helper functions */
 /**
  * Check a new team object against its schema. Finds missing/invalid fields.
@@ -48,7 +50,7 @@ function addUserToTeam(userId, teamId, callback){
 	User.update({_id: userId}, {teamId: teamId}, function(err, details){
 		if(err){
 			callback(err);
-		} else if(details.nModified !== 1){
+		} else if(details.ok !== 1){
 			callback({
 				errmsg: 'Unable to update any PuzzleHuntUser documents matching the given _ids',
 			});
@@ -66,15 +68,33 @@ function addUserToTeam(userId, teamId, callback){
  *     error, if any, followed by teamId and userId.
  */
 function addTeamMember(teamId, userId, callback){
-	Team.update({_id: teamId}, {members: userId}, function(err, details){
+	Team.findById(teamId, function(err, theTeam){
 		if(err){
 			callback(err);
-		} else if(details.nModified !== 1){
-			callback({
-				errmsg: 'Unable to update any PuzzleHuntTeam documents matching the given _ids',
-			});
 		} else {
-			callback(null, teamId, userId);
+			// Verify that the userId is valid before adding them to the team
+			User.findById(userId, function(err, user){
+				if(err){
+					callback({
+						message: 'Unable to find user with given _id'
+					});
+				} else {
+					// User exists in database
+					if(theTeam.members.length >= MAX_TEAM_SIZE){
+						callback({message: 'Unable to join; team is already full!'});
+					} else {
+						theTeam.members.push(user._id);
+						if(theTeam.members.length === MAX_TEAM_SIZE){
+							// Team can't be looking for members if it's full!
+							theTeam.lookingForMembers = false;
+						}
+						theTeam.save(function(err, theTeam){
+							if(err){ callback(err); }
+							else{ callback(null, theTeam._id, user._id); }
+						});
+					}
+				}
+			});
 		}
 	});
 }
@@ -123,10 +143,11 @@ exports.createNew = function(req, res){
 	],
 	// Error handler
 	function(err){
-		err = err.validationErrors || err.errmsg;
+		console.log(err);
+		var error = err.validationErrors || err.errmsg;
 		var ret = {
 			message: 'Failed to save new team.',
-			errors: err
+			errors: error
 		};
 		res.status(400).send(ret);
 	});
