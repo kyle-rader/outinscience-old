@@ -1,6 +1,7 @@
 'use strict';
 
 var mongoose = require('mongoose'),
+	async = require('async'),
 	Team = mongoose.model('PuzzleHuntTeam'),
 	User = mongoose.model('PuzzleHuntUser'),
 	Validator = require('is-my-json-valid'),
@@ -13,45 +14,131 @@ var signupValidate = new Validator({
 }, {greedy: true});
 
 
-exports.createNew = function(req, res){
-	if(signupValidate(req.body)){
-		if(req.body.members.length === 0){
-			req.body.members = [req.body.owner_id];
-		}
-		var newTeam = new Team(req.body);
-		User.update({_id: req.body.owner_id}, {teamId: newTeam._id}, function(err, details){
-			console.log(details);
-			if(err){
-				res.status(404).send({message: 'Unable to update team owner\'s profile', error: err});
-			} else if(details.nModified === 1){
-				newTeam.save(function(err){
-					if(err){
-						console.log(err);
-						res.status(500).send({
-							message: 'Failed to create team! Please try a different team name.',
- 							error: err
-						});
-					} else {
-						res.status(200).send(newTeam);
-					}
-				});
-			} else {
-				res.status(404).send({message: 'Could not find team owner with given _id'});
-			}
-
-		});
+/* Helper functions */
+/**
+ * Check a new team object against its schema. Finds missing/invalid fields.
+ * @param team {Object} The team object to Check
+ * @returns {null|Object} Null if valid object, else an object containing
+ *     invalid fields.
+ */
+function validateNewPuzzleHuntTeam(team){
+	if(signupValidate(team)){
+		return null;
 	} else {
-		var errMessage = {
-			message: 'One or more invalid field(s)',
-			errors: {}
-		};
+		var retObj = {};
 		var errors = signupValidate.errors;
 		for(var i=0; i<errors.length; i++){
 			var fieldName = errors[i].field.substr(5);
-			errMessage.errors[fieldName] = fieldName + ' ' + errors[i].message;
+			retObj[fieldName] = fieldName + ' ' + errors[i].message;
 		}
-		res.status(400).send(errMessage);
+
+		return retObj;
 	}
+}
+
+/**
+ * Update a PuzzleHuntUser document so that their "teamId" is the id given.
+ * @param userId {String} The _id of the user document
+ * @param teamId {String} The _id of the team document
+ * @param callback {function} Gets called upon completion. First argument is
+ *     error, if any, followed by userId and teamId.
+ * @returns {Promise} Resolves to empty, fails to error object
+ */
+function addUserToTeam(userId, teamId, callback){
+	User.update({_id: userId}, {teamId: teamId}, function(err, details){
+		if(err){
+			callback(err);
+		} else if(details.nModified !== 0){
+			callback({
+				summary: 'Unable to update any PuzzleHuntUser documents matching the given _ids',
+				nonFatal: true
+			});
+		} else {
+			callback(null, userId, teamId);
+		}
+	});
+}
+
+/**
+ * Update a PuzzleHuntTeam's "members" array to include the given user _id
+ * @param teamId {String} The _id of the team document
+ * @param userId {String} The _id of the user document
+ * @returns {Promise} Resolves to empty, fails to error object
+ */
+function addTeamMember(teamId, userId, callback){
+	Team.update({_id: teamId}, {members: userId}, function(err, details){
+		if(err){
+			callback(err);
+		} else if(details.nModified !== 1){
+			callback({
+				summary: 'Unable to update any documents matching the given _ids',
+				nonFatal: true
+			});
+		} else {
+			callback(null, teamId, userId);
+		}
+	});
+}
+
+
+/* Request-processing functions */
+
+exports.createNew = function(req, res){
+	delete req.body.roles; // For security reasons
+
+	async.waterfall([
+		// Validate the team fields in the request
+		function(done){
+			console.log("Tiem to validate");
+			var validationErrors = validateNewPuzzleHuntTeam(req.body);
+			if(validationErrors === null){
+				if(req.body.members.length === 0){
+					// Automatically add this user to their new team
+					req.body.members = [req.body.owner_id];
+				}
+				done(null);
+			} else {
+				done(validationErrors);
+			}
+		},
+		// Save the new record in the database and get its _id
+		function saveNewTeam(done){
+			console.log("Valid. save it.");
+			var teamObject = new Team(req.body);
+			teamObject.save(function(err, doc){
+				console.log("Saved (maybe)");
+				console.log(err);
+				console.log(doc);
+				if(err){
+					done(err);
+				} else {
+					done(null, doc);
+				}
+			});
+		},
+		// Update the owner so that their teamId points to this new one
+		function(team, done){
+			console.log("last one");
+			console.log(team);
+			addUserToTeam(team.owner_id, team._id, function(err){
+				console.log(err);
+				if(err){
+					done(err);
+				} else {
+					res.send(team);
+				}
+			});
+		},
+		// Error handler at end of chain.
+		function(err){
+			console.log(err);
+			var ret = {
+				message: 'Failed to save new team.',
+				errors: err
+			};
+			res.status(400).send();
+		}
+	]);
 };
 
 //exports.join = function(res,req){
