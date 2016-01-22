@@ -48,10 +48,9 @@ function addUserToTeam(userId, teamId, callback){
 	User.update({_id: userId}, {teamId: teamId}, function(err, details){
 		if(err){
 			callback(err);
-		} else if(details.nModified !== 0){
+		} else if(details.nModified !== 1){
 			callback({
-				summary: 'Unable to update any PuzzleHuntUser documents matching the given _ids',
-				nonFatal: true
+				errmsg: 'Unable to update any PuzzleHuntUser documents matching the given _ids',
 			});
 		} else {
 			callback(null, userId, teamId);
@@ -71,8 +70,7 @@ function addTeamMember(teamId, userId, callback){
 			callback(err);
 		} else if(details.nModified !== 1){
 			callback({
-				summary: 'Unable to update any documents matching the given _ids',
-				nonFatal: true
+				errmsg: 'Unable to update any PuzzleHuntTeam documents matching the given _ids',
 			});
 		} else {
 			callback(null, teamId, userId);
@@ -84,12 +82,11 @@ function addTeamMember(teamId, userId, callback){
 /* Request-processing functions */
 
 exports.createNew = function(req, res){
-	delete req.body.roles; // For security reasons
+	delete req.body.roles; // For security
 
 	async.waterfall([
 		// Validate the team fields in the request
 		function(done){
-			console.log("Tiem to validate");
 			var validationErrors = validateNewPuzzleHuntTeam(req.body);
 			if(validationErrors === null){
 				if(req.body.members.length === 0){
@@ -98,17 +95,13 @@ exports.createNew = function(req, res){
 				}
 				done(null);
 			} else {
-				done(validationErrors);
+				done({validationErrors: validationErrors});
 			}
 		},
 		// Save the new record in the database and get its _id
 		function saveNewTeam(done){
-			console.log("Valid. save it.");
 			var teamObject = new Team(req.body);
 			teamObject.save(function(err, doc){
-				console.log("Saved (maybe)");
-				console.log(err);
-				console.log(doc);
 				if(err){
 					done(err);
 				} else {
@@ -118,10 +111,7 @@ exports.createNew = function(req, res){
 		},
 		// Update the owner so that their teamId points to this new one
 		function(team, done){
-			console.log("last one");
-			console.log(team);
 			addUserToTeam(team.owner_id, team._id, function(err){
-				console.log(err);
 				if(err){
 					done(err);
 				} else {
@@ -129,16 +119,16 @@ exports.createNew = function(req, res){
 				}
 			});
 		},
-		// Error handler at end of chain.
-		function(err){
-			console.log(err);
-			var ret = {
-				message: 'Failed to save new team.',
-				errors: err
-			};
-			res.status(400).send();
-		}
-	]);
+	],
+	// Error handler
+	function(err){
+		err = err.validationErrors || err.errmsg;
+		var ret = {
+			message: 'Failed to save new team.',
+			errors: err
+		};
+		res.status(400).send(ret);
+	});
 };
 
 //exports.join = function(res,req){
