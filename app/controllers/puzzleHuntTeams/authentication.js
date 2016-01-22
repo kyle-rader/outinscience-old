@@ -2,6 +2,7 @@
 
 var mongoose = require('mongoose'),
 	async = require('async'),
+	passport = require('passport'),
 	Team = mongoose.model('PuzzleHuntTeam'),
 	User = mongoose.model('PuzzleHuntUser'),
 	Validator = require('is-my-json-valid'),
@@ -42,7 +43,6 @@ function validateNewPuzzleHuntTeam(team){
  * @param teamId {String} The _id of the team document
  * @param callback {function} Gets called upon completion. First argument is
  *     error, if any, followed by userId and teamId.
- * @returns {Promise} Resolves to empty, fails to error object
  */
 function addUserToTeam(userId, teamId, callback){
 	User.update({_id: userId}, {teamId: teamId}, function(err, details){
@@ -62,7 +62,8 @@ function addUserToTeam(userId, teamId, callback){
  * Update a PuzzleHuntTeam's "members" array to include the given user _id
  * @param teamId {String} The _id of the team document
  * @param userId {String} The _id of the user document
- * @returns {Promise} Resolves to empty, fails to error object
+ * @param callback {function} Gets called upon completion. First argument is
+ *     error, if any, followed by teamId and userId.
  */
 function addTeamMember(teamId, userId, callback){
 	Team.update({_id: teamId}, {members: userId}, function(err, details){
@@ -131,25 +132,33 @@ exports.createNew = function(req, res){
 	});
 };
 
-//exports.join = function(res,req){
-//	passport.authenticate('local', function(err, user, info) {
-//		if (err || !user) {
-//			res.status(400).send(info);
-//		} else {
-//			// Remove sensitive data before login
-//			user.password = undefined;
-//			user.salt = undefined;
-//
-//			req.login(user, function(err) {
-//				if (err) {
-//					res.status(400).send(err);
-//				} else if (!user.verified) {
-//					req.logout();
-//					res.status(400).send({message: 'No account with that email exists or that email is not yet verified.'});
-//				} else {
-//					res.json(user);
-//				}
-//			});
-//		}
-//	})(req, res, next);
-//};
+exports.join = function(res,req){
+	passport.authenticate('local', function(err, user, info) {
+		if (err || !user) {
+			res.status(400).send(info);
+		} else {
+			// Remove sensitive data before login
+			user.password = undefined;
+			user.salt = undefined;
+
+			if(!res.body.teamId){
+				res.status(400).send('No teamId provided.');
+			} else {
+				async.waterfall([
+					function(done){
+						addUserToTeam(user._id, req.body.teamId, done);
+					},
+					function(userId, teamId, done){
+						addTeamMember(teamId, userId, done);
+					}
+				], function(err){
+					err = err.message || err.errmsg || null;
+					res.status(400).send({
+						message: 'Unable to join team with given _id',
+						details: err
+					});
+				});
+			}
+		}
+	})(req, res);
+};
