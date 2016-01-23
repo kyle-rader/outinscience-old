@@ -1,0 +1,22 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "properties": {
+    "teamName": {
+      "type": "string",
+      "minLength": 1
+    },
+    "owner_id": {
+      "type": "string",
+      "length": 36
+    },
+    "password": {
+      "type": "string",
+      "minLength": 1
+    }
+  },
+  "required": [
+    "teamName",
+    "owner_id",
+    "password"
+  ]
+}

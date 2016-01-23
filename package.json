@@ -33,6 +33,7 @@
     "grunt-contrib-less": "^1.0.0",
     "helmet": "^1.0.1",
     "iconfonts": "^0.6.0",
+    "is-my-json-valid": "^2.12.4",
     "lodash": "^3.10.1",
     "mailchimp-api": "^2.0.7",
     "method-override": "^2.3.5",
