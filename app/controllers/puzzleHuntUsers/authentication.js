@@ -15,12 +15,14 @@ var _ = require('lodash'),
   crypto = require('crypto'),
   Validator = require('is-my-json-valid'),
   JSONSchema = require('../../models/puzzleHuntUsersRequired.json');
+
 var auth = {
   auth: {
     api_key: config.mailer.api_key,
     domain: config.mailer.domain
   }
 };
+
 var nodemailerMailgun = nodemailer.createTransport(mg(auth));
 
 var signupValidate = new Validator({
@@ -45,6 +47,7 @@ exports.signup = function(req, res) {
 
   async.waterfall([
     // Make sure the new User object conforms (in part) to our schema
+    // And the fields have valid values
     function(done) {
       var errMessage = null;
 
@@ -91,14 +94,15 @@ exports.signup = function(req, res) {
         done(err, token); // err not passed to next function
       });
     },
-    function(token, done){
+    // Create new user object
+    function(token, done) {
       // "done" argument is appended automatically
       var newUser = new User(req.body);
-      var err = null;
+      var err = newUser ? null : {message: 'Failed to create user!'};
 
       done(err, token, newUser);
     },
-    // Create user with verify token
+    // Attempt to save user with verify token
     function(token, newUser, done) {
 
       // Init Variables
@@ -122,16 +126,16 @@ exports.signup = function(req, res) {
         }
       });
     },
-    // Send verification email
+    // Render Response Email (Verification or Warning)
     function(token, user, emailInUse, done) {
       if (!emailInUse) {
         // Send the normal confirm email
-        res.render('templates/email-confirmation-email', {
-          name: user.displayName,
+        res.render('templates/puzzle-hunt-email-confirmation-email', {
+          name: user.firstName,
           appName: config.app.title,
-          url: req.protocol + '://' + req.headers.host + '/auth/confirm-email/' + token
+          url: req.protocol + '://' + req.headers.host + '/puzzlehunt/auth/confirm-email/' + token
         }, function(err, emailHTML) {
-          done(err, emailHTML, user, 'Out In Science: Confirm Email');
+          done(err, emailHTML, user, 'WWU Great Puzzle Hunt: Confirm Email');
         });
       } else {
         // Send a warning email to the existing user about this potential attempt
@@ -140,12 +144,12 @@ exports.signup = function(req, res) {
           email: user.email
         }, function(err, existingUser) {
           if (!err && existingUser) {
-            res.render('templates/email-in-use-warning-email', {
+            res.render('templates/puzzle-hunt-email-in-use-warning-email', {
               name: existingUser.displayName,
               appName: config.app.title,
               imposter: user.displayName
             }, function(err, emailHTML) {
-              done(err, emailHTML, user, 'Out In Science: Attempted Account Creation');
+              done(err, emailHTML, user, 'WWU Great Puzzle Hunt: Attempted Account Creation');
             });
           } else {
             done({message: 'Account creation failed.  For support, email support@outinscience.com'});
@@ -153,6 +157,7 @@ exports.signup = function(req, res) {
         });
       }
     },
+    // Send Rendered email
     function(emailHTML, user, subject, done) {
       nodemailerMailgun.sendMail({
         from: config.mailer.from,
@@ -250,7 +255,7 @@ exports.revertEmailUpdate = function(req, res) {
  * Signin after passport authentication
  */
 exports.signin = function(req, res, next) {
-  passport.authenticate('local', function(err, user, info) {
+  passport.authenticate('puzzleHuntUser', function(err, user, info) {
     if (err || !user) {
       res.status(400).send(info);
     } else {

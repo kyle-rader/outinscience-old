@@ -28,6 +28,4 @@ module.exports = function(app) {
 	app.route('/puzzlehunt/auth/signout').get(puzzleHuntUsers.signout);
 	app.route('/puzzlehunt/auth/revert-email-update/:token').get(puzzleHuntUsers.revertEmailUpdate);
 
-	// Finish by binding the user middleware
-	app.param('userId', puzzleHuntUsers.userByID);
 };

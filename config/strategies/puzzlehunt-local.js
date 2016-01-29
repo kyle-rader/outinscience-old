@@ -9,7 +9,7 @@ var passport = require('passport'),
 
 module.exports = function() {
 	// Use local strategy
-	passport.use(new LocalStrategy({
+	passport.use('puzzleHuntUser', new LocalStrategy({
 			usernameField: 'email',
 			passwordField: 'password'
 		},

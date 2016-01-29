@@ -19,21 +19,21 @@ angular.module('core').controller('HeaderController', ['$scope', 'Authentication
 
 		$scope.formData = {};
 
-		$scope.emailSubscribe = function() {
-			/*
-			$http.post($location.protocol() + '://' + $location.host() + '/mail/subscribe/d7142be008/' + $scope.formData.email)
-			.success(function(data, status, headers, config) {
-				if(!data.error) {
-					$scope.formData.success = $scope.formData.email + ' has been subscribed to the CodeLily mailing list.  Thanks! We look forward to talking with you soon ^_^';
-				} else {
-					$scope.formData.error = data.error;
-				}
-			})
-			.error(function(data, status, headers, config) {
-				$scope.formData.error = data.error;
-			});
-			*/
-		};
+		// $scope.emailSubscribe = function() {
+		// 	/*
+		// 	$http.post($location.protocol() + '://' + $location.host() + '/mail/subscribe/d7142be008/' + $scope.formData.email)
+		// 	.success(function(data, status, headers, config) {
+		// 		if(!data.error) {
+		// 			$scope.formData.success = $scope.formData.email + ' has been subscribed to the CodeLily mailing list.  Thanks! We look forward to talking with you soon ^_^';
+		// 		} else {
+		// 			$scope.formData.error = data.error;
+		// 		}
+		// 	})
+		// 	.error(function(data, status, headers, config) {
+		// 		$scope.formData.error = data.error;
+		// 	});
+		// 	*/
+		// };
 
 	}
 ]);

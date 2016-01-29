@@ -50,6 +50,7 @@
                 <div class="help-block" ng-show="error && error.errors['phone']" data-ng-bind="error.errors['phone']"></div>
               </div>
 
+              <!-- T-SHIRT -->
               <div class="form-group">
                 <div class="checkbox">
                   <label>
@@ -57,6 +58,7 @@
                   </label>
                 </div>
               </div>
+
               <!-- MAJOR -->
               <div class="form-group" ng-class="{ 'has-error': (error && error.errors['major'])}">
                 <label for="major">Major (s) &nbsp; <small style="font-weight: 300;">(Or intended, or minors, or whatever)</small></label>
@@ -70,15 +72,17 @@
                 <input type="password" id="password" name="password" class="form-control" ng-model="credentials.password" placeholder="Password" ng-change="fieldChanged('password')">
                 <div class="help-block" ng-show="error && error.errors['password']" data-ng-bind="error.errors['password']"></div>
               </div>
-            </div>
 
-            <div class="text-center form-group">
-              <button type="submit" class="btn btn-large btn-primary">Sign up</button>&nbsp; or&nbsp;
-              <a href="/#!/puzzle-hunt/login" class="show-signup">Sign in</a>
+              <div class="text-center form-group">
+                <button type="submit" class="btn btn-large btn-primary">Sign up</button>&nbsp; or&nbsp;
+                <a href="/#!/puzzle-hunt/login" class="show-signup">Sign in</a>
+              </div>
             </div>
 
             <div data-ng-show="success" class="text-center text-success">
               <strong ng-bind-html="success"></strong>
+              <br><br>
+              <a href="/#!/puzzle-hunt/login" class="btn btn-large btn-primary">Sign in</a>
             </div>
 
             <div data-ng-show="error" class="text-center text-danger">
