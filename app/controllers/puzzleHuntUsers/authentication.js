@@ -62,13 +62,8 @@ exports.signup = function(req, res) {
         }
       }
 
-      // Also Enforce WWU Student Email Address
-      req.body.email = req.body.email ? req.body.email.trim() : '';
-      if (!(_.endsWith(req.body.email, '@students.wwu.edu'))) {
-        if (!errMessage)
-          errMessage = makeErrMessage();
-        errMessage.errors.email = 'Please use a WWU student email address.';
-      }
+      // Enforce WWU Student Email Address
+      req.body.email = req.body.email ? req.body.email.trim() + '@students.wwu.edu' : '';
 
       // Enforce phone number to be at 10 or 11 digits
       req.body.phone = req.body.phone ? req.body.phone.trim() : '';

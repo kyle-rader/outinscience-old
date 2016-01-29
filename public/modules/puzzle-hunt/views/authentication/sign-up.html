@@ -19,7 +19,7 @@
       <div class="col-xs-12 col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3">
         <div class="text-center">Your email and phone will be hidden unless you choose to share them in the team finder.</div>
         <br><br>
-        <form name="userForm" data-ng-submit="signup()" class="signin form-horizontal" autocomplete="off" novalidate="true">
+        <form name="userForm" data-ng-submit="signup()" class="form-horizontal" autocomplete="off" novalidate="true">
           <fieldset>
             <div ng-show="!success">
               <!-- FIRST NAME -->
@@ -38,8 +38,11 @@
 
               <!-- EMAIL -->
               <div class="form-group" ng-class="{ 'has-error': (error && error.errors['email'])}">
-                <label for="email">Email &nbsp; <small style="font-weight: 300;">(Must be a "@students.wwu.edu" email address)</small></label>
-                <input type="email" id="email" name="email" class="form-control" ng-model="credentials.email" placeholder="lastf@students.wwu.edu" ng-change="fieldChanged('email')">
+                <label for="email">WWU Username</label>
+                <div class="input-group">
+                  <input type="text" id="email" name="email" class="form-control" ng-model="credentials.email" placeholder="lastf" ng-change="fieldChanged('email')">
+                  <div class="input-group-addon">@students.wwu.edu</div>
+                </div>
                 <div class="help-block" ng-show="error && error.errors['email']" data-ng-bind="error.errors['email']"></div>
               </div>
 
