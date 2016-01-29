@@ -1,5 +1,5 @@
 <div class="input-group interests">
   <label ng-repeat="(key, val) in interests" ng-class="{'checkbox-inline': true, 'active': interests[key]}">
-    <input type="checkbox" class="hide" ng-model="interests[key]"><i class="sci-icon {{key}}" title="{{key}}"><img src="/modules/core/img/icons/{{key}}.png"></i>
+    <input type="checkbox" class="hide" ng-model="interests[key]"><i class="sci-icon {{key}}" title="{{key}}"><img ng-src="/modules/core/img/icons/{{key}}.png"></i>
   </label>
 </div>
