@@ -1,8 +1,8 @@
 'use strict';
 
-angular.module('puzzle-hunt').controller('PuzzleHuntInfoController', ['$scope', 'Authentication', '$http',
-	function($scope, Authentication, $http) {
-		$scope.user = Authentication.user;
+angular.module('puzzle-hunt').controller('PuzzleHuntInfoController', ['$scope', 'PuzzleAuth', '$http',
+	function($scope, PuzzleAuth, $http) {
+		$scope.user = PuzzleAuth.user;
 
 	}
 ]);

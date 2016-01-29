@@ -1,10 +1,10 @@
 'use strict';
 
-angular.module('puzzle-hunt').controller('PuzzleHuntSignUpController', ['$scope', 'Authentication', '$http', '$location',
-  function($scope, Authentication, $http, $location) {
+angular.module('puzzle-hunt').controller('PuzzleHuntSignUpController', ['$scope', 'PuzzleAuth', '$http', '$location',
+  function($scope, PuzzleAuth, $http, $location) {
 
     // If user is signed in then redirect back home
-    if (Authentication.user && Authentication.user._id) $location.path('/#!/puzzle-hunt/dashboard');
+    if (PuzzleAuth.user && PuzzleAuth.user._id) $location.path('/#!/puzzle-hunt/dashboard');
 
     $scope.signup = function() {
 
