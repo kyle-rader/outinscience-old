@@ -250,6 +250,9 @@ exports.revertEmailUpdate = function(req, res) {
  * Signin after passport authentication
  */
 exports.login = function(req, res, next) {
+  // use full email
+  req.body.email = req.body.email ? req.body.email.trim() + '@students.wwu.edu' : '';
+
   passport.authenticate('puzzleHuntUser', function(err, user, info) {
     if (err || !user) {
       res.status(400).send(info);
@@ -277,7 +280,7 @@ exports.login = function(req, res, next) {
  */
 exports.signout = function(req, res) {
   req.logout();
-  res.redirect('/');
+  res.redirect('/#!/puzzle-hunt');
 };
 
 /**
