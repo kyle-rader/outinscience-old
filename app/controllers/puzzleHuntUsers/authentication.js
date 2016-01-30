@@ -104,11 +104,14 @@ exports.signup = function(req, res) {
       var message = null;
 
       // Add missing user fields
-      newUser.provider = 'local';
+      newUser.provider = 'puzzleHuntUser';
       newUser.displayName = newUser.firstName + ' ' + newUser.lastName;
 
       newUser.confirmEmailToken = token;
       newUser.confirmEmailExpires = Date.now() + 86400000; // 24 hours
+
+      // Set userType for sessions serialization differentiation.
+      newUser.userType = 'puzzleHuntUser';
 
       // Then save the user
       newUser.save(function(err) {

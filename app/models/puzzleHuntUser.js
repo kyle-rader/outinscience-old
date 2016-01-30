@@ -83,6 +83,17 @@ var PuzzleHuntUserSchema = new Schema({
 			default: 'private'
 		}
 	},
+  role: {
+    type: String,
+    enum: ['player', 'helper', 'admin'],
+    default: 'player'
+  },
+  userType: {
+    type: String,
+    enum: ['outInScienceUser', 'puzzleHuntUser'],
+    required: true,
+    trim: true
+  },
 	salt: {
 		type: String
 	},
