@@ -1,11 +1,10 @@
 'use strict';
 
-angular.module('core').controller('HeaderController', ['$scope', 'Authentication', 'Menus', '$location', '$http',
-  function($scope, Authentication, Menus, $location, $http) {
-    $scope.authentication = Authentication;
+angular.module('core').controller('HeaderController', ['$scope', 'Menus', '$location', '$http', 'Authentication', 'PuzzleAuth',
+  function($scope, Menus, $location, $http, Authentication, PuzzleAuth) {
+    $scope.oisAuth = Authentication;
+    $scope.puzzleAuth = PuzzleAuth;
 
-    console.log($scope.authentication);
-    
     $scope.isCollapsed = false;
 
     $scope.$location = $location;
