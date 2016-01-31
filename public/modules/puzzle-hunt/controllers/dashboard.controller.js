@@ -7,5 +7,7 @@ angular.module('puzzle-hunt').controller('PuzzleHuntDashboardController', ['$sco
     // If user is signed in then redirect back home
     if (!PuzzleAuth.user || !PuzzleAuth.user._id) $location.path('/puzzle-hunt/login');
 
+    // Get Dashboard info from server
+
   }
 ]);
