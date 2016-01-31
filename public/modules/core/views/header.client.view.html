@@ -53,14 +53,17 @@
           <span data-ng-bind="oisAuth.user ? oisAuth.user.displayName : (puzzleAuth.user ? puzzleAuth.user.displayName : '')"></span>
         </a>
         <ul class="dropdown-menu">
-          <li ng-if="oisAuth.user" class="dropdown-header"><strong>Out In Science</strong></li>
+          <li class="dropdown-header"><strong>Out In Science</strong></li>
           <li ng-if="oisAuth.user"><a href="/#!/settings/profile">Edit Profile</a></li>
           <li ng-if="oisAuth.user"><a href="/#!/settings/password">Change Password</a></li>
+          <li ng-if="!oisAuth.user"><a href="/#!/signin">Login</a></li>
 
-          <li ng-if="puzzleAuth.user" class="dropdown-header"><strong>WWU Puzzle Hunt</strong></li>
+          <li class="dropdown-header"><strong>WWU Puzzle Hunt</strong></li>
+          <li ng-if="puzzleAuth.user"><a href="/#!/puzzle-hunt/dashboard">Dashboard</a></li>
           <li ng-if="puzzleAuth.user"><a href="/#!/puzzle-hunt/team">Team</a></li>
           <li ng-if="puzzleAuth.user"><a href="/#!/puzzle-hunt/profile">Edit Profile</a></li>
           <li ng-if="puzzleAuth.user"><a href="/#!/settings/password">Change Password</a></li>
+          <li ng-if="!puzzleAuth.user"><a href="/#!/puzzle-hunt/login">Login</a></li>
 
           <li class="divider"></li>
           <li><a href="/auth/signout">Signout</a></li>
