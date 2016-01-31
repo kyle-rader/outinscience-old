@@ -1,9 +1,9 @@
 'use strict';
 
-angular.module('puzzle-hunt').controller('PuzzleHuntLoginController', ['$scope', 'PuzzleAuth', '$http', '$location',
-  function($scope, PuzzleAuth, $http, $location) {
+angular.module('puzzle-hunt').controller('PuzzleHuntLoginController', ['$scope', 'PuzzleAuth', 'Authentication', '$http', '$location',
+  function($scope, PuzzleAuth, Authentication, $http, $location) {
     $scope.puzzleAuth = PuzzleAuth;
-
+    $scope.oisAuth = Authentication;
     $scope.user = PuzzleAuth.user;
 
     // If user is signed in then redirect back home
@@ -13,7 +13,8 @@ angular.module('puzzle-hunt').controller('PuzzleHuntLoginController', ['$scope',
       $http.post('/puzzlehunt/auth/login', $scope.credentials).success(function(response) {
         // If successful we assign the response to the global user model
         $scope.puzzleAuth.user = response;
-
+        // Remove Out in Science user.
+        $scope.oisAuth.user = null;
         // And redirect to the index page
         $location.path('/puzzle-hunt/dashboard');
 
