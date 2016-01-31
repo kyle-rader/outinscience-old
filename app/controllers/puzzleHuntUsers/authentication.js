@@ -204,7 +204,7 @@ exports.confirmEmail = function(req, res) {
           if (err) {
             res.status(400).send(err);
           } else {
-            res.redirect('/#!/settings/profile');
+            res.redirect('/#!/puzzle-hunt/dashboard');
           }
         });
       }
@@ -240,7 +240,7 @@ exports.revertEmailUpdate = function(req, res) {
             if (err) {
               res.status(400).send(err);
             } else {
-              res.redirect('/#!/settings/profile');
+              res.redirect('/#!/puzzle-hunt/dashboard');
             }
           });
         }

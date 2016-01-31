@@ -3,7 +3,7 @@
 // Init the application configuration module for AngularJS application
 var ApplicationConfiguration = (function() {
 	// Init module configuration options
-	var applicationModuleName = 'CodeLily';
+	var applicationModuleName = 'OutInScience';
 	var applicationModuleVendorDependencies = ['ngResource', 'ngRoute', 'ui.router', 'ui.bootstrap', 'ui.utils', 'ngAnimate', 'ngSanitize'];
 
 	// Add a new vertical module
