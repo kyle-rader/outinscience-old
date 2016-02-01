@@ -27,7 +27,19 @@ angular.module('puzzle-hunt').config(['$stateProvider',
     })
     .state('puzzle-hunt-password-forogt', {
       url: '/puzzle-hunt/password/forgot',
-      templateUrl: 'modules/puzzle-hunt/views/authentication/password-forgot.html'
+      templateUrl: 'modules/puzzle-hunt/views/password/forgot.html'
+    })
+    .state('puzzle-hunt-password-reset', {
+      url: '/puzzle-hunt/password/reset/:token',
+      templateUrl: 'modules/puzzle-hunt/views/password/reset.html'
+    })
+    .state('puzzle-hunt-password-reset-invalid', {
+      url: '/puzzle-hunt/password/reset-invalid',
+      templateUrl: 'modules/puzzle-hunt/views/password/reset-invalid.html'
+    })
+    .state('puzzle-hunt-password-success', {
+      url: '/puzzle-hunt/password/reset-success',
+      templateUrl: 'modules/puzzle-hunt/views/password/reset-success.html'
     })
     .state('puzzle-hunt-dashboard', {
       url: '/puzzle-hunt/dashboard',

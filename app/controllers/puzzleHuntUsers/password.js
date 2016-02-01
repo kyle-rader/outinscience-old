@@ -105,7 +105,7 @@ exports.validateResetToken = function(req, res) {
     }
   }, function(err, user) {
     if (!user) {
-      return res.redirect('/#!/password/reset/invalid');
+      return res.redirect('/#!/password/reset-invalid');
     }
 
     res.redirect('/#!/puzzle-hunt/password/reset/' + req.params.token);
@@ -134,7 +134,8 @@ exports.reset = function(req, res, next) {
             user.resetPasswordToken = undefined;
             user.resetPasswordExpires = undefined;
 
-            // Not assigning skipHash - so this password will be hashed on save.
+            // Not assigning skipHash
+            // so this password will be hashed on save.
             user.save(function(err) {
               if (err) {
                 return res.status(400).send({
@@ -200,7 +201,7 @@ exports.changePassword = function(req, res) {
   // Init Variables
   var passwordDetails = req.body;
 
-  if (req.user) {
+  if (req.user && req.user.userType === 'puzzleHuntUser') {
     if (passwordDetails.newPassword) {
       User.findById(req.user.id, function(err, user) {
         if (!err && user) {
@@ -218,7 +219,7 @@ exports.changePassword = function(req, res) {
                     if (err) {
                       res.status(400).send(err);
                     } else {
-                      res.send({
+                      res.status(200).send({
                         message: 'Password changed successfully'
                       });
                     }
