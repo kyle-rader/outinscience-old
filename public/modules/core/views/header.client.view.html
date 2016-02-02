@@ -15,7 +15,7 @@
     <!-- LEFT SIDE MENU -->
     <ul class="nav navbar-nav" >
       <!-- DYNAMIC TOP BAR ITEMS -->
-      <li data-ng-repeat="item in menu.items | orderBy: 'position'" ng-switch="item.menuItemType" ui-route="{{item.uiRoute}}" class="{{item.menuItemClass}}" ng-class="{'active': $location.path().match(item.uiRoute).length >= 1}" dropdown="item.menuItemType === 'dropdown'">
+      <li data-ng-repeat="item in menu.items | orderBy: 'position'" ng-switch="item.menuItemType" ui-route="{{item.uiRoute}}" class="{{item.menuItemClass}}" ng-class="{'active': $location.path().indexOf(item.uiRoute) === 0}" dropdown="item.menuItemType === 'dropdown'">
         <a href="#" ng-switch-when="dropdown" class="dropdown-toggle">
           <span data-ng-bind="item.title"></span>
         </a>
