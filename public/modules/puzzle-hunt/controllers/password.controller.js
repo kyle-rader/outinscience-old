@@ -35,8 +35,8 @@ angular.module('users').controller('PuzzleHuntPasswordController', ['$scope', '$
         PuzzleAuth.user = response;
         Authentication.user = null;
 
-        // And redirect to the index page
-        $location.path('/puzzle-hunt/dashboard');
+        // And redirect to password reset success page
+        $location.path('/puzzle-hunt/password/reset-success');
       }).error(function(response) {
         $scope.error = response.message;
       });

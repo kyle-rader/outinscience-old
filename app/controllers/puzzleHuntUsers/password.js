@@ -105,7 +105,7 @@ exports.validateResetToken = function(req, res) {
     }
   }, function(err, user) {
     if (!user) {
-      return res.redirect('/#!/password/reset-invalid');
+      return res.redirect('/#!/puzzle-hunt/password/reset-invalid');
     }
 
     res.redirect('/#!/puzzle-hunt/password/reset/' + req.params.token);
@@ -120,7 +120,6 @@ exports.reset = function(req, res, next) {
   var passwordDetails = req.body;
 
   async.waterfall([
-
     function(done) {
       User.findOne({
         resetPasswordToken: req.params.token,
@@ -129,11 +128,22 @@ exports.reset = function(req, res, next) {
         }
       }, function(err, user) {
         if (!err && user) {
+          if (!passwordDetails.newPassword || !passwordDetails.verifyPassword) {
+            return res.status(400).send({
+              message: 'Password fields must not be empty'
+            });
+          }
+          else if (passwordDetails.newPassword.length < 8) {
+            return res.status(400).send({
+              message: 'Password must be at least 8 characters'
+            });
+          }
           if (passwordDetails.newPassword === passwordDetails.verifyPassword) {
             user.password = passwordDetails.newPassword;
             user.resetPasswordToken = undefined;
             user.resetPasswordExpires = undefined;
 
+            user.skipHash = false;
             // Not assigning skipHash
             // so this password will be hashed on save.
             user.save(function(err) {
@@ -144,11 +154,10 @@ exports.reset = function(req, res, next) {
               } else {
                 req.login(user, function(err) {
                   if (err) {
-                    res.status(400).send(err);
+                    return res.status(400).send(err);
                   } else {
-                    // Return authenticated user
+                    // Continue with logged in udpdated user
                     res.json(user);
-
                     done(err, user);
                   }
                 });
@@ -206,6 +215,16 @@ exports.changePassword = function(req, res) {
       User.findById(req.user.id, function(err, user) {
         if (!err && user) {
           if (user.authenticate(passwordDetails.currentPassword)) {
+            if (!passwordDetails.newPassword || !passwordDetails.verifyPassword) {
+              return res.status(400).send({
+                message: 'Password fields must not be empty'
+              });
+            }
+            else if (passwordDetails.newPassword.length < 8) {
+              return res.status(400).send({
+                message: 'Password must be at least 8 characters'
+              });
+            }
             if (passwordDetails.newPassword === passwordDetails.verifyPassword) {
               user.password = passwordDetails.newPassword;
 

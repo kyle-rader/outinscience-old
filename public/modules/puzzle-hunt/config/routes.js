@@ -2,13 +2,14 @@
 
 //Setting up route
 angular.module('puzzle-hunt').config(['$stateProvider',
-	function($stateProvider) {
-		// The out list state routing
-		$stateProvider.
-		state('puzzle-hunt', {
-			url: '/puzzle-hunt',
-			templateUrl: 'modules/puzzle-hunt/views/home/home.html'
-		})
+  function($stateProvider) {
+
+    $stateProvider.
+    // Public Info Pages
+    state('puzzle-hunt', {
+      url: '/puzzle-hunt',
+      templateUrl: 'modules/puzzle-hunt/views/home/home.html'
+    })
     .state('puzzle-hunt-info', {
       url: '/puzzle-hunt/info',
       templateUrl: 'modules/puzzle-hunt/views/home/info.html'
@@ -37,13 +38,14 @@ angular.module('puzzle-hunt').config(['$stateProvider',
       url: '/puzzle-hunt/password/reset-invalid',
       templateUrl: 'modules/puzzle-hunt/views/password/reset-invalid.html'
     })
-    .state('puzzle-hunt-password-success', {
+    .state('puzzle-hunt-password-reset-success', {
       url: '/puzzle-hunt/password/reset-success',
       templateUrl: 'modules/puzzle-hunt/views/password/reset-success.html'
     })
+    // Internal WWU Puzzle Hunt Pages
     .state('puzzle-hunt-dashboard', {
       url: '/puzzle-hunt/dashboard',
       templateUrl: 'modules/puzzle-hunt/views/users/dashboard.html'
     });
-	}
+  }
 ]);
