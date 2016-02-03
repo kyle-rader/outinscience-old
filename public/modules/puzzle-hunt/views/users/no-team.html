@@ -1,0 +1,60 @@
+<section data-ng-controller="PuzzleHuntNoTeamController">
+  <div class="container">
+    <div class="row">
+      <h2 class="text-center">Create or Join a Team</h2>
+    </div>
+    <div class="row">
+      <div class="col-xs-12 col-sm-6">
+        <h3 class="text-center">Create a Team</h3>
+        <div class="row">
+          <div class="col-xs-12 col-md-8 col-md-offset-2">
+            <form name="newTeamForm" ng-submit="createTeam()" class="form-horizontal" ng-if="!success">
+                <!-- TEAM NAME -->
+                <div class="form-group" ng-class="{'has-error': error && error.errors && error.errors.teamName}">
+                    <label for="teamName">Team Name</label>
+                    <input type="text" name="teamName" class="form-control" data-ng-model="newTeam.teamName" placeholder="The Seahawks">
+                    <div class="text-danger" ng-bind="error.errors.teamName"></div>
+                </div>
+                <!-- TEAM PASSWORD -->
+                <div class="form-group" ng-class="{'has-error': error && error.errors && error.errors.password}">
+                    <label for="teamPassword">Team Password</label>
+                    <input type="text" name="teamPassword" class="form-control" data-ng-model="newTeam.password" placeholder="Secret Password">
+                    <small>Anyone who knows the team password will be able to join.</small>
+                    <div class="text-danger" ng-bind="error.errors.password"></div>
+                </div>
+                <!-- LOOKING FOR MEMBERS CHECKBOX -->
+                <div class="form-group">
+                    <div class="checkbox">
+                        <label>
+                            <input type="checkbox" name="lookingForMembers" data-ng-model="newTeam.lookingForMembers">Add team to the looking for members list! <br><small>(So your team shows up under the Join a Team list)</small>
+                        </label>
+                    </div>
+                </div>
+                <!-- INVITE TEAM MEMBERS -->
+                <div class="form-group">
+                    <label for="inviteMembers">
+                      Invite Team Members<br>
+                      <span style="font-weight:500;">Enter the WWU Universal ID(s) you wish to invite. Separate by spaces or new lines.</span>
+                    </label>
+                    <textarea class="form-control" name="inviteMembers" resizable="false" rows="4" style="resize: none;" data-ng-model="newTeam.inviteMembers"></textarea>
+                    You do not need to put <i>@students.wwu.edu</i> after each username :)
+                    <br>You can also invite team members later.
+                    <br>Max team size is 6.
+                </div>
+                <!-- CREATE TEAM BTN -->
+                <div class="form-group">
+                  <button type="submit" class="btn btn-primary center-block">Create Team</button>
+                </div>
+            </form>
+            <div class="text-danger text-center h4" ng-if="error && error.message" data-ng-bind="error.message"></div>
+            <div class="text-success text-center h4" ng-if="success && success.message" data-ng-bind="success.message"></div>
+          </div>
+        </div>
+      </div>
+      <div class="col-xs-12 col-sm-6">
+          <h3 class="text-center">Join a Team</h3>
+          Some UI here to browse teams - TODO: Write Directive for team display.
+      </div>
+    </div>
+  </div>
+</section>

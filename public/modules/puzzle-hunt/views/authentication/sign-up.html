@@ -50,7 +50,7 @@
 
               <!-- PHONE -->
               <div class="form-group" ng-class="{ 'has-error': (error && error.errors['phone'])}">
-                <label for="phone">Phone Number &nbsp; <small style="font-weight: 300;">(Just numbers go here)</small></label>
+                <label for="phone">Phone Number &nbsp; <small>(Just numbers go here)</small></label>
                 <input type="phone" id="phone" name="phone" class="form-control" ng-model="credentials.phone" placeholder="3601119999" ng-change="fieldChanged('phone')">
                 <div class="help-block" ng-show="error && error.errors['phone']" data-ng-bind="error.errors['phone']"></div>
               </div>
@@ -66,14 +66,14 @@
 
               <!-- MAJOR -->
               <div class="form-group" ng-class="{ 'has-error': (error && error.errors['major'])}">
-                <label for="major">Major (s) &nbsp; <small style="font-weight: 300;">(Or intended, or minors, or whatever)</small></label>
+                <label for="major">Major (s) &nbsp; <small>(Or intended, or minors, or whatever)</small></label>
                 <input type="text" id="major" name="major" class="form-control" ng-model="credentials.major" placeholder="Major/ Minor" ng-change="fieldChanged('major')">
                 <div class="help-block" ng-show="error && error.errors['major']" data-ng-bind="error.errors['major']"></div>
               </div>
 
               <!-- PASSWORD -->
               <div class="form-group" ng-class="{ 'has-error': (error && error.errors['password'])}">
-                <label for="password">Password &nbsp; <small style="font-weight: 300;">(Must be at least 8 characters)</small></label>
+                <label for="password">Password &nbsp; <small>(Must be at least 8 characters)</small></label>
                 <input type="password" id="password" name="password" class="form-control" ng-model="credentials.password" placeholder="Password" ng-change="fieldChanged('password')">
                 <div class="help-block" ng-show="error && error.errors['password']" data-ng-bind="error.errors['password']"></div>
               </div>

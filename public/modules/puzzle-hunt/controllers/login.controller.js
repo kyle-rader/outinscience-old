@@ -16,7 +16,12 @@ angular.module('puzzle-hunt').controller('PuzzleHuntLoginController', ['$scope',
         // Remove Out in Science user.
         $scope.oisAuth.user = null;
         // And redirect to the index page
-        $location.path('/puzzle-hunt/dashboard');
+        if ($scope.puzzleAuth.user.teamId !== null) {
+          $location.path('/puzzle-hunt/dashboard');
+        }
+        else {
+          $location.path('/puzzle-hunt/no-team');
+        }
 
       }).error(function(response) {
         $scope.error = response.message;

@@ -46,6 +46,10 @@ angular.module('puzzle-hunt').config(['$stateProvider',
     .state('puzzle-hunt-dashboard', {
       url: '/puzzle-hunt/dashboard',
       templateUrl: 'modules/puzzle-hunt/views/users/dashboard.html'
+    })
+    .state('puzzle-hunt-team', {
+      url: '/puzzle-hunt/no-team',
+      templateUrl: 'modules/puzzle-hunt/views/users/no-team.html'
     });
   }
 ]);

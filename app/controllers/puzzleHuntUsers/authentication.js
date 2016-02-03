@@ -204,7 +204,7 @@ exports.confirmEmail = function(req, res) {
           if (err) {
             res.status(400).send(err);
           } else {
-            res.redirect('/#!/puzzle-hunt/dashboard');
+            res.redirect('/#!/puzzle-hunt/no-team');
           }
         });
       }
