@@ -1,12 +1,12 @@
 <section data-ng-controller="TheOutListController">
-	<div class="container">
-		<outlist-entry ng-show="user" user="user"></outlist-entry>
-		<div class="row" ng-show="user">
-		  <div class="col-xs-12">
-		    <hr>
-		  </div>
-		</div>
+  <div class="container">
+    <outlist-entry ng-show="user" user="user"></outlist-entry>
+    <div class="row" ng-show="user">
+      <div class="col-xs-12">
+        <hr>
+      </div>
+    </div>
 
-		<outlist-entry ng-repeat="u in outlist" user="u"></outlist-entry>
-	</div>
+    <outlist-entry ng-repeat="u in outlist" user="u"></outlist-entry>
+  </div>
 </section>

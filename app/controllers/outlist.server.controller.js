@@ -4,13 +4,13 @@
  * Module dependencies.
  */
 var _ = require('lodash'),
-	errorHandler = require('./errors.server.controller.js'),
-	mongoose = require('mongoose'),
-	passport = require('passport'),
-	User = mongoose.model('User'),
-	async = require('async'),
-	crypto = require('crypto'),
-	config = require('../../config/config');
+  errorHandler = require('./errors.server.controller.js'),
+  mongoose = require('mongoose'),
+  passport = require('passport'),
+  User = mongoose.model('User'),
+  async = require('async'),
+  crypto = require('crypto'),
+  config = require('../../config/config');
 
 var visible = function(user, privacy) {
   return privacy === 'public' || (privacy === 'internal' && user && user._id);
@@ -18,15 +18,15 @@ var visible = function(user, privacy) {
 
 exports.getOutList = function(req, res) {
   // Init Variables
-	var loggedInUser = req.user;
+  var loggedInUser = req.user;
   var outlist = [];
-	var query = {verified: true};
-	if (loggedInUser && loggedInUser._id) {
-		query._id = { '$ne' : loggedInUser._id };
-	}
+  var query = {verified: true};
+  if (loggedInUser && loggedInUser._id) {
+    query._id = { '$ne' : loggedInUser._id };
+  }
 
   User.find(
-		query,
+    query,
     {firstName: 1, lastName: 1, email: 1, phone: 1, pronouns: 1, orientation: 1, primaryTags: 1, bio: 1, privacy: 1},
     function(err, users) {
       if (err && !users) {
@@ -72,7 +72,7 @@ exports.getOutList = function(req, res) {
         user.privacy = {};
         user._id = null;
       });
-			res.status(200).send(users);
+      res.status(200).send(users);
   });
 
 
