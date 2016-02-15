@@ -2,9 +2,14 @@
 
 angular.module('puzzle-hunt').controller('PuzzleHuntNoTeamController', ['$scope', 'PuzzleAuth', '$http', '$location',
   function($scope, PuzzleAuth, $http, $location) {
+
+    // If user is not signed in then redirect back home
+    if (!PuzzleAuth.user || !PuzzleAuth.user._id) return $location.path('/puzzle-hunt/login');
+
     $scope.user = PuzzleAuth.user;
     $scope.hasTeam = $scope.user.teamId !== null;
     $scope.newTeam = {};
+
 
     // TODO: Get Actual team List (if needed) from server
     $scope.teams = [
@@ -22,8 +27,7 @@ angular.module('puzzle-hunt').controller('PuzzleHuntNoTeamController', ['$scope'
       }
     ];
 
-    // If user is signed in then redirect back home
-    if (!PuzzleAuth.user || !PuzzleAuth.user._id) $location.path('/puzzle-hunt/login');
+
 
     // Create new Team function
     $scope.createTeam = function() {

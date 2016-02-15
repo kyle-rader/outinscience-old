@@ -63,7 +63,15 @@ exports.signup = function(req, res) {
       }
 
       // Enforce WWU Student Email Address
-      req.body.email = req.body.email ? req.body.email.trim() + '@students.wwu.edu' : '';
+      // if (req.body.email.match(/(@.*|\.)/g)) {
+      //   if (!errMessage)
+      //     errMessage = makeErrMessage();
+      //   errMessage.errors.email = 'You must use a valid WWU username. (Not a full email address)';
+      // }
+      // else {
+      //   req.body.email = req.body.email.trim() + '@students.wwu.edu';
+      // }
+      // TODO: Uncomment WWU email enforcement.
 
       // Enforce phone number to be at 10 or 11 digits
       req.body.phone = req.body.phone ? req.body.phone.trim() : '';
@@ -110,12 +118,16 @@ exports.signup = function(req, res) {
       newUser.confirmEmailToken = token;
       newUser.confirmEmailExpires = Date.now() + 86400000; // 24 hours
 
+      // TODO: Remove Debugging auto verified
+      newUser.verified = true;
+      
       // Set userType for sessions serialization differentiation.
       newUser.userType = 'puzzleHuntUser';
 
       // Then save the user
       newUser.save(function(err) {
         if (err && err.message !== 'email-in-use') {
+          console.log(err);
           return res.status(400).send({
             message: errorHandler.getErrorMessage(err)
           });
@@ -253,8 +265,9 @@ exports.revertEmailUpdate = function(req, res) {
  * Signin after passport authentication
  */
 exports.login = function(req, res, next) {
-  // use full email
-  req.body.email = req.body.email ? req.body.email.trim() + '@students.wwu.edu' : '';
+  // Use full WWU email
+  // req.body.email = req.body.email ? req.body.email.trim() + '@students.wwu.edu' : '';
+  // TODO: Re-Enable email completion
 
   passport.authenticate('puzzleHuntUser', function(err, user, info) {
     if (err || !user) {

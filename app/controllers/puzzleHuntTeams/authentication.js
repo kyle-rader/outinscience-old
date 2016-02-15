@@ -5,8 +5,20 @@ var mongoose = require('mongoose'),
   passport = require('passport'),
   Team = mongoose.model('PuzzleHuntTeam'),
   User = mongoose.model('PuzzleHuntUser'),
+  Invite = mongoose.model('PuzzleHuntInvite'),
+  config = require('../../../config/config'),
   Validator = require('is-my-json-valid'),
-  JSONSchema = require('../../models/puzzleHuntTeamsRequired.json');
+  JSONSchema = require('../../models/puzzleHuntTeamsRequired.json'),
+  nodemailer = require('nodemailer'),
+  mg = require('nodemailer-mailgun-transport');
+
+var auth = {
+  auth: {
+    api_key: config.mailer.api_key,
+    domain: config.mailer.domain
+  }
+};
+var nodemailerMailgun = nodemailer.createTransport(mg(auth));
 
 var signupValidate = new Validator({
   type: 'object',
@@ -100,11 +112,92 @@ function addTeamMember(teamId, userId, callback){
   });
 }
 
+/**
+ * Create an invite for the given user to join the given team and email the user.
+ * @param teamId {String} The _id of the team initiating the invite.
+ * @param user {String} The WWU username of the student to invite.
+ * @return true if Invitation is created and sent, false otherwise.
+ */
+function inviteUser(teamId, teamName, username, req, res) {
+  var response = {
+    success: false,
+    err: null
+  };
+  async.waterfall([
+    // Create Invitation
+    function(done) {
+      var invite = new Invite({
+        teamId: teamId,
+        email: username, // TODO: Uncomment + '@students.wwu.edu'
+      });
+      if (!invite) {
+        done({message: 'Failed to create invitation'});
+      } else {
+        done(null, invite);
+      }
+    },
+    // Save Invitation
+    function(invite, done) {
+      invite.save(function(err) {
+        if (err)
+          return done(err);
+        else
+          done(null, invite);
+      });
+    },
+    // Create invite email
+    function(invite, done) {
+      res.render('templates/puzzle-hunt-team-invitation-email', {
+        team: teamName,
+        appName: config.app.title,
+        loginUrl: req.protocol + '://' + req.headers.host + '/puzzle-hunt/login',
+        signupUrl: req.protocol + '://' + req.headers.host + '/puzzle-hunt/sign-up'
+      }, function(err, emailHTML) {
+        done(err, invite, emailHTML, 'WWU Puzzle Hunt: Team Invitation');
+      });
+    },
+    // Email Invite
+    function(invite, html, subject, done) {
+      nodemailerMailgun.sendMail({
+        from: config.mailer.from,
+        to: invite.email,
+        subject: subject,
+        'h:Reply-To': config.mailer.reply_to,
+        html: html,
+        text: html
+      }, function(err) {
+        if (err) done(err);
+      });
+    }
+  ], function(err) {
+    if (err) {
+      response.err = err;
+    } else {
+      response.success = true;
+    }
+  });
+  return response;
+}
+
+function createInvitations(teamId, teamName, usernames, req, res, callback) {
+  var users = usernames.match(/\S+/g);
+  for (var i = 0; i < users.length; i++) {
+    var result = inviteUser(teamId, teamName, users[i], req);
+    if (!result.success) {
+      console.log('Failed to send invite to' + users[i]);
+    }
+  }
+  callback(null);
+}
 
 /* Request-processing functions */
 
 exports.createNew = function(req, res) {
-  delete req.body.roles; // For security
+  // For security
+  delete req.body.roles;
+  if (!(req.user && req.user._id && req.user._id.toString() === req.body.ownerId)) {
+    return res.status(401).send({message: 'You don\'t have permission to do that'});
+  }
 
   async.waterfall([
     // Validate the team fields in the request
@@ -149,12 +242,11 @@ exports.createNew = function(req, res) {
         }
       });
     },
-    // TODO: Add a step to find and create invitations or invites to join the site.
     // Save the new record in the database and get its _id
     function saveNewTeam(done) {
       var teamObject = new Team(req.body);
-      
-      teamObject.save(function(err, doc){
+
+      teamObject.save(function(err, doc) {
         if (err) {
           done(err);
         } else {
@@ -163,14 +255,19 @@ exports.createNew = function(req, res) {
       });
     },
     // Update the owning user so that their teamId points to this new team
-    function(team, done){
-      addUserToTeam(team.ownerId, team._id, function(err){
-        if(err){
+    function(team, done) {
+      addUserToTeam(team.ownerId, team._id, function(err) {
+        if (err) {
           done(err);
         } else {
           res.send(team);
+          done(null, team);
         }
       });
+    },
+    // Create invitations
+    function(team, done) {
+      createInvitations(team._id, team.teamName, req.body.inviteMembers, req, res, done);
     },
   ],
   // Error handler
@@ -185,7 +282,8 @@ exports.createNew = function(req, res) {
   });
 };
 
-exports.join = function(res,req) {
+// TODO: Modify this to be join by password.
+exports.join = function(res, req) {
   passport.authenticate('local', function(err, user, info) {
     if (err || !user) {
       res.status(400).send(info);
@@ -198,13 +296,13 @@ exports.join = function(res,req) {
         res.status(400).send('No teamId provided.');
       } else {
         async.waterfall([
-          function(done){
+          function (done) {
             addUserToTeam(user._id, req.body.teamId, done);
           },
-          function(userId, teamId, done){
+          function (userId, teamId, done) {
             addTeamMember(teamId, userId, done);
           }
-        ], function(err){
+        ], function (err) {
           err = err.message || err.errmsg || null;
           res.status(400).send({
             message: 'Unable to join team with given _id',

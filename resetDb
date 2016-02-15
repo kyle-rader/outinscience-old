@@ -1,0 +1,2 @@
+#!/bin/bash
+mongo outinscience-dev --eval "db.dropDatabase();"
