@@ -19,7 +19,7 @@ var PuzzleHuntInviteSchema = new Schema({
   email: {
     // The email invited
     required: true,
-    type: Schema.ObjectId
+    type: String
   },
   accepted: {
     type: Boolean,
@@ -34,6 +34,5 @@ var PuzzleHuntInviteSchema = new Schema({
     default: Date.now
   }
 });
-
 
 mongoose.model('PuzzleHuntInvite', PuzzleHuntInviteSchema);

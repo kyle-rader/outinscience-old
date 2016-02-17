@@ -8,6 +8,7 @@ var mongoose = require('mongoose'),
   Invite = mongoose.model('PuzzleHuntInvite'),
   config = require('../../../config/config'),
   Validator = require('is-my-json-valid'),
+  emailValidator = require('validator'),
   JSONSchema = require('../../models/puzzleHuntTeamsRequired.json'),
   nodemailer = require('nodemailer'),
   mg = require('nodemailer-mailgun-transport');
@@ -50,7 +51,6 @@ function validateNewPuzzleHuntTeam(team) {
     return retObj;
   }
 }
-
 
 /**
  * Update a PuzzleHuntUser document so that their "teamId" is the id given.
@@ -118,9 +118,9 @@ function addTeamMember(teamId, userId, callback){
  * @param user {String} The WWU username of the student to invite.
  * @return true if Invitation is created and sent, false otherwise.
  */
-function inviteUser(teamId, teamName, username, req, res) {
+function inviteUser(teamId, teamName, username, req, res, callback) {
   var response = {
-    success: false,
+    success: true,
     err: null
   };
   async.waterfall([
@@ -140,7 +140,7 @@ function inviteUser(teamId, teamName, username, req, res) {
     function(invite, done) {
       invite.save(function(err) {
         if (err)
-          return done(err);
+          done(err);
         else
           done(null, invite);
       });
@@ -166,28 +166,23 @@ function inviteUser(teamId, teamName, username, req, res) {
         html: html,
         text: html
       }, function(err) {
-        if (err) done(err);
+        if (err) {
+          done(err);
+          return;
+        }
+        // Emailed successfully - callback to tell async.map the good result.
+        callback(null, response);
       });
     }
   ], function(err) {
     if (err) {
       response.err = err;
-    } else {
-      response.success = true;
+      response.success = false;
+      console.log('Failed to send invite email.', err);
     }
+    // Email failed - callback to tell async.map the bad result.
+    callback(null, response);
   });
-  return response;
-}
-
-function createInvitations(teamId, teamName, usernames, req, res, callback) {
-  var users = usernames.match(/\S+/g);
-  for (var i = 0; i < users.length; i++) {
-    var result = inviteUser(teamId, teamName, users[i], req);
-    if (!result.success) {
-      console.log('Failed to send invite to' + users[i]);
-    }
-  }
-  callback(null);
 }
 
 /* Request-processing functions */
@@ -207,6 +202,7 @@ exports.createNew = function(req, res) {
         // Check password length
         if (req.body.password.length < 8) {
           done({message: 'Team password must be at least 8 characters long!'});
+          return;
         }
         if (!req.body.memberIds || req.body.memberIds.length === 0) {
           // Automatically add this user to their new team
@@ -218,14 +214,15 @@ exports.createNew = function(req, res) {
         done({validationErrors: validationErrors});
       }
     },
+    // Make sure user is not an owner of a team, a member of another team
+    // and the team name is not already taken.
     function(done) {
-      // Make sure user is not an owner of a team, a member of another team
-      // and the team name is not already taken.
       Team.findOne({
         $or: [{ownerId: req.user._id}, {teamName: req.body.teamName}, {memberIds: req.user._id} ]
       }, function(err, existingTeam) {
         if (err) {
           done({ message: err });
+          return;
         }
         if (existingTeam) {
           if (existingTeam.ownerId.equals(req.user._id)) {
@@ -246,13 +243,75 @@ exports.createNew = function(req, res) {
     function saveNewTeam(done) {
       var teamObject = new Team(req.body);
 
-      teamObject.save(function(err, doc) {
+      teamObject.save(function(err, docs) {
         if (err) {
           done(err);
         } else {
-          done(null, doc);
+          done(null, docs);
         }
       });
+    },
+    // Create invitations (before setting team owner because if this fails we need to un-make the team object.)
+    function(team, done) {
+      // Check for members at all - if none - skip
+      if (!req.body.inviteMembers) {
+        done(null, team);
+        return;
+      }
+
+      var users = req.body.inviteMembers.match(/\S+/g);
+      
+      // if no users - skip
+      if (!users) {
+        done(null, team);
+        return;
+      }
+
+      // Check for less than 5 user names.
+      if (users.length > 5) {
+        team.remove();
+        done({message: 'You can only invite up to 5 more teammates!'});
+        return;
+      }
+
+      // Check for valid emails
+      for (var i = 0; i < users.length; i++) {
+        // TODO: Add '@students.wwu.edu' to username.
+        if (!emailValidator.isEmail(users[i])) {
+          team.remove();
+          done({message: '"' + users[i] + '" is not a valid email address!'});
+          return;
+        }
+      }
+
+      async.map(users,
+        // iteratee function
+        function(user, callback) {
+          inviteUser(team._id, team.teamName, user, req, res, callback);
+        },
+        // final function
+        function(err, results) {
+
+          // throw immediate error
+          if (err) {
+            team.remove();
+            done(err);
+            return;
+          }
+
+          // check results for any failures
+          for (var i = 0; i < results.length; i++) {
+            if (!results[i].success && results[i].err) {
+              team.remove();
+              done(results[i].err);
+              return;
+            }
+          }
+
+          // No fails
+          done(null, team);
+        }
+      );
     },
     // Update the owning user so that their teamId points to this new team
     function(team, done) {
@@ -260,25 +319,23 @@ exports.createNew = function(req, res) {
         if (err) {
           done(err);
         } else {
+          // All good send back team.
           res.send(team);
-          done(null, team);
         }
       });
-    },
-    // Create invitations
-    function(team, done) {
-      createInvitations(team._id, team.teamName, req.body.inviteMembers, req, res, done);
     },
   ],
   // Error handler
   function(err) {
-    console.log(err);
-    var error = err.validationErrors || err.errmsg;
-    var ret = {
-      message: err.message || 'Failed to save new team.',
-      errors: error
-    };
-    res.status(400).send(ret);
+    if(err) {
+      var error = err.validationErrors || err.errmsg;
+      var ret = {
+        message: err.message || 'Failed to save new team.',
+        errors: error
+      };
+      console.log(err);
+      res.status(400).send(ret);
+    }    
   });
 };
 
