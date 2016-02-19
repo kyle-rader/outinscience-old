@@ -30,13 +30,12 @@ var signupValidate = new Validator({
 
 var MAX_TEAM_SIZE = 6;
 
-/* Helper functions */
 /**
  * Check a new team object against its schema. Finds missing/invalid fields.
  * @param team {Object} The team object to Check
  * @returns {null|Object} Null if valid object, else an object containing
  *     invalid fields.
- */
+**/
 function validateNewPuzzleHuntTeam(team) {
   if (signupValidate(team)) {
     return null;
@@ -58,16 +57,18 @@ function validateNewPuzzleHuntTeam(team) {
  * @param teamId {String} The _id of the team document
  * @param callback {function} Gets called upon completion. First argument is
  *     error, if any, followed by userId and teamId.
- */
+**/
 function addUserToTeam(userId, teamId, callback) {
   User.update({_id: userId}, {teamId: teamId}, function(err, details){
     if (err) {
       callback(err);
-    } else if (details.ok !== 1) {
+    }
+    else if (details.ok !== 1) {
       callback({
         errmsg: 'Unable to update any PuzzleHuntUser documents matching the given _ids',
       });
-    } else {
+    }
+    else {
       callback(null, userId, teamId);
     }
   });
@@ -79,31 +80,32 @@ function addUserToTeam(userId, teamId, callback) {
  * @param userId {String} The _id of the user document
  * @param callback {function} Gets called upon completion. First argument is
  *     error, if any, followed by teamId and userId.
- */
-function addTeamMember(teamId, userId, callback){
-  Team.findById(teamId, function(err, theTeam){
+**/
+function addTeamMember(teamId, userId, callback) {
+  Team.findById(teamId, function(err, theTeam) {
     if(err){
       callback(err);
     } else {
       // Verify that the userId is valid before adding them to the team
-      User.findById(userId, function(err, user){
+      User.findById(userId, function(err, user) {
         if(err){
           callback({
             message: 'Unable to find user with given _id'
           });
         } else {
           // User exists in database
-          if(theTeam.members.length >= MAX_TEAM_SIZE){
+          if (theTeam.members.length >= MAX_TEAM_SIZE) {
             callback({message: 'Unable to join; team is already full!'});
-          } else {
+          }
+          else {
             theTeam.members.push(user._id);
-            if(theTeam.members.length === MAX_TEAM_SIZE){
+            if (theTeam.members.length === MAX_TEAM_SIZE) {
               // Team can't be looking for members if it's full!
               theTeam.lookingForMembers = false;
             }
-            theTeam.save(function(err, theTeam){
-              if(err){ callback(err); }
-              else{ callback(null, theTeam._id, user._id); }
+            theTeam.save(function(err, theTeam) {
+              if (err) { callback(err); }
+              else { callback(null, theTeam._id, user._id); }
             });
           }
         }
@@ -117,7 +119,7 @@ function addTeamMember(teamId, userId, callback){
  * @param teamId {String} The _id of the team initiating the invite.
  * @param user {String} The WWU username of the student to invite.
  * @return true if Invitation is created and sent, false otherwise.
- */
+**/
 function inviteUser(teamId, teamName, username, req, res, callback) {
   var response = {
     success: true,
@@ -185,12 +187,13 @@ function inviteUser(teamId, teamName, username, req, res, callback) {
   });
 }
 
-/* Request-processing functions */
-
+/**
+ * Create New Team
+**/
 exports.createNew = function(req, res) {
   // For security
   delete req.body.roles;
-  if (!(req.user && req.user._id && req.user._id.toString() === req.body.ownerId)) {
+  if (!(req.user && req.user._id && req.user.userType === 'puzzleHuntUser' && req.user._id.toString() === req.body.ownerId)) {
     return res.status(401).send({message: 'You don\'t have permission to do that'});
   }
 
@@ -339,34 +342,48 @@ exports.createNew = function(req, res) {
   });
 };
 
-// TODO: Modify this to be join by password.
-exports.join = function(res, req) {
-  passport.authenticate('local', function(err, user, info) {
-    if (err || !user) {
-      res.status(400).send(info);
-    } else {
-      // Remove sensitive data before login
-      user.password = undefined;
-      user.salt = undefined;
+/**
+ * Join Team By Password
+**/
+exports.joinTeamByPassword = function(res, req) {
+  // 1. Is user authed?
+  if (!(req.user && req.user._id && req.user.userType === 'puzzleHuntUser')) {
+    return res.status(400).send({message: 'You must be logged in to do that'});
+  }
+  else if (!(req.body.teamId && req.body.teamId.length > 0)) {
+    return res.status(400).send({message: 'Must submit a valid teamId.'});
+  }
+  else if (!(req.body.password && req.body.password.length > 0)) {
+    return res.status(400).send({message: 'Must submit a valid password.'});
+  }
 
-      if(!res.body.teamId) {
-        res.status(400).send('No teamId provided.');
-      } else {
-        async.waterfall([
-          function (done) {
-            addUserToTeam(user._id, req.body.teamId, done);
-          },
-          function (userId, teamId, done) {
-            addTeamMember(teamId, userId, done);
-          }
-        ], function (err) {
-          err = err.message || err.errmsg || null;
-          res.status(400).send({
-            message: 'Unable to join team with given _id',
-            details: err
-          });
-        });
+  async.waterfall([
+    // 1. Get Team
+    function(done) {
+      Team.findOne(req.body.teamId, function(err, team) {
+        if (err) {
+          done(err);
+          return;
+        }
+        done(null, team);
+      });
+    },
+    function (team, done) {
+      if (!team.authenticate(req.body.password)) {
+        done({message: 'Incorrect team password'});
+        return;
       }
+      addUserToTeam(req.user._id, team._id, done);
+    },
+    function (userId, teamId, done) {
+      addTeamMember(teamId, userId, done);
     }
-  })(req, res);
+  ], function (err, result) {
+    err = err.message || err.errmsg || null;
+    if (err) {
+      res.status(400).send(err);
+    } else {
+      res.status(200).send({message: 'Joined!'});
+    }
+  });
 };
