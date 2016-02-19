@@ -7,7 +7,7 @@ angular.module('puzzle-hunt').controller('PuzzleHuntLoginController', ['$scope',
     $scope.user = PuzzleAuth.user;
 
     // If user is signed in then redirect back home
-    if (PuzzleAuth.user && PuzzleAuth.user._id) $location.path('/puzzle-hunt/dashboard');
+    if (PuzzleAuth.user && PuzzleAuth.user._id) $location.path('/puzzle-hunt/' + (PuzzleAuth.user.teamId === null ? 'no-team' : 'team'));
 
     $scope.signin = function() {
       $http.post('/puzzlehunt/auth/login', $scope.credentials).success(function(response) {
