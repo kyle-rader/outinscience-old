@@ -5,14 +5,14 @@ var Team = mongoose.model('PuzzleHuntTeam');
 var User = mongoose.model('PuzzleHuntUser');
 
 /**
- * Authed - checks that a puzzle hunt user is authed. 
+ * Authed - checks that a puzzle hunt user is authed.
  */
 function authed(req) {
 	return req.user && req.user._id && req.user.userType && req.user.userType === 'puzzleHuntUser';
 }
 
 exports.list = function(req, res) {
-  var projection = 'teamName ownerId memberIds lookingForMembers';
+  var projection = '_id teamName ownerId memberIds lookingForMembers';
   Team.find({}, projection, function(err, teams) {
     if (err) {
       res.status(400).send(err);
@@ -54,6 +54,7 @@ exports.getTeam = function(req, res) {
       });
     }
     else {
+      // You ain't on this team yo, GTFO
       return res.status(400).send({message: 'You are not on this team!'});
     }
   });

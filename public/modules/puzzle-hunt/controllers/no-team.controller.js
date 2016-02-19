@@ -15,7 +15,15 @@ angular.module('puzzle-hunt').controller('PuzzleHuntNoTeamController', ['$scope'
     // Define newTeam object.
     $scope.newTeam = {};
 
-    // TODO: Get Actual team List (if needed) from server
+    // Get Team List:
+    $http.get('/puzzlehunt/teams')
+    .success(function(response) {
+      $scope.teams = response;
+      console.log(response);
+    })
+    .error(function(response) {
+      console.log(response);
+    });
 
     // Create New Team function
     $scope.createTeam = function() {

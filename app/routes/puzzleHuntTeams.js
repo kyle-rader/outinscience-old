@@ -9,7 +9,7 @@ module.exports = function(app) {
     // User Routes
     var puzzleHuntTeams = require('../../app/controllers/puzzleHuntTeams.js');
 
-    app.route('/puzzlehunt/teams/list').get(puzzleHuntTeams.list);
+    app.route('/puzzlehunt/teams').get(puzzleHuntTeams.list);
     app.route('/puzzlehunt/team/:teamId').get(puzzleHuntTeams.getTeam);
     app.route('/puzzlehunt/auth/createTeam').post(puzzleHuntTeams.createNew);
 
