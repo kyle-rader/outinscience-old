@@ -5,7 +5,9 @@ angular.module('puzzle-hunt').config(['$stateProvider',
   function($stateProvider) {
 
     $stateProvider.
-    // Public Info Pages
+    /*
+     * Public Info Pages
+     */
     state('puzzle-hunt', {
       url: '/puzzle-hunt',
       templateUrl: 'modules/puzzle-hunt/views/home/home.html'
@@ -42,14 +44,20 @@ angular.module('puzzle-hunt').config(['$stateProvider',
       url: '/puzzle-hunt/password/reset-success',
       templateUrl: 'modules/puzzle-hunt/views/password/reset-success.html'
     })
-    // Internal WWU Puzzle Hunt Pages
+    /*
+     * Internal WWU Puzzle Hunt Pages
+     */
     .state('puzzle-hunt-dashboard', {
       url: '/puzzle-hunt/dashboard',
       templateUrl: 'modules/puzzle-hunt/views/users/dashboard.html'
     })
-    .state('puzzle-hunt-team', {
+    .state('puzzle-hunt-no-team', {
       url: '/puzzle-hunt/no-team',
       templateUrl: 'modules/puzzle-hunt/views/users/no-team.html'
+    })
+    .state('puzzle-hunt-team', {
+      url: '/puzzle-hunt/team',
+      templateUrl: 'modules/puzzle-hunt/views/users/team.html'
     });
   }
 ]);

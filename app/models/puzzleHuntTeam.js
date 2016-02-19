@@ -60,10 +60,6 @@ var PuzzleHuntTeamSchema = new Schema({
   updated: {
     type: Date
   },
-  verified: {
-    type: Boolean,
-    default: false
-  },
   created: {
     type: Date,
     default: Date.now

@@ -8,28 +8,16 @@ angular.module('puzzle-hunt').controller('PuzzleHuntNoTeamController', ['$scope'
 
     $scope.user = PuzzleAuth.user;
     $scope.hasTeam = $scope.user.teamId !== null;
+
+    // If they have a team - go to team page
+    if ($scope.hasTeam) return $location.path('/puzzle-hunt/team');
+
+    // Define newTeam object.
     $scope.newTeam = {};
 
-
     // TODO: Get Actual team List (if needed) from server
-    $scope.teams = [
-      {
-        name: 'The puzzlers',
-        id: '2l345b23k5hrfssga74of93g78go8yrbfuw'
-      },
-      {
-        name: 'The bashers',
-        id: '94389ghnp39hg93'
-      },
-      {
-        name: 'Team Rocket',
-        id: '24702984ugv934fb4'
-      }
-    ];
 
-
-
-    // Create new Team function
+    // Create New Team function
     $scope.createTeam = function() {
 
       // Verify they've enetered something.
@@ -63,5 +51,9 @@ angular.module('puzzle-hunt').controller('PuzzleHuntNoTeamController', ['$scope'
       });
     };
 
+    // Join A Team function
+    $scope.joinTeam = function(obj) {
+      console.log('Join Team!', obj);
+    };
   }
 ]);
