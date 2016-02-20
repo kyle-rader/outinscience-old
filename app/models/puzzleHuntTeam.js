@@ -70,12 +70,11 @@ var PuzzleHuntTeamSchema = new Schema({
  * Hook a pre save method to hash the password
  */
 PuzzleHuntTeamSchema.pre('save', function(next) {
-
-  if (!this.skipHash && this.password && this.password.length >= 8) {
+  
+  if (!this.salt && this.password && this.password.length >= 8) {
     this.salt = new Buffer(crypto.randomBytes(16).toString('base64'), 'base64');
     this.password = this.hashPassword(this.password);
   }
-
   next();
 });
 
@@ -83,6 +82,7 @@ PuzzleHuntTeamSchema.pre('save', function(next) {
  * Create instance method for hashing a password
  */
 PuzzleHuntTeamSchema.methods.hashPassword = function(password) {
+  
   if (this.salt && password) {
     return crypto.pbkdf2Sync(password, this.salt, 10000, 64).toString('base64');
   } else {

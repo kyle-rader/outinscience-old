@@ -17,12 +17,11 @@ angular.module('puzzle-hunt').controller('PuzzleHuntNoTeamController', ['$scope'
 
     // Get Team List:
     $http.get('/puzzlehunt/teams')
-    .success(function(response) {
-      $scope.teams = response;
-      console.log(response);
+    .success(function(res) {
+      $scope.teams = res;
     })
-    .error(function(response) {
-      console.log(response);
+    .error(function(res) {
+      console.log(res);
     });
 
     // Create New Team function
@@ -60,8 +59,18 @@ angular.module('puzzle-hunt').controller('PuzzleHuntNoTeamController', ['$scope'
     };
 
     // Join A Team function
-    $scope.joinTeam = function(obj) {
-      console.log('Join Team!', obj);
+    $scope.joinTeam = function(team) {
+      $http.post('/puzzlehunt/team/' + team._id + '/password-join', {
+        password: team.password
+      })
+      .success(function(res) {
+        PuzzleAuth.user.teamId = team._id;
+        team.success = res.message;
+        team.error = null;
+      })
+      .error(function(res) {
+        team.error = res.message;
+      });
     };
   }
 ]);

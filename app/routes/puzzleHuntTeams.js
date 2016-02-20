@@ -12,6 +12,7 @@ module.exports = function(app) {
     app.route('/puzzlehunt/teams').get(puzzleHuntTeams.list);
     app.route('/puzzlehunt/team/:teamId').get(puzzleHuntTeams.getTeam);
     app.route('/puzzlehunt/auth/createTeam').post(puzzleHuntTeams.createNew);
+    app.route('/puzzlehunt/team/:teamId/password-join').post(puzzleHuntTeams.joinTeamByPassword);
 
     // Setting up the team profile api
     /*

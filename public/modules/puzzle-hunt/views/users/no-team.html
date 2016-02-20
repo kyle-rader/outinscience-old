@@ -69,10 +69,15 @@
                   <form class="form-inline team-item-form pull-right">
                     <div class="form-group">
                       
-                      <input type="password" class="form-control" id="{{team._id}}" placeholder="Team Password">
+                      <input type="password" class="form-control" id="{{team._id}}" ng-model="team.password" placeholder="Team Password">
                     </div>
                     <button type="submit" class="btn btn-primary" ng-click="joinTeam(team)">Join</button>
                   </form>
+                  <div data-ng-bind="team.error" class="text-danger"></div>
+                  <div class="text-success" ng-if="team.success">
+                    <span class="text-success">{{team.success}}</span><br>
+                    <a class="btn btn-success" href="/#!/puzzle-hunt/team">Go To Team Page</a>
+                  </div>
                 </li>
               </ul>
             </div>

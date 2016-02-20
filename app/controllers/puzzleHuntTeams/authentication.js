@@ -29,6 +29,7 @@ var signupValidate = new Validator({
 
 
 var MAX_TEAM_SIZE = 6;
+var EMAIL_DOMAIN = '@kylerader.ninja';
 
 /**
  * Check a new team object against its schema. Finds missing/invalid fields.
@@ -59,13 +60,13 @@ function validateNewPuzzleHuntTeam(team) {
  *     error, if any, followed by userId and teamId.
 **/
 function addUserToTeam(userId, teamId, callback) {
-  User.update({_id: userId}, {teamId: teamId}, function(err, details){
+  User.update({_id: userId}, {$set: {teamId: teamId}}, function(err, details) {
     if (err) {
       callback(err);
     }
     else if (details.ok !== 1) {
       callback({
-        errmsg: 'Unable to update any PuzzleHuntUser documents matching the given _ids',
+        message: 'Unable to update any PuzzleHuntUser documents matching the given _ids',
       });
     }
     else {
@@ -94,13 +95,13 @@ function addTeamMember(teamId, userId, callback) {
           });
         } else {
           // User exists in database
-          if (theTeam.members.length >= MAX_TEAM_SIZE) {
+          if (theTeam.memberIds.length >= MAX_TEAM_SIZE) {
             callback({message: 'Unable to join; team is already full!'});
           }
           else {
-            theTeam.members.push(user._id);
-            if (theTeam.members.length === MAX_TEAM_SIZE) {
-              // Team can't be looking for members if it's full!
+            theTeam.memberIds.push(user._id);
+            if (theTeam.memberIds.length === MAX_TEAM_SIZE) {
+              // Team can't be looking for memberIds if it's full!
               theTeam.lookingForMembers = false;
             }
             theTeam.save(function(err, theTeam) {
@@ -130,7 +131,7 @@ function inviteUser(teamId, teamName, username, req, res, callback) {
     function(done) {
       var invite = new Invite({
         teamId: teamId,
-        email: username, // TODO: Uncomment + '@students.wwu.edu'
+        email: username + EMAIL_DOMAIN
       });
       if (!invite) {
         done({message: 'Failed to create invitation'});
@@ -152,8 +153,8 @@ function inviteUser(teamId, teamName, username, req, res, callback) {
       res.render('templates/puzzle-hunt-team-invitation-email', {
         team: teamName,
         appName: config.app.title,
-        loginUrl: req.protocol + '://' + req.headers.host + '/puzzle-hunt/login',
-        signupUrl: req.protocol + '://' + req.headers.host + '/puzzle-hunt/sign-up'
+        loginUrl: req.protocol + '://' + req.headers.host + '/#!/puzzle-hunt/login',
+        signupUrl: req.protocol + '://' + req.headers.host + '/#!/puzzle-hunt/sign-up'
       }, function(err, emailHTML) {
         done(err, invite, emailHTML, 'WWU Puzzle Hunt: Team Invitation');
       });
@@ -246,6 +247,7 @@ exports.createNew = function(req, res) {
     function saveNewTeam(done) {
       var teamObject = new Team(req.body);
 
+      teamObject.shouldHash = true;
       teamObject.save(function(err, docs) {
         if (err) {
           done(err);
@@ -279,8 +281,7 @@ exports.createNew = function(req, res) {
 
       // Check for valid emails
       for (var i = 0; i < users.length; i++) {
-        // TODO: Add '@students.wwu.edu' to username.
-        if (!emailValidator.isEmail(users[i])) {
+        if (!emailValidator.isEmail(users[i] + EMAIL_DOMAIN)) {
           team.remove();
           done({message: '"' + users[i] + '" is not a valid email address!'});
           return;
@@ -345,12 +346,12 @@ exports.createNew = function(req, res) {
 /**
  * Join Team By Password
 **/
-exports.joinTeamByPassword = function(res, req) {
+exports.joinTeamByPassword = function(req, res) {
   // 1. Is user authed?
   if (!(req.user && req.user._id && req.user.userType === 'puzzleHuntUser')) {
     return res.status(400).send({message: 'You must be logged in to do that'});
   }
-  else if (!(req.body.teamId && req.body.teamId.length > 0)) {
+  else if (!(req.params.teamId && req.params.teamId.length > 0)) {
     return res.status(400).send({message: 'Must submit a valid teamId.'});
   }
   else if (!(req.body.password && req.body.password.length > 0)) {
@@ -360,7 +361,7 @@ exports.joinTeamByPassword = function(res, req) {
   async.waterfall([
     // 1. Get Team
     function(done) {
-      Team.findOne(req.body.teamId, function(err, team) {
+      Team.findById(req.params.teamId, function(err, team) {
         if (err) {
           done(err);
           return;
@@ -379,7 +380,6 @@ exports.joinTeamByPassword = function(res, req) {
       addTeamMember(teamId, userId, done);
     }
   ], function (err, result) {
-    err = err.message || err.errmsg || null;
     if (err) {
       res.status(400).send(err);
     } else {

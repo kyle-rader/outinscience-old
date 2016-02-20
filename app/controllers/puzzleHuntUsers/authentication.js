@@ -31,6 +31,9 @@ var signupValidate = new Validator({
   required: JSONSchema.required
 }, {greedy: true});
 
+
+var EMAIL_DOMAIN = '@kylerader.ninja';
+
 /**
  * /puzzlehunt/users/signup POST
  */
@@ -63,15 +66,15 @@ exports.signup = function(req, res) {
       }
 
       // Enforce WWU Student Email Address
-      // if (req.body.email.match(/(@.*|\.)/g)) {
-      //   if (!errMessage)
-      //     errMessage = makeErrMessage();
-      //   errMessage.errors.email = 'You must use a valid WWU username. (Not a full email address)';
-      // }
-      // else {
-      //   req.body.email = req.body.email.trim() + '@students.wwu.edu';
-      // }
-      // TODO: Uncomment WWU email enforcement.
+      if (req.body.email.match(/(@.*|\.)/g)) {
+        if (!errMessage)
+          errMessage = makeErrMessage();
+        errMessage.errors.email = 'You must use a valid WWU username. (Not a full email address)';
+      }
+      else {
+        req.body.email = req.body.email.trim() + EMAIL_DOMAIN;
+      }
+      
 
       // Enforce phone number to be at 10 or 11 digits
       req.body.phone = req.body.phone ? req.body.phone.trim() : '';
@@ -266,8 +269,7 @@ exports.revertEmailUpdate = function(req, res) {
  */
 exports.login = function(req, res, next) {
   // Use full WWU email
-  // req.body.email = req.body.email ? req.body.email.trim() + '@students.wwu.edu' : '';
-  // TODO: Re-Enable email completion
+  req.body.email = req.body.email ? req.body.email.trim() + EMAIL_DOMAIN : '';
 
   passport.authenticate('puzzleHuntUser', function(err, user, info) {
     if (err || !user) {
