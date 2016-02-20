@@ -10,6 +10,11 @@
           <div class="panel-body">
             <h3>{{teamRef[invite.teamId]}}</h3>
             <button class="btn btn-success pull-right" ng-click="acceptInvite(invite)">Join!</button>
+            <div data-ng-bind="invite.error" class="text-danger"></div>
+            <div class="text-success" ng-if="invite.success">
+              <span class="text-success">{{invite.success}}</span><br>
+              <a class="btn btn-success" href="/#!/puzzle-hunt/team">Go To Team Page</a>
+            </div>
           </div>
         </div>
       </div>

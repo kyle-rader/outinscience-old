@@ -426,7 +426,7 @@ exports.joinTeamByInvite = function(req, res) {
           return;
         }
         invite.accepted = true;
-        invite.acceptedOn = Date.now;
+        invite.acceptedOn = Date.now();
         invite.save(function(err, invite) {
           if (err) {
             done(err);

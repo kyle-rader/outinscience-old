@@ -90,8 +90,16 @@ angular.module('puzzle-hunt').controller('PuzzleHuntNoTeamController', ['$scope'
       });
     };
 
-    $scope.acceptInvite = function(teamId) {
-      console.log('Going to accept team invite for ' + teamId);
+    $scope.acceptInvite = function(invite) {
+      $http.post('/puzzlehunt/team/' + invite.teamId + '/accept-invite')
+      .success(function(res) {
+        PuzzleAuth.user.teamId = invite.teamId;
+        invite.success = res.message;
+        invite.error = null;
+      })
+      .error(function(res) {
+        invite.error = res.message;
+      });
     };
 
   }
