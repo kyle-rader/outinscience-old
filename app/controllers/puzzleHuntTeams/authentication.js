@@ -370,10 +370,74 @@ exports.joinTeamByPassword = function(req, res) {
       });
     },
     function (team, done) {
+      if (!team.lookingForMembers) {
+        done({message: 'This team is not looking for members'});
+        return;
+      }
       if (!team.authenticate(req.body.password)) {
         done({message: 'Incorrect team password'});
         return;
       }
+      addUserToTeam(req.user._id, team._id, done);
+    },
+    function (userId, teamId, done) {
+      addTeamMember(teamId, userId, done);
+    }
+  ], function (err, result) {
+    if (err) {
+      res.status(400).send(err);
+    } else {
+      res.status(200).send({message: 'Joined!'});
+    }
+  });
+};
+
+/**
+ * Join Team By Invite
+**/
+exports.joinTeamByInvite = function(req, res) {
+  // 1. Is user authed?
+  if (!(req.user && req.user._id && req.user.userType === 'puzzleHuntUser')) {
+    return res.status(400).send({message: 'You must be logged in to do that'});
+  }
+  else if (!(req.params.teamId && req.params.teamId.length > 0)) {
+    return res.status(400).send({message: 'Must submit a valid teamId.'});
+  }
+
+  async.waterfall([
+    // 1. Get Team
+    function(done) {
+      Team.findById(req.params.teamId, function(err, team) {
+        if (err) {
+          done(err);
+          return;
+        }
+        done(null, team);
+      });
+    },
+    // 2. Get the Invite and say accepted.
+    function(team, done) {
+      Invite.findOne({email: req.user.email, teamId: team._id}, function(err, invite) {
+        if (err) {
+          done(err);
+          return;
+        } else if (!invite) {
+          done({message: 'You don\'t have an invite from this team'});
+          return;
+        }
+        invite.accepted = true;
+        invite.acceptedOn = Date.now;
+        invite.save(function(err, invite) {
+          if (err) {
+            done(err);
+            return;
+          }
+          done(null, team);
+        });
+      });
+    },
+    // 3. Add the user to the team.
+    function (team, done) {
       addUserToTeam(req.user._id, team._id, done);
     },
     function (userId, teamId, done) {

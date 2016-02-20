@@ -13,6 +13,7 @@ module.exports = function(app) {
 	// Setting up the users profile api
 	app.route('/puzzlehunt/users/me').get(puzzleHuntUsers.me);
 	app.route('/puzzlehunt/users').put(puzzleHuntUsers.update);
+	app.route('/puzzlehunt/invites').get(puzzleHuntUsers.invites);
 	// app.route('/puzzlehunt/users/accounts').delete(puzzleHuntUsers.removeOAuthProvider);
 
 	// Setting up the users password api

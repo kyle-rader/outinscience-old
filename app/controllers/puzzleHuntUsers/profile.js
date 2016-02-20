@@ -8,18 +8,23 @@ var _ = require('lodash'),
   mongoose = require('mongoose'),
   passport = require('passport'),
   User = mongoose.model('PuzzleHuntUser'),
+  Team = mongoose.model('PuzzleHuntTeam'),
+  Invite = mongoose.model('PuzzleHuntInvite'),
   async = require('async'),
   crypto = require('crypto'),
   config = require('../../../config/config'),
   nodemailer = require('nodemailer'),
   mg = require('nodemailer-mailgun-transport');
+
 var auth = {
   auth: {
     api_key: config.mailer.api_key,
     domain: config.mailer.domain
   }
 };
+
 var nodemailerMailgun = nodemailer.createTransport(mg(auth));
+
 /**
  * Update user details
  */
@@ -140,4 +145,22 @@ exports.update = function(req, res) {
  */
 exports.me = function(req, res) {
   res.json(req.user || null);
+};
+
+/**
+ * Get Team Invites
+ */
+exports.invites = function(req, res) {
+  if (!(req.user && req.user._id && req.user.email)) {
+    return res.status(400).send({message: 'You must be logged in'});
+  }
+
+  Invite.find({email: req.user.email}, {teamId:true}, function(err, invites) {
+    if (err) {
+      return res.status(400).send(err);
+    }
+    
+    return res.send(invites);
+    
+  });
 };

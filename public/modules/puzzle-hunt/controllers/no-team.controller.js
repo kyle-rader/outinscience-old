@@ -19,6 +19,20 @@ angular.module('puzzle-hunt').controller('PuzzleHuntNoTeamController', ['$scope'
     $http.get('/puzzlehunt/teams')
     .success(function(res) {
       $scope.teams = res;
+      $scope.teamRef = [];
+
+      res.forEach(function(team) {
+        $scope.teamRef[team._id] = team.teamName;
+      });
+    })
+    .error(function(res) {
+      console.log(res);
+    });
+
+    // Get Invites
+    $http.get('/puzzlehunt/invites')
+    .success(function(res) {
+      $scope.invites = res;
     })
     .error(function(res) {
       console.log(res);
@@ -44,6 +58,9 @@ angular.module('puzzle-hunt').controller('PuzzleHuntNoTeamController', ['$scope'
       // Add the owner as a member
       $scope.newTeam.memberIds = [$scope.user._id];
 
+      // Make lookingForMembers a boolean
+      $scope.newTeam.lookingForMembers = !!$scope.newTeam.lookingForMembers;
+
       $http.post('/puzzlehunt/auth/createTeam', $scope.newTeam).success(function(response) {
         // If successful we assign user's new team id.
         // This will cause the normal Team Page to render.
@@ -58,7 +75,7 @@ angular.module('puzzle-hunt').controller('PuzzleHuntNoTeamController', ['$scope'
       });
     };
 
-    // Join A Team function
+    // Join A Team by password function
     $scope.joinTeam = function(team) {
       $http.post('/puzzlehunt/team/' + team._id + '/password-join', {
         password: team.password
@@ -72,5 +89,10 @@ angular.module('puzzle-hunt').controller('PuzzleHuntNoTeamController', ['$scope'
         team.error = res.message;
       });
     };
+
+    $scope.acceptInvite = function(teamId) {
+      console.log('Going to accept team invite for ' + teamId);
+    };
+
   }
 ]);
