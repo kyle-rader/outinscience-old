@@ -59,9 +59,18 @@
               <div class="form-group">
                 <div class="checkbox">
                   <label>
-                    <input type="checkbox" id="tShirt" name="tShirt" ng-model="credentials.tShirt"> I want to buy a Puzzle Master T-Shirt when they become available! (~$18)
+                    <input type="checkbox" id="tShirt" name="tShirt" ng-model="credentials.wantsTshirt"> I want to buy a Puzzle Master T-Shirt when they become available! (~$11)
                   </label>
                 </div>
+              </div>
+
+              <!-- T-Shirt Size -->
+              <div class="form-group">
+                <label class="radio-inline"><input type="radio" name="tShirtSize" ng-model="credentials.tShirtSize" id="tShirtSizeS" value="S" />Small</label>
+                <label class="radio-inline"><input type="radio" name="tShirtSize" ng-model="credentials.tShirtSize" id="tShirtSizeM" value="M" />Medium</label>
+                <label class="radio-inline"><input type="radio" name="tShirtSize" ng-model="credentials.tShirtSize" id="tShirtSizeL" value="L" />Large</label>
+                <label class="radio-inline"><input type="radio" name="tShirtSize" ng-model="credentials.tShirtSize" id="tShirtSizeXL" value="XL" />X-Large</label>
+                <label class="radio-inline"><input type="radio" name="tShirtSize" ng-model="credentials.tShirtSize" id="tShirtSizeXXL" value="XXL" />2X-Large</label>
               </div>
 
               <!-- MAJOR -->

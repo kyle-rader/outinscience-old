@@ -13,7 +13,7 @@ angular.module('puzzle-hunt').controller('PuzzleHuntSignUpController', ['$scope'
         $scope.credentials = {};
       }
       // Force boolean value
-      $scope.credentials.tShirt = !!$scope.credentials.tShirt;
+      $scope.credentials.wantsTshirt = !!$scope.credentials.wantsTshirt;
 
       // Remove anything but digits from phone number
       if ($scope.credentials.phone) {

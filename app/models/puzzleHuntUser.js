@@ -71,6 +71,15 @@ var PuzzleHuntUserSchema = new Schema({
     type: Schema.ObjectId,
     default: null
   },
+  wantsTshirt: {
+    type: Boolean,
+    default: false
+  },
+  tShirtSize: {
+    type: String,
+    default: null,
+    trim: true
+  },
   privacy: {
     email: {
       type: String,
