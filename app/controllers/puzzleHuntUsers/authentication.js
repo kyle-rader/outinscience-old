@@ -121,8 +121,7 @@ exports.signup = function(req, res) {
       newUser.confirmEmailToken = token;
       newUser.confirmEmailExpires = Date.now() + 86400000; // 24 hours
 
-      // TODO: Remove Debugging auto verified
-      newUser.verified = true;
+      newUser.verified = false;
       
       // Set userType for sessions serialization differentiation.
       newUser.userType = 'puzzleHuntUser';
