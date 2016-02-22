@@ -46,7 +46,8 @@
     "passport-facebook": "^2.0.0",
     "passport-google-oauth": "^0.2.0",
     "passport-local": "^1.0.0",
-    "swig": "~1.4.1"
+    "swig": "~1.4.1",
+    "validator": "^4.8.0"
   },
   "devDependencies": {
     "supertest": "~0.14.0",

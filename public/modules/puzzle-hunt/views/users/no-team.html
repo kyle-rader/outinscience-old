@@ -1,0 +1,105 @@
+<section data-ng-controller="PuzzleHuntNoTeamController">
+  <div class="container">
+    <div class="row">
+      <h2 class="text-center">Create or Join a Team</h2>
+    </div>
+    <div class="row" ng-if="invites && invites.length > 0">
+      <div class="col-xs-12 col-sm-6 col-sm-offset-3">
+        <h3 class="text-center">You've Been Invited!</h3>
+        <div class="panel panel-default" ng-repeat="invite in invites">
+          <div class="panel-body">
+            <h3>{{teamRef[invite.teamId]}}</h3>
+            <button class="btn btn-success pull-right" ng-click="acceptInvite(invite)">Join!</button>
+            <div data-ng-bind="invite.error" class="text-danger"></div>
+            <div class="text-success" ng-if="invite.success">
+              <span class="text-success">{{invite.success}}</span><br>
+              <a class="btn btn-success" href="/#!/puzzle-hunt/team">Go To Team Page</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <!-- CREATE A TEAM -->
+      <div class="col-xs-12 col-sm-6">
+        <h3 class="text-center">Create a Team</h3>
+        <div class="row">
+          <div class="col-xs-12 col-sm-10 col-sm-offset-1">
+            <form name="newTeamForm" ng-submit="createTeam()" class="form-horizontal" ng-if="!success">
+                <!-- TEAM NAME -->
+                <div class="form-group" ng-class="{'has-error': error && error.errors && error.errors.teamName}">
+                    <label for="teamName">Team Name</label>
+                    <input type="text" name="teamName" class="form-control" data-ng-model="newTeam.teamName" placeholder="The Seahawks">
+                    <div class="text-danger" ng-bind="error.errors.teamName"></div>
+                </div>
+                <!-- TEAM PASSWORD -->
+                <div class="form-group" ng-class="{'has-error': error && error.errors && error.errors.password}">
+                    <label for="teamPassword">Team Password</label>
+                    <input type="text" name="teamPassword" class="form-control" data-ng-model="newTeam.password" placeholder="Secret Password">
+                    <small>Anyone who knows the team password will be able to join.</small>
+                    <div class="text-danger" ng-bind="error.errors.password"></div>
+                </div>
+                <!-- LOOKING FOR MEMBERS CHECKBOX -->
+                <div class="form-group">
+                    <div class="checkbox">
+                        <label>
+                            <input type="checkbox" name="lookingForMembers" data-ng-model="newTeam.lookingForMembers">Add team to the looking for members list! <br><small>(So your team shows up under the Join a Team list)</small>
+                        </label>
+                    </div>
+                </div>
+                <!-- INVITE TEAM MEMBERS -->
+                <div class="form-group">
+                    <label for="inviteMembers">
+                      Invite Team Members<br>
+                      <span style="font-weight:500;">Enter the WWU Usernames of people you wish to invite. Separate by spaces or new lines.</span>
+                    </label>
+                    <textarea class="form-control" name="inviteMembers" resizable="false" rows="4" style="resize: none;" data-ng-model="newTeam.inviteMembers"></textarea>
+                    You do not need to put <i>@students.wwu.edu</i> after each username :)
+                    <br>You can also invite team members later.
+                    <br>Max team size is 6.
+                </div>
+                <!-- CREATE TEAM BTN -->
+                <div class="form-group">
+                  <button type="submit" class="btn btn-primary center-block">Create Team</button>
+                </div>
+            </form>
+            <div class="text-danger text-center h4" ng-if="error && error.message" data-ng-bind="error.message"></div>
+            <div class="text-success text-center h4" ng-if="success && success.message">
+              {{success.message}}
+              <br><br>
+              <a href="/#!/puzzle-hunt/team" class="btn btn-primary">Team Page</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- JOIN A TEAM -->
+      <div class="col-xs-12 col-sm-6">
+          <h3 class="text-center">Join a Team</h3>
+          <div class="row">
+            <div class="col-xs-12 col-sm-10 col-sm-offset-1">
+              <ul class="list-group team-list">
+                <li class="list-group-item" ng-repeat="team in teams" ng-class="{disabled: team.memberIds.length >= 6 || !team.lookingForMembers}">
+                  <h4 class="list-item-title">{{team.teamName}}</h4>
+                  Members: {{team.memberIds.length}}
+                  <form class="form team-item-form" ng-if="team.lookingForMembers">
+                    <div class="form-group">
+                      
+                      <input type="password" class="form-control" id="{{team._id}}" ng-model="team.password" placeholder="Team Password">
+                    </div>
+                    <button type="submit" class="btn btn-primary" ng-click="joinTeam(team)">Join</button>
+                  </form>
+                  <div data-ng-bind="team.error" class="text-danger"></div>
+                  <div class="text-success" ng-if="team.success">
+                    <span class="text-success">{{team.success}}</span><br>
+                    <a class="btn btn-success" href="/#!/puzzle-hunt/team">Go To Team Page</a>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

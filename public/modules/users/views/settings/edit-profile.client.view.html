@@ -1,125 +1,125 @@
 <section data-ng-controller="SettingsController">
-	<div class="container">
-		<div class="row">
-			<h3 class="col-xs-12 text-center">Edit your profile</h3>
-			<div class="col-xs-12 col-md-8 col-md-offset-2">
-				<form name="userForm" data-ng-submit="updateUserProfile(userForm.$valid)" class="profile form-horizontal" autocomplete="off">
+  <div class="container">
+    <div class="row">
+      <h3 class="col-xs-12 text-center">Edit your profile</h3>
+      <div class="col-xs-12 col-md-8 col-md-offset-2">
+        <form name="userForm" data-ng-submit="updateUserProfile(userForm.$valid)" class="profile form-horizontal" autocomplete="off">
 
-					<!-- FIRST NAME / LAST NAME -->
-					<div class="row">
-						<div class="col-xs-12 col-sm-6">
-							<label for="firstName">First Name</label>
-							<input type="text" id="firstName" name="firstName" class="form-control" ng-model="user.firstName" placeholder="First Name">
-							<privacy-selector privacy="user.privacy.firstName" name="'firstNamePrivacy'"></privacySelector>
-						</div>
+          <!-- FIRST NAME / LAST NAME -->
+          <div class="row">
+            <div class="col-xs-12 col-sm-6">
+              <label for="firstName">First Name</label>
+              <input type="text" id="firstName" name="firstName" class="form-control" ng-model="user.firstName" placeholder="First Name">
+              <privacy-selector privacy="user.privacy.firstName" name="'firstNamePrivacy'"></privacySelector>
+            </div>
 
-						<div class="col-xs-12 col-sm-6">
-							<label for="lastName">Last Name</label>
-							<input type="text" id="lastName" name="lastName" class="form-control" data-ng-model="user.lastName" placeholder="Last Name">
-							<privacy-selector privacy="user.privacy.lastName" name="'lastNamePrivacy'"></privacySelector>
-						</div>
-					</div>
+            <div class="col-xs-12 col-sm-6">
+              <label for="lastName">Last Name</label>
+              <input type="text" id="lastName" name="lastName" class="form-control" data-ng-model="user.lastName" placeholder="Last Name">
+              <privacy-selector privacy="user.privacy.lastName" name="'lastNamePrivacy'"></privacySelector>
+            </div>
+          </div>
 
-					<!-- EMAIL / PHONE -->
-					<div class="row">
-						<div class="col-xs-12 col-sm-6">
-							<label for="email">Email </label>
-							<div class="input-group">
-								<input type="email" id="email" name="email" class="form-control" ng-model="user.email" ng-disabled="!enableEmailEdit" placeholder="Email">
-								<span class="input-group-btn">
-									<button class="btn btn-default" id="emailEditBtn" type="button" ng-click="enableEmailEdit = !enableEmailEdit">
-										<i class="icon edit" ng-show="!enableEmailEdit"></i>
-										<i class="icon x" ng-show="enableEmailEdit"></i>
-									</button>
-									</span>
-							</div>
-							<span ng-show="enableEmailEdit" class="text-danger"> (Updating you're email will automatically log you out and <strong>lock</strong> your account until the new email is verified.)</span>
-							<privacy-selector privacy="user.privacy.email" name="'emailPrivacy'"></privacySelector>
-						</div>
+          <!-- EMAIL / PHONE -->
+          <div class="row">
+            <div class="col-xs-12 col-sm-6">
+              <label for="email">Email </label>
+              <div class="input-group">
+                <input type="email" id="email" name="email" class="form-control" ng-model="user.email" ng-disabled="!enableEmailEdit" placeholder="Email">
+                <span class="input-group-btn">
+                  <button class="btn btn-default" id="emailEditBtn" type="button" ng-click="enableEmailEdit = !enableEmailEdit">
+                    <i class="icon edit" ng-show="!enableEmailEdit"></i>
+                    <i class="icon x" ng-show="enableEmailEdit"></i>
+                  </button>
+                  </span>
+              </div>
+              <span ng-show="enableEmailEdit" class="text-danger"> (Updating you're email will automatically log you out and <strong>lock</strong> your account until the new email is verified.)</span>
+              <privacy-selector privacy="user.privacy.email" name="'emailPrivacy'"></privacySelector>
+            </div>
 
-						<div class="col-xs-12 col-sm-6">
-							<label for="phone">Phone</label>
-							<input type="tel" ng-model="user.phone" name="phone" class="form-control" placeholder="3601119999" ng-pattern="/[0-9]{9}/" maxlength="10">
-							<span ng-show="userForm.phone.$error" class="text-info">Phone number must 10 digits.</span>
-							<privacy-selector privacy="user.privacy.phone" name="'phonePrivacy'"></privacySelector>
-						</div>
-					</div>
+            <div class="col-xs-12 col-sm-6">
+              <label for="phone">Phone</label>
+              <input type="tel" ng-model="user.phone" name="phone" class="form-control" placeholder="3601119999" ng-pattern="/[0-9]{9}/" maxlength="10">
+              <span ng-show="userForm.phone.$error" class="text-info">Phone number must 10 digits.</span>
+              <privacy-selector privacy="user.privacy.phone" name="'phonePrivacy'"></privacySelector>
+            </div>
+          </div>
 
-					<!-- PRONOUNS -->
-					<div class="row">
-						<div class="col-xs-12 col-sm-6">
-							<label for="pronouns">Preferred gender pronouns</label>
-							<input type="text" id="pronouns" name="pronouns" class="form-control" ng-model="user.pronouns" placeholder="She/He/Ze   His/Hers/Hir   Her/Him">
-							<privacy-selector privacy="user.privacy.pronouns" name="'pronounsPrivacy'"></privacySelector>
-						</div>
+          <!-- PRONOUNS -->
+          <div class="row">
+            <div class="col-xs-12 col-sm-6">
+              <label for="pronouns">Preferred gender pronouns</label>
+              <input type="text" id="pronouns" name="pronouns" class="form-control" ng-model="user.pronouns" placeholder="She/He/Ze   His/Hers/Hir   Her/Him">
+              <privacy-selector privacy="user.privacy.pronouns" name="'pronounsPrivacy'"></privacySelector>
+            </div>
 
-						<div class="col-xs-12 col-sm-6">
-							<label for="orientation">Orientation</label>
-							<input type="text" id="orientation" name="orientation" class="form-control" ng-model="user.orientation" placeholder="(Straight, Gay, Bi, ??)">
-							<privacy-selector privacy="user.privacy.orientation" name="'orientationPrivacy'"></privacySelector>
-						</div>
-					</div>
+            <div class="col-xs-12 col-sm-6">
+              <label for="orientation">Orientation</label>
+              <input type="text" id="orientation" name="orientation" class="form-control" ng-model="user.orientation" placeholder="(Straight, Gay, Bi, ??)">
+              <privacy-selector privacy="user.privacy.orientation" name="'orientationPrivacy'"></privacySelector>
+            </div>
+          </div>
 
-					<!-- PRIMARY INTERESTS -->
-					<div class="row">
-						<div class="col-xs-12">
-							<hr>
-							<label>Primary Interest(s)</label>
-							<interest-selector interests="user.primaryTags"></interest-selector>
-							<privacy-selector privacy="user.privacy.primaryTags" name="'primaryTagsPrivacy'"></privacy-selector>
-						</div>
-					</div>
+          <!-- PRIMARY INTERESTS -->
+          <div class="row">
+            <div class="col-xs-12">
+              <hr>
+              <label>Primary Interest(s)</label>
+              <interest-selector interests="user.primaryTags"></interest-selector>
+              <privacy-selector privacy="user.privacy.primaryTags" name="'primaryTagsPrivacy'"></privacy-selector>
+            </div>
+          </div>
 
-					<!-- BIO -->
-					<div class="row">
-						<div class="col-xs-12">
-							<label for="bio">Bio</label>
-							<textarea name="bio" class="form-control" ng-model="user.bio" maxlength="500" rows="4" wrap="true" placeholder="Everyone has a story. What's yours?"></textarea>
-							<privacy-selector class="pull-left" privacy="user.privacy.bio" name="'primaryTagsPrivacy'"></privacy-selector>
-							<span class="pull-right"><span class="badge text-info" ng-bind="500 - user.bio.length"></span> remaining</span>
-						</div>
-					</div>
+          <!-- BIO -->
+          <div class="row">
+            <div class="col-xs-12">
+              <label for="bio">Bio</label>
+              <textarea name="bio" class="form-control" ng-model="user.bio" maxlength="500" rows="4" wrap="true" placeholder="Everyone has a story. What's yours?"></textarea>
+              <privacy-selector class="pull-left" privacy="user.privacy.bio" name="'primaryTagsPrivacy'"></privacy-selector>
+              <span class="pull-right"><span class="badge text-info" ng-bind="500 - user.bio.length"></span> remaining</span>
+            </div>
+          </div>
 
-					<!-- SAVE PROFILE -->
-					<div class="row">
-						<div class="col-xs-12 text-center">
-							<button type="submit" class="btn btn-large btn-primary">Save Profile</button>
-						</div>
-					</div>
-					<div class="row">
-						<div class="col-xs-12">
-							<div data-ng-show="success" class="text-center text-success">
-								<strong>Profile Saved Successfully</strong>
-							</div>
-							<div data-ng-show="error" class="text-center text-danger">
-								<strong data-ng-bind="error"></strong>
-							</div>
-						</div>
-					</div>
+          <!-- SAVE PROFILE -->
+          <div class="row">
+            <div class="col-xs-12 text-center">
+              <button type="submit" class="btn btn-large btn-primary">Save Profile</button>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-xs-12">
+              <div data-ng-show="success" class="text-center text-success">
+                <strong>Profile Saved Successfully</strong>
+              </div>
+              <div data-ng-show="error" class="text-center text-danger">
+                <strong data-ng-bind="error"></strong>
+              </div>
+            </div>
+          </div>
 
-					<!-- PRIVACY LEGEND -->
-					<div class="row text-center">
-						<div class="col-xs-12">
-							<h3>Your data, your privacy</h3>
-							<hr>
-						</div>
-						<div class="col-xs-4">
-							<h4><strong>Public</strong></h4> <i class="icon earth fsize-34"></i><br> The Internet
-						</div>
-						<div class="col-xs-4">
-							<h4><strong>Internal</strong></h4> <i class="icon people fsize-34"></i><br> Must be logged into Out In Science
-						</div>
-						<div class="col-xs-4">
-							<h4><strong>Private</strong></h4> <i class="icon locked fsize-34"></i><br> You and only you
-						</div>
-						<div class="col-xs-12">
-							<hr>
-							If a field is not visible to whomever is viewing your entry in the outlist it will be anonymized.
-						</div>
-					</div>
+          <!-- PRIVACY LEGEND -->
+          <div class="row text-center">
+            <div class="col-xs-12">
+              <h3>Your data, your privacy</h3>
+              <hr>
+            </div>
+            <div class="col-xs-4">
+              <h4><strong>Public</strong></h4> <i class="icon earth fsize-34"></i><br> The Internet
+            </div>
+            <div class="col-xs-4">
+              <h4><strong>Internal</strong></h4> <i class="icon people fsize-34"></i><br> Must be logged into Out In Science
+            </div>
+            <div class="col-xs-4">
+              <h4><strong>Private</strong></h4> <i class="icon locked fsize-34"></i><br> You and only you
+            </div>
+            <div class="col-xs-12">
+              <hr>
+              If a field is not visible to whomever is viewing your entry in the outlist it will be anonymized.
+            </div>
+          </div>
 
-				</form>
-			</div>
-		</div>
-	</div>
+        </form>
+      </div>
+    </div>
+  </div>
 </section>

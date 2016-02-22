@@ -18,10 +18,6 @@ html, body, header, section {
     margin-top: 10px;
 }
 
-body {
-    margin-top: 80px;
-}
-
 .box-shadow {
     -webkit-box-shadow: 3px 3px 10px 0px rgba(0,0,0,0.5);
     -moz-box-shadow: 3px 3px 10px 0px rgba(0,0,0,0.5);
@@ -35,6 +31,7 @@ body {
 h1, h2, h3, h4, h5, h6 {
   font-weight: 300;
 }
+
 /* Color buttons */
 li.li-rb-red {
 	.li-rb-color-btn(@rb-red);
@@ -76,4 +73,13 @@ li.li-rb-purple {
 }
 .rb-black {
   color: @rb-black !important;
+}
+
+/* Override angular valid if form controls have an error message */
+.has-error .form-control {
+  border-color: @brand-danger !important;
+}
+
+form small {
+  font-weight: 400;
 }

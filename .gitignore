@@ -13,3 +13,4 @@ app/tests/coverage/
 config/mc-config.json
 config/fb-config.json
 config/mail-config.json
+dump/

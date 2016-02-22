@@ -9,9 +9,6 @@
 }
 
 section[data-ng-controller="PuzzleHuntController"] {
-  img.puzzle-logo {
-    max-width: 150px;
-  }
 
   div.puzzle-hunt-title {
     text-align: center;
@@ -22,20 +19,20 @@ section[data-ng-controller="PuzzleHuntController"] {
       }
 
       img {
-        max-height: 115px;
+        max-height: 160px;
         display: block;
       }
     }
     @media screen and (min-width: @screen-sm-min) {
       h1 {
         display: inline-block;
-        line-height: 130px;
+        line-height: 160px;
         vertical-align: bottom;
         font-size: 3em;
       }
 
       img {
-        max-height: 150px;
+        max-height: 175px;
         padding: 15px;
         display: inline-block;
       }
@@ -60,7 +57,7 @@ section[data-ng-controller="PuzzleHuntController"] {
 }
 
 div.puzzle-hunt-title-small {
-  text-align: left;
+  text-align: center;
   h2, a {
     display: inline-block;
   }
@@ -95,7 +92,18 @@ div.puzzle-hunt-title-small {
     }
   }
 }
+/* Logistics and Contact on hompage */
+dl.puzzle-hunt-big-info {
+  text-align: center;
+  dt {
+    .h3;
+  }
+  dd {
+    font-size: 1.2em;
+  }
+}
 
+/* For INFO Page */
 dl.info-list {
   dd + dt {
     padding-top: 10px;
@@ -104,7 +112,7 @@ dl.info-list {
     .h3;
   }
   dd {
-    font-size: 1.1em;
+    font-size: 1.2em;
   }
   i {
     display: inline-block;
@@ -118,14 +126,37 @@ dl.info-list {
   }
 }
 
-.puzzlehunt-donate-button{
+.puzzlehunt-donate-button {
   background-color: rgb(186,216,10);
-  color: rgb(0,63,135)
+  color: rgb(0,63,135);
+  padding: 10px;
+  font-size: 1.6em;
+
+  &:hover {
+    background-color: rgb(24,142,217);
+    color: white;
+  }
 }
-.puzzlehunt-donate-button:hover{
-  background-color: rgb(24,142,217);
-  color:white;
-}
+
 .puzzlehunt-donate-text{
   color: rgb(0,63,135)
+}
+
+ul.team-list {
+  li {
+    overflow: auto;
+  }
+}
+form.team-item-form {
+  margin-top: 5px;
+}
+
+dl.member-list {
+  .member + .member {
+    margin-top: 10px;
+  }
+}
+
+ul.invite-list li {
+  padding: 5px 0px;
 }
