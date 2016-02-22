@@ -82,7 +82,7 @@
                 <li class="list-group-item" ng-repeat="team in teams" ng-class="{disabled: team.memberIds.length >= 6 || !team.lookingForMembers}">
                   <h4 class="list-item-title">{{team.teamName}}</h4>
                   Members: {{team.memberIds.length}}
-                  <form class="form-inline team-item-form pull-right" ng-if="team.lookingForMembers">
+                  <form class="form team-item-form" ng-if="team.lookingForMembers">
                     <div class="form-group">
                       
                       <input type="password" class="form-control" id="{{team._id}}" ng-model="team.password" placeholder="Team Password">

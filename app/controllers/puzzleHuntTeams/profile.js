@@ -3,6 +3,7 @@
 var mongoose = require('mongoose');
 var Team = mongoose.model('PuzzleHuntTeam');
 var User = mongoose.model('PuzzleHuntUser');
+var Invite = mongoose.model('PuzzleHuntInvite');
 
 /**
  * Authed - checks that a puzzle hunt user is authed.
@@ -24,38 +25,37 @@ exports.list = function(req, res) {
 
 exports.getTeam = function(req, res) {
 	// 1. You authed?
-	if (!authed) {
+	if (!authed(req)) {
 		return res.status(400).send({message: 'Not logged in'});
 	}
-  else if (!req.params.teamId || req.params.teamId.length === 0) {
-    return res.status(400).send({message: 'Missing paramter "teamId"'});
+
+  var user = req.user;
+
+  if (!user.teamId) {
+    return res.status(400).send({message: 'You are not on a team!'});
   }
 
-  // 2. You on this team?
-  Team.findById(req.params.teamId, function(err, team) {
+  // 2. Get User's team.
+  Team.findById(user.teamId, {password: false, salt: false}, function(err, team) {
     if (err) {
       return res.status(400).send(err);
     }
-    if (team._id.toString() === req.params.teamId) {
-      // remove team password for security
-      team.password = undefined;
-      team.members = null;
 
-      User.find({_id: {$in: team.memberIds}}, '_id displayName firstName lastName major phone email').lean().exec(function(err, members) {
-        if (err) {
-          return res.status(400).send(err);
-        }
-        members = members.map(function(member) {
-          member.salt = member.password = undefined;
-          return member;
-        });
-
-        return res.send({team: team, members: members});
+    User.find({_id: {$in: team.memberIds}}, '_id displayName firstName lastName major phone email').lean().exec(function(err, members) {
+      if (err) {
+        return res.status(400).send(err);
+      }
+      members = members.map(function(member) {
+        member.salt = member.password = undefined;
+        return member;
       });
-    }
-    else {
-      // You ain't on this team yo, GTFO
-      return res.status(400).send({message: 'You are not on this team!'});
-    }
+
+      // Get Pending Invites
+      Invite.find({teamId: team._id, accepted: false}, function(err, invites) {
+        if (err)
+          return res.status(400).send(err);
+        return res.send({team: team, members: members, invites: invites});
+      });
+    });
   });
 };

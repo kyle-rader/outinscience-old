@@ -13,10 +13,11 @@ angular.module('puzzle-hunt').controller('PuzzleHuntTeamController', ['$scope', 
     if (!$scope.hasTeam) return $location.path('/puzzle-hunt/no-team');
 
     // Get team:
-    $http.get('/puzzlehunt/team/' + $scope.user.teamId)
+    $http.get('/puzzlehunt/team')
     .success(function(response) {
       $scope.team = response.team;
       $scope.members = response.members;
+      $scope.invites = response.invites;
     })
     .error(function(response) {
       $scope.error = response;

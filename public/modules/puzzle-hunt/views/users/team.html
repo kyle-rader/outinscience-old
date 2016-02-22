@@ -1,10 +1,39 @@
 <section data-ng-controller="PuzzleHuntTeamController">
   <div class="container">
+
     <div class="row">
       <h2 class="text-center">{{team.teamName}}</h2>
     </div>
+
     <div class="row">
-    <!-- Angular repeat here --> 
+        <div class="col-xs-12 col-sm-6">
+            <h3>Members</h3>
+            <dl class="member-list">
+                <div ng-repeat="member in members" class="member">
+                    <dt>{{member.displayName}}</dt>
+                    <dd>
+                        {{member.major}}<br>
+                        <a href="tel:{{member.phone}}">{{member.phone}}</a> &nbsp; | &nbsp; <a href="mailto:{{member.email}}">{{member.email}}</a>
+                    </dd>
+                </div>
+            </dl>
+        </div>
+        <div class="col-xs-12 col-sm-6">
+            <h3>Pending Invites</h3>
+            <ul class="list-unstyled invite-list">
+                <li ng-repeat="invite in invites">
+                    <a href="mailto:{{invite.email}}">{{invite.email}}</a>
+                </li>
+            </dl>
+        </div>
     </div>
+
+    <div class="row">
+        <div class="col-xs-12">
+            <br><br>
+            For any team or account questions email <a href="mailto:kyle@kylerader.ninja">kyle@kylerader.ninja</a>
+        </div>
+    </div>
+    <br>
   </div>
 </section>
