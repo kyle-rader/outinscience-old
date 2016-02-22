@@ -17,7 +17,7 @@ angular.module('puzzle-hunt').controller('PuzzleHuntLoginController', ['$scope',
         $scope.oisAuth.user = null;
         // And redirect to the index page
         if ($scope.puzzleAuth.user.teamId !== null) {
-          $location.path('/puzzle-hunt/dashboard');
+          $location.path('/puzzle-hunt/team');
         }
         else {
           $location.path('/puzzle-hunt/no-team');
