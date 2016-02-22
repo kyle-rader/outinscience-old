@@ -29,7 +29,7 @@ var signupValidate = new Validator({
 
 
 var MAX_TEAM_SIZE = 6;
-var EMAIL_DOMAIN = '@kylerader.ninja';
+var EMAIL_DOMAIN = '@students.wwu.edu';
 
 /**
  * Check a new team object against its schema. Finds missing/invalid fields.

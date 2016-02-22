@@ -32,7 +32,7 @@ var signupValidate = new Validator({
 }, {greedy: true});
 
 
-var EMAIL_DOMAIN = '@kylerader.ninja';
+var EMAIL_DOMAIN = '@students.wwu.edu';
 
 /**
  * /puzzlehunt/users/signup POST
