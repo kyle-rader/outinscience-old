@@ -36,7 +36,7 @@ exports.forgot = function(req, res, next) {
     // Lookup user by email
     function(token, done) {
       if (req.body.email) {
-        req.body.email = req.body.email.concat('@students.wwu.edu');
+          req.body.email = req.body.email.trim().toLowerCase().concat('@students.wwu.edu');
         User.findOne({
           email: req.body.email,
           verified: true

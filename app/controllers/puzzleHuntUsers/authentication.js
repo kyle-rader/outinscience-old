@@ -72,7 +72,7 @@ exports.signup = function(req, res) {
         errMessage.errors.email = 'You must use a valid WWU username. (Not a full email address)';
       }
       else {
-        req.body.email = req.body.email.trim() + EMAIL_DOMAIN;
+          req.body.email = req.body.email.trim().toLowerCase() + EMAIL_DOMAIN;
       }
       
 
