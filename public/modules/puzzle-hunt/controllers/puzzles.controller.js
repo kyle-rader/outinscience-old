@@ -2,7 +2,6 @@
 
 angular.module('puzzle-hunt').controller('PuzzleHuntPuzzlesController', ['$scope', 'PuzzleAuth', '$http',
 	function($scope, PuzzleAuth, $http) {
-		$scope.user = PuzzleAuth.user;
-
+		location = 'https://wwupuzzlehunt.com/puzzles';
 	}
 ]);
